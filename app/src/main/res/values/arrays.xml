@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="news_titles">
+        <item>国内焦点</item>
+        <item>社会焦点</item>
+        <item>互联网焦点</item>
+        <item>科技焦点</item>
+        <item>娱乐焦点</item>
+        <item>体育焦点</item>
+        <item>房产焦点</item>
+        <item>财经焦点</item>
+        <item>国际焦点</item>
+    </string-array>
+    <string-array name="news_channelId">
+        <item>5572a108b3cdc86cf39001cd</item>
+        <item>5572a109b3cdc86cf39001da</item>
+        <item>5572a108b3cdc86cf39001d1</item>
+        <item>5572a108b3cdc86cf39001d9</item>
+        <item>5572a108b3cdc86cf39001d5</item>
+        <item>5572a108b3cdc86cf39001d4</item>
+        <item>5572a108b3cdc86cf39001d2</item>
+        <item>5572a108b3cdc86cf39001d0</item>
+        <item>5572a108b3cdc86cf39001ce</item>
+    </string-array>
+
+    <string-array name="image_titles">
+        <item>----11----</item>
+        <item>----12----</item>
+        <item>----13----</item>
+        <item>----14----</item>
+        <item>----15----</item>
+        <item>----16----</item>
+        <item>----17----</item>
+        <item>----18----</item>
+        <item>----19----</item>
+    </string-array>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group  android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_item_drawer_news"
+            android:orderInCategory="1"
+            android:checked="true"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="@string/news"/>
+        <item
+            android:orderInCategory="2"
+            android:id="@+id/menu_item_drawer_image"
+            android:icon="@android:drawable/ic_dialog_email"
+            android:title="@string/image"/>
+        <item
+            android:orderInCategory="3"
+            android:id="@+id/menu_item_drawer_music"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="@string/music"/>
+        <item
+            android:orderInCategory="4"
+            android:id="@+id/menu_item_drawer_video"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/video"/>
+        <item
+            android:orderInCategory="4"
+            android:id="@+id/menu_item_drawer_video"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/video"/>
+
+    </group>
+
+</menu>
