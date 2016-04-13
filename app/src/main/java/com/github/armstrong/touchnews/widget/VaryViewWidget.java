@@ -1,12 +1,8 @@
 package com.github.armstrong.touchnews.widget;
 
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.util.Constant;
 
 public class VaryViewWidget {
@@ -23,17 +19,14 @@ public class VaryViewWidget {
          * 没网View
          */
         public View mNoNetView;
-
         /**
          * 正在加载View
          */
-
         public View mLoadingView;
         /**
          * 数据为空的View
          */
         public View mEmptyView;
-
         /**
          * 正在加载View
          */
@@ -141,6 +134,7 @@ public class VaryViewWidget {
 
                 }
         }
+
         public void hideInfo ( ) {
                 showView ( Constant.TYPE.ORIGIN );
         }
