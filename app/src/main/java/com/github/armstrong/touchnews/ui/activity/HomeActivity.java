@@ -107,6 +107,7 @@ public class HomeActivity extends BaseActivity implements HomeView{
 
         @Override
         public void setNavigation(Weather weather) {
+                //// TODO: 2016/4/13
                 Log.e("setNavigation", weather.getBasic().getCity());
                 mNavigationView.getHeaderView(0);
         }

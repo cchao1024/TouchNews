@@ -33,14 +33,14 @@
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"/>
             <!--android:transitionName="@string/transition_news_img"-->
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar_home"
+            <include android:id="@+id/toolbar" layout="@layout/toolbar_news_detail"/>
+            <!--<android.support.v7.widget.Toolbar
+                android:id="@+id/toolba"
+                layout="@layout/toolba"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -62,7 +62,7 @@
                 android:id="@+id/pb_new_detail"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="wrap_content"
                 android:progressDrawable="@drawable/selector_progressbar_web_view"
                 android:layout_gravity="center"/>
 

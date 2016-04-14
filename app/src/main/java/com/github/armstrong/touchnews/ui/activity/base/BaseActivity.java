@@ -1,5 +1,6 @@
 package com.github.armstrong.touchnews.ui.activity.base;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
  */
 public  class BaseActivity extends AppCompatActivity {
         protected Toolbar mToolbar=null;
-
+        public Context mContext=this;
         @Override
         public void setContentView ( int layoutResID ) {
                 super.setContentView(layoutResID);

@@ -19,7 +19,7 @@
             android:title="@string/music"/>
         <item
             android:orderInCategory="4"
-            android:id="@+id/menu_item_drawer_video"
+            android:id="@+id/menu_item_drawer_vid"
             android:icon="@android:drawable/ic_dialog_info"
             android:title="@string/video"/>
         <item

@@ -2,18 +2,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".ui.activity.HomeActivity">
-    <item
-        android:id="@+id/action_edit"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/edit"
-        android:orderInCategory="8"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_share"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/share"
-        android:orderInCategory="9"
-        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="10"
