@@ -6,7 +6,9 @@
     <dimen name="news_item_image_height">72dp</dimen>
     <dimen name="news_item_image_width">96dp</dimen>
     <dimen name="news_item_margin">8dp</dimen>
-    <dimen name="news_item_text_primary">16sp</dimen>
-    <dimen name="news_item_text_secondary">14sp</dimen>
-    <dimen name="news_detail_image_height">260sp</dimen>
+    <dimen name="text_huge">20sp</dimen>
+    <dimen name="text_large">22sp</dimen>
+    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="news_detail_image_height">260dp</dimen>
 </resources>

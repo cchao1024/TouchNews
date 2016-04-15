@@ -65,12 +65,11 @@ public class NewsDetailActivity extends BaseActivity implements Toolbar.OnMenuIt
         private void initViews ( ) {
                 mContentlist = ( Contentlist ) this.getIntent ( ).getSerializableExtra ( "contentList" );
                 ImageUtil.displayImage ( this, mContentlist.getImageurls ( ).get ( 0 ).getUrl ( ), mImageViewTop );
-//                ViewCompat.setTransitionName ( mImageViewTop,mContentlist.getSource ( ) );
-//                mWebView.loadUrl ( "http://www.sina.com" );
                 mWebView.loadUrl ( mContentlist.getLink ( ) );
                 if ( mToolbar != null ) {
                         mToolbar.setTitle ( mContentlist.getSource ( ) );
                         mToolbar.setOnMenuItemClickListener ( this );
+                        setSupportActionBar ( mToolbar );
                 }
         }
 

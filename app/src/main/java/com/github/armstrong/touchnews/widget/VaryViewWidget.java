@@ -1,12 +1,8 @@
 package com.github.armstrong.touchnews.widget;
 
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.util.Constant;
 
 public class VaryViewWidget {
@@ -38,7 +34,7 @@ public class VaryViewWidget {
          * 正在加载View
          */
 //        public ProgressWheel mLoadingProgress;
-        ViewGroup mParentView;
+        ViewGroup mParentViewGroup;
         int mOriginViewIndex;
         ViewGroup.LayoutParams layoutParams;
 
@@ -46,13 +42,13 @@ public class VaryViewWidget {
                 setOriginView ( originView );
 
                 layoutParams = mOriginView.getLayoutParams ( );
-                mParentView = ( ViewGroup ) mOriginView.getParent ( );
-                if ( mParentView == null ) {
-                        return;
+                mParentViewGroup = ( ViewGroup ) mOriginView.getParent ( );
+                if ( mParentViewGroup == null ) {
+                        throw new IllegalArgumentException (originView.getClass ().getSimpleName ()+"目标View 需要有ViewGroup父布局");
                 }
                 if ( mOriginViewIndex == - 1 ) {
-                        for ( int index = 0 ; index < mParentView.getChildCount ( ) ; index++ ) {
-                                if ( mOriginView == mParentView.getChildAt ( index ) ) {
+                        for ( int index = 0 ; index < mParentViewGroup.getChildCount ( ) ; index++ ) {
+                                if ( mOriginView == mParentViewGroup.getChildAt ( index ) ) {
                                         mOriginViewIndex = index;
                                         break;
                                 }
@@ -102,14 +98,6 @@ public class VaryViewWidget {
         public void setEmptyView ( View emptyView ) {
                 mEmptyView = emptyView;
         }
-                /*private VaryViewWidget(OverlapViewHelper helper) {
-                        this.mViewHelper = helper;
-                }
-       /* public void setUpLoadingView ( View view ) {
-                        *//*mLoadingView = view;
-                        mLoadingView.setClickable(true);
-                        mLoadingProgress = (ProgressWheel) view.findViewById(R.id.vv_loading_progress);*//*
-        }*/
 
         public void showView ( Constant.TYPE type ) {
                 View infoView = null;
@@ -130,15 +118,15 @@ public class VaryViewWidget {
                                 infoView = mOriginView;
                                 break;
                 }
-//                if ( parentViewGroup.getChildAt ( targetViewIndex ) != targetView ) {
+             if( mParentViewGroup.getChildAt ( mOriginViewIndex ) != infoView ) {
                 if ( infoView != null ) {
                         ViewGroup parent = ( ViewGroup ) infoView.getParent ( );
                         if ( parent != null ) {
                                 parent.removeView ( infoView );
                         }
-                        mParentView.removeViewAt ( mOriginViewIndex );
-                        mParentView.addView ( infoView, mOriginViewIndex, layoutParams );
-
+                        mParentViewGroup.removeViewAt ( mOriginViewIndex );
+                        mParentViewGroup.addView ( infoView, mOriginViewIndex, layoutParams );
+                }
                 }
         }
         public void hideInfo ( ) {

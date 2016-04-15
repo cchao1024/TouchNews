@@ -45,6 +45,10 @@ public class HomeActivity extends BaseActivity implements HomeView{
                 initViews ( );
         }
         private void initNavigation ( ) {
+                mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open,
+                        R.string.close);
+                mActionBarDrawerToggle.syncState();
+                mDrawerLayout.addDrawerListener (mActionBarDrawerToggle);
                 mNavigationView.setNavigationItemSelectedListener ( new NavigationView.OnNavigationItemSelectedListener ( ) {
                         @Override
                         public boolean onNavigationItemSelected ( MenuItem item ) {

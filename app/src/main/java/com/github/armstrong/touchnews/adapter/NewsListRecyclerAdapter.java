@@ -1,6 +1,5 @@
 package com.github.armstrong.touchnews.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
@@ -25,11 +24,12 @@ import java.util.List;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListRecyclerAdapter extends RecyclerView.Adapter< NewsListRecyclerAdapter.ViewHolder > {
+public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
+        private static final int TYPE_ITEM = 0;
+        private static final int TYPE_FOOTER = 1;
         public Context mContext;
         public List< Contentlist > mData;
         public LayoutInflater mLayoutInflater;
-
 
 //        private View.OnClickListener mOnClickListener;
 
@@ -40,37 +40,51 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< NewsListRecyc
         }
 
         @Override
-        public NewsListRecyclerAdapter.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
-                View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.news_item, parent, false );
-                return new ViewHolder ( view );
+        public int getItemViewType ( int position ) {
+                if ( position + 1 == getItemCount ( ) ) {
+                        return TYPE_FOOTER;
+                } else {
+                        return TYPE_ITEM;
+                }
         }
 
         @Override
-        public void onBindViewHolder ( ViewHolder holder, int position ) {
-                Contentlist contentEntity = mData.get ( position );
-                holder.mTitle.setText ( contentEntity.getTitle ( ) );
-                holder.mDescription.setText ( contentEntity.getDesc ( ) );
-                ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), holder.mImage );
-
+        public RecyclerView.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
+                if ( viewType == TYPE_ITEM ) {
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.news_item, parent, false );
+                        return new MViewHolder ( view );
+                } else {
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.news_item_footer, parent, false );
+                        return new RecyclerView.ViewHolder ( view){
+                                @Override
+                                public String toString ( ) {
+                                        return super.toString ( );
+                                }
+                        };
+                }
         }
 
-        /*public void setOnClickListener ( View.OnClickListener onClickListener ) {
-                if ( onClickListener != null ) {
-                        mOnClickListener = onClickListener;
+        @Override
+        public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
+                if(holder instanceof MViewHolder) {
+                        Contentlist contentEntity = mData.get ( position );
+                        ((MViewHolder)holder).mTitle.setText ( contentEntity.getTitle ( ) );
+                        ((MViewHolder)holder).mDescription.setText ( contentEntity.getDesc ( ) );
+                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ((MViewHolder)holder).mImage );
                 }
-        }*/
+        }
 
         @Override
         public int getItemCount ( ) {
-                return mData.size ( );
+                return mData.size ( )+1;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
                 public TextView mTitle;
                 public TextView mDescription;
                 public ImageView mImage;
 
-                public ViewHolder ( View view ) {
+                public MViewHolder ( View view ) {
                         super ( view );
                         mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
                         mDescription = ( TextView ) view.findViewById ( R.id.tv_description );
@@ -83,11 +97,11 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< NewsListRecyc
                         /*if ( mOnClickListener != null ) {
                                 mOnClickListener.onClick ( v );
                         }*/
-                       Intent intent = new Intent ( mContext, NewsDetailActivity.class );
+                        Intent intent = new Intent ( mContext, NewsDetailActivity.class );
                         intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
 //                     View transitionView = view.findViewById(R.id.ivNews);
                         ActivityOptionsCompat options =
-                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity )mContext,
+                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
                                         mImage, mContext.getString ( R.string.transition__img ) );
 
                         ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );

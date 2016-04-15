@@ -78,13 +78,15 @@ public class NewsListPresenter implements INewsListPresenter, NetRequestUtil.Req
                         mNewsListView.hideInfo (  );
                         if ( pagebean.getCurrentPage ( ) == 1 ) {
                                 mNewsListView.refreshData ( contentlist );
+                        }else{
+                                mNewsListView.addMoreListData ( contentlist );
                         }
-                        mNewsListView.addMoreListData ( contentlist );
                 }
         }
 
         @Override
         public void onError ( VolleyError error ) {
+
                 LogUtils.i ( error );
         }
 }
