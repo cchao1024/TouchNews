@@ -3,19 +3,29 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/header_height"
               android:background="@color/colorPrimary"
-              android:padding="@dimen/fab_margin">
+                android:fitsSystemWindows="true"
+              android:padding="8dp">
     <TextView
         android:id="@+id/iv_user_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:drawableTop="@drawable/weather_100"
+        android:drawableTop="@drawable/icon_user"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
         android:textSize="30sp"
         android:text="cchao"/>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_user_exit"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +66,8 @@
                 android:id="@+id/tv_weather_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="32*C"
+                android:text="32"
+                android:drawableRight="@drawable/icon_temperature"
                 android:textSize="@dimen/textLarge"/>
 
 
@@ -64,8 +75,9 @@
                 android:id="@+id/tv_weather_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18~32*C"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
+                android:layout_gravity="center_horizontal"
+                android:text="广州"
+                android:textAppearance="@dimen/news_item_text_secondary"/>
         </LinearLayout>
     </LinearLayout>
 

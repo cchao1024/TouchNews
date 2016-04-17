@@ -12,14 +12,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
-
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_home"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
+        android:fitsSystemWindows="true"
         app:menu="@menu/menu_drawer"/>
 </android.support.v4.widget.DrawerLayout>
