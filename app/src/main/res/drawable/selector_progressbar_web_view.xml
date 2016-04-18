@@ -5,14 +5,14 @@
             <clip>
                 <shape>
                     <solid android:color="@color/white"/>
-                    <corners android:radius="4dp"/>
+                    <corners android:radius="2dp"/>
                 </shape>
             </clip>
         </item>
         <item android:id="@android:id/progress">
             <clip>
                 <shape>
-                    <corners android:radius="4dp"/>
+                    <corners android:radius="2dp"/>
                     <gradient android:startColor="@color/colorPrimary" android:endColor="@color/colorPrimaryDark"/>
                 </shape>
             </clip>

@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
+import com.apkfuns.logutils.LogUtils;
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.NewsListRecyclerAdapter;
 import com.github.armstrong.touchnews.javaBean.news.Contentlist;
@@ -61,10 +63,30 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                 mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
 
                 mNewsListRecyclerAdapter = new NewsListRecyclerAdapter ( mContext, mNewsItemList );
+                mRecyclerView.addOnScrollListener (new RecyclerView.OnScrollListener() {
+                        private int lastVisibleItem;
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                lastVisibleItem =((LinearLayoutManager)recyclerView.getLayoutManager ()).findLastVisibleItemPosition();
+                        }
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                super.onScrollStateChanged(recyclerView, newState);
+                                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                                        && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount()) {
+                                        //加载更多
+
+                                        LogUtils.d(getClass ().getSimpleName (),"loading more data");
+                                        mNewsListPresenter.getMoreData ();
+                                }
+                        }
+                });
                 mRecyclerView.setAdapter ( mNewsListRecyclerAdapter );
 
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
                 mSwipeRefreshLayout.setOnRefreshListener ( this );
+
         }
 
         /**

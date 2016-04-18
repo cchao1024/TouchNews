@@ -11,5 +11,5 @@
     <string name="edit">编辑</string>
     <string name="share">分享</string>
     <string name="loading">正在加载</string>
-    <string name="search">search</string>
+    <string name="action_search">search</string>
 </resources>
