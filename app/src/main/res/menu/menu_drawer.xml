@@ -19,13 +19,6 @@
             android:title="@string/music"/>
         <item
             android:orderInCategory="4"
-            android:id="@+id/menu_item_drawer_vid"
-            android:icon="@android:drawable/ic_dialog_info"
-            android:id="@+id/menu_item_drawer_video"
-            android:icon="@drawable/icon_smile"
-            android:title="@string/video"/>
-        <item
-            android:orderInCategory="4"
             android:id="@+id/menu_item_drawer_chat"
             android:icon="@drawable/icon_smile"
             android:title="@string/video"/>

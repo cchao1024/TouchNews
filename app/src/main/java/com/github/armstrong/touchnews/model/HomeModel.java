@@ -33,8 +33,6 @@ public class HomeModel implements IHomeModel {
                 mFragments=new ArrayList (  );
                 mFragments.add ( new NewsContainerFragment () );
                 mFragments.add ( new ImageContainerFragment () );
-                mFragments.add ( null);
-                mFragments.add ( null);
                 return mFragments;
         }
 

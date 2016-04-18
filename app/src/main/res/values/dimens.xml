@@ -4,12 +4,21 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="header_height">192dp</dimen>
-    <dimen name="news_item_image_height">96dp</dimen>
     <dimen name="news_item_image_height">72dp</dimen>
     <dimen name="news_item_image_width">96dp</dimen>
     <dimen name="news_item_margin">8dp</dimen>
     <dimen name="news_item_text_primary">16sp</dimen>
-    <dimen name="news_item_text_secondary">14sp</dimen>
     <dimen name="news_detail_image_height">260sp</dimen>
-    <dimen name="textLarge">30sp</dimen>
+    <!--margin-->
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_huge">32dp</dimen>
+    <!--text-->
+    <dimen name="text_tiny">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_large">22sp</dimen>
+    <dimen name="text_huge">32sp</dimen>
 </resources>

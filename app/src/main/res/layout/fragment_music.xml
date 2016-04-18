@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_music__name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_music_singer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/musics_player_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:id="@+id/tv_music_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"/>
+
+        <SeekBar
+            android:id="@+id/musics_player_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxHeight="3dp"
+            android:minHeight="3dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:progressDrawable="@drawable/music_seekbar"
+            android:thumb="@drawable/icon_news"
+            android:thumbOffset="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_music_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/musics_player_progress_container"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/musics_player_play_ctrl_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_play_normal"/>
+
+        <ImageButton
+            android:id="@+id/musics_player_play_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_next_play_normal"/>
+    </LinearLayout>
+
+</RelativeLayout>
