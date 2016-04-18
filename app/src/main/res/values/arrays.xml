@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer-array name="weather_code">
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>999</item>
+
+    </integer-array>
+    <array name="weather_icon">
+        <item>@drawable/weather_100</item>
+        <item>@drawable/weather_101</item>
+        <item>@drawable/weather_102</item>
+        <item>@drawable/weather_103</item>
+        <item>@drawable/weather_999</item>
+    </array>
     <string-array name="news_titles">
         <item>国内焦点</item>
         <item>社会焦点</item>
@@ -34,4 +49,5 @@
         <item>----18----</item>
         <item>----19----</item>
     </string-array>
+
 </resources>

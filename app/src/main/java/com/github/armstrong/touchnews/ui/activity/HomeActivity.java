@@ -5,9 +5,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.HomeFragmentPagerAdapter;
@@ -24,8 +27,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomeView{
-
-
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
         @Bind ( R.id.viewpager_home_fragments_container )
@@ -107,8 +108,29 @@ public class HomeActivity extends BaseActivity implements HomeView{
 
         @Override
         public void setNavigation(Weather weather) {
-                //// TODO: 2016/4/13
-                Log.e("setNavigation", weather.getBasic().getCity());
-                mNavigationView.getHeaderView(0);
+//                Log.e("setNavigation", weather.getBasic().getCity());
+                View headerView= mNavigationView.getHeaderView ( 0 );
+                ImageView iconWeather=((ImageView)headerView.findViewById ( R.id.iv_weather_icon ));
+               //天气类型 - 晴、多云
+                TextView tvTypeText=((TextView)headerView.findViewById ( R.id.tv_weather_txt ));
+                //当前气温 - 32 *C
+                TextView tvTemperature=((TextView)headerView.findViewById ( R.id.tv_weather_temperature ));
+                //城市位置 - 广州
+                TextView tvPosition=((TextView)headerView.findViewById ( R.id.tv_weather_position ));
+                //天气类型代码
+                int weatherCode=Integer.valueOf (weather.getNow ().getCond ().getCode () );
+                int[] weatherCodeArr=getResources ().getIntArray ( R.array.weather_code );
+                int[] weatherDrawableID=getResources ().getIntArray ( R.array.weather_icon );
+                //设置天气类型图标
+                iconWeather.setImageResource ( R.drawable.weather_999);
+                for ( int i=0;i<weatherCodeArr.length;i++ ){
+                        if(weatherCodeArr[i]==weatherCode){
+                                iconWeather.setImageResource ( weatherDrawableID[i] );
+                        }
+                }
+                tvTypeText.setText ( weather.getNow ().getCond ().getTxt () );
+                tvTemperature.setText ( weather.getNow ().getTmp () );
+                tvPosition.setText ( weather.getBasic ().getCity () );
+
         }
 }
