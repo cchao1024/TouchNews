@@ -1,4 +1,4 @@
-package com.github.armstrong.touchnews.javaBean.Weather;
+package com.github.armstrong.touchnews.javaBean;
 
 import java.util.List;
 

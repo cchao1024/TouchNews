@@ -8,13 +8,18 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.github.armstrong.touchnews.R;
+import com.github.armstrong.touchnews.presenter.MusicPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 
 /**
@@ -24,8 +29,25 @@ import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
  */
 
 public class MusicFragment extends BaseLazyFragment {
+        View mView;
+        private MusicPresenter mMusicsPresenter = null;
+        public void onFirstUserVisible ( ) {
 
-        /*@InjectView(R.id.musics_player_background)
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
+                mView=inflater.inflate ( R.layout.fragment_music,container );
+                return mView;
+        }
+        @Override
+        public void onViewCreated ( View view, @Nullable Bundle savedInstanceState ) {
+                super.onViewCreated ( view, savedInstanceState );
+
+        }
+
+/*@InjectView(R.id.musics_player_background)
         ImageView mBackgroundImage;
 
         @InjectView(R.id.musics_player_disc_view)
@@ -58,7 +80,7 @@ public class MusicFragment extends BaseLazyFragment {
         @InjectView(R.id.musics_player_loading_view)
         View mLoadingTargetView;
 
-        private MusicsPresenter mMusicsPresenter = null;
+
         private String mMusicsCollectId = UriHelper.URL_MUSICS_LIST_CHANNEL_ID;
 
         private List<MusicsListEntity> mPlayListData;

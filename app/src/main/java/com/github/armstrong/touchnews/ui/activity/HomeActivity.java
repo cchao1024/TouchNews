@@ -8,12 +8,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.HomeFragmentPagerAdapter;
-import com.github.armstrong.touchnews.javaBean.Weather.Weather;
+import com.github.armstrong.touchnews.javaBean.Weather;
 import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
 import com.github.armstrong.touchnews.presenter.HomePresenter;
 import com.github.armstrong.touchnews.ui.activity.base.BaseActivity;

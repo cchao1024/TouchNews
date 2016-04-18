@@ -1,6 +1,6 @@
 package com.github.armstrong.touchnews.view;
 
-import com.github.armstrong.touchnews.javaBean.Weather.Weather;
+import com.github.armstrong.touchnews.javaBean.Weather;
 
 import java.util.List;
 

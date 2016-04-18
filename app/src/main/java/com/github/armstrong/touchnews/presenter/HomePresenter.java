@@ -3,7 +3,7 @@ package com.github.armstrong.touchnews.presenter;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.github.armstrong.touchnews.javaBean.Weather.Weather;
+import com.github.armstrong.touchnews.javaBean.Weather;
 import com.github.armstrong.touchnews.model.i.IHomeModel;
 import com.github.armstrong.touchnews.model.HomeModel;
 import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
