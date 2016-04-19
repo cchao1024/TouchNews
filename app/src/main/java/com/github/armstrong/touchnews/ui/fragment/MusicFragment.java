@@ -1,26 +1,20 @@
 package com.github.armstrong.touchnews.ui.fragment;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.presenter.MusicPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.armstrong.touchnews.view.IMusicView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/4/18.
@@ -28,22 +22,26 @@ import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
  * Description:
  */
 
-public class MusicFragment extends BaseLazyFragment {
+public class MusicFragment extends BaseLazyFragment implements IMusicView{
+        @Bind ( R.id.btn_music_play)
+        ImageButton mPlayBtn;
+        @Bind ( R.id.btn_music_next)
+        ImageButton mNextBtn;
         View mView;
         private MusicPresenter mMusicsPresenter = null;
-        public void onFirstUserVisible ( ) {
 
-        }
 
-        @Nullable
         @Override
-        public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
-                mView=inflater.inflate ( R.layout.fragment_music,container );
+        public View onCreateView ( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState ) {
+                mView=inflater.inflate ( R.layout.fragment_music,null );
+                ButterKnife.bind ( mView );
                 return mView;
         }
+        public void onFirstUserVisible ( ) {
+                mMusicsPresenter=new MusicPresenter ( mContext,this );
+        }
         @Override
-        public void onViewCreated ( View view, @Nullable Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
+        public void initiationView ( ) {
 
         }
 

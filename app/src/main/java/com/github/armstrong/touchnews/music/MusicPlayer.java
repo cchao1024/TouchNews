@@ -1,12 +1,11 @@
 package com.github.armstrong.touchnews.music;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Bundle;
 
-import com.github.armstrong.touchnews.javaBean.MusicEntity;
+import com.github.armstrong.touchnews.javaBean.MusicInfoRoot;
+import com.github.armstrong.touchnews.javaBean.music.MusicHashEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,8 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         private MediaPlayer mMediaPlayer;
 
-        private List<MusicEntity > mMusicList;
-        private MusicEntity mCurMusic;
+        private List<MusicInfoRoot.Data > mMusicList;
+        private MusicInfoRoot.Data  mCurMusic;
         private Context mContext;
 
         public MusicPlayer ( Context context ) {
@@ -36,7 +35,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mContext = context;
 
                 mMediaPlayer = new MediaPlayer ( );
-                mMusicList = new ArrayList<MusicEntity> ( );
+                mMusicList = new ArrayList<MusicInfoRoot.Data > ( );
 
                 mMediaPlayer.setOnErrorListener ( this );
                 mMediaPlayer.setOnPreparedListener ( this );
@@ -51,8 +50,14 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mMusicList.clear ( );
         }
 
-        public void setMusicList ( List<MusicEntity> musicList ) {
+        public void setMusicList ( List<MusicInfoRoot.Data > musicList ) {
                 mMusicList=musicList;
+        }
+
+        public void addMusic ( MusicInfoRoot.Data music ) {
+                if ( music != null ) {
+                        mMusicList.add ( music );
+                }
         }
 
         public int getMusicListCount ( ) {

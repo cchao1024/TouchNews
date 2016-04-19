@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import com.apkfuns.logutils.LogLevel;
+import com.apkfuns.logutils.LogUtils;
+
 /**
  * * Created by H on 2016/3/12.
  */
@@ -13,6 +16,11 @@ public class BaseApplication extends Application {
         public void onCreate ( ) {
                 super.onCreate ( );
                 context=getApplicationContext ();
+                LogUtils.getLogConfig()
+                        .configAllowLog(true)
+                        .configTagPrefix("LogUtils")
+                        .configShowBorders(true)
+                        .configLevel( LogLevel.TYPE_VERBOSE);
         }
 
         @Override

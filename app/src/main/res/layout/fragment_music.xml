@@ -78,14 +78,14 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/musics_player_play_ctrl_btn"
+            android:id="@+id/btn_music_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:src="@drawable/btn_play_normal"/>
 
         <ImageButton
-            android:id="@+id/musics_player_play_next_btn"
+            android:id="@+id/btn_music_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

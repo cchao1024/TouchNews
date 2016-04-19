@@ -3,6 +3,7 @@ package com.github.armstrong.touchnews.model;
 import com.github.armstrong.touchnews.model.i.IHomeModel;
 import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
 import com.github.armstrong.touchnews.ui.fragment.ImageContainerFragment;
+import com.github.armstrong.touchnews.ui.fragment.MusicFragment;
 import com.github.armstrong.touchnews.ui.fragment.NewsContainerFragment;
 import com.github.armstrong.touchnews.util.NetRequestUtil;
 import com.github.armstrong.touchnews.util.UriUtil;
@@ -33,6 +34,7 @@ public class HomeModel implements IHomeModel {
                 mFragments=new ArrayList (  );
                 mFragments.add ( new NewsContainerFragment () );
                 mFragments.add ( new ImageContainerFragment () );
+                mFragments.add ( new MusicFragment () );
                 return mFragments;
         }
 
