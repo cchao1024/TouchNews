@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'pl.tajchert:waitingdots:0.2.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

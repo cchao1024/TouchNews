@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tv_music__name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="2"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"/>
-
-    <TextView
-        android:id="@+id/tv_music_singer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:singleLine="true"
-        android:textColor="@color/white"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_music__name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            android:layout_margin="@dimen/margin_large"
+            android:textSize="@dimen/text_large"
+            android:text="tv_music__name"
+            android:paddingRight="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_music_singer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="@dimen/text_large"
+            android:text="tv_music_singer"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/iv_music_album"
+        android:src="@drawable/weather_310"
+        android:layout_gravity="bottom"
+        android:layout_centerInParent="true"/>
+
+
+
+    <!--<LinearLayout
         android:id="@+id/musics_player_progress_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
+
+        android:layout_below="@id/tv_music_singer"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
@@ -67,13 +87,12 @@
             android:text="00:00"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/musics_player_progress_container"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -84,6 +103,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/btn_play_normal"/>
 
+
         <ImageButton
             android:id="@+id/btn_music_next"
             android:layout_width="wrap_content"
@@ -93,4 +113,4 @@
             android:src="@drawable/btn_next_play_normal"/>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

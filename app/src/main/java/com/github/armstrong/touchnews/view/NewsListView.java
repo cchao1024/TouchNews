@@ -28,10 +28,10 @@ public interface NewsListView {
         /**
          * 显示信息  e.g. 没有网络、正在加载、异常
          *
-         * @param type 枚举值
+         * @param INFOType 枚举值
          * @param infoText 提示的文本内容
-         * @see com.github.armstrong.touchnews.util.Constant.TYPE
+         * @see Constant.INFO_TYPE
          */
-        void showInfo ( Constant.TYPE type, String infoText);
+        void showInfo ( Constant.INFO_TYPE INFOType, String infoText);
         void hideInfo();
 }

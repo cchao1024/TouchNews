@@ -4,8 +4,10 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
-import com.github.armstrong.touchnews.javaBean.MusicInfoRoot;
-import com.github.armstrong.touchnews.javaBean.music.MusicHashEntity;
+import com.github.armstrong.touchnews.javaBean.MusicEntity;
+import com.github.armstrong.touchnews.javaBean.event.MusicEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +25,25 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         private MediaPlayer mMediaPlayer;
 
-        private List<MusicInfoRoot.Data > mMusicList;
-        private MusicInfoRoot.Data  mCurMusic;
+        private List< MusicEntity > mMusicList;
+
+
+        private MusicEntity mCurMusic;
         private Context mContext;
+        public boolean isPause;
+        public boolean isPlaying;
 
         public MusicPlayer ( Context context ) {
-                initiation ( context );
+                mContext = context;
+                initiation ( );
         }
 
-        private void initiation ( Context context ) {
-                mContext = context;
-
+        private void initiation ( ) {
                 mMediaPlayer = new MediaPlayer ( );
-                mMusicList = new ArrayList<MusicInfoRoot.Data > ( );
+                mMusicList = new ArrayList<> ( );
+
+                mMediaPlayer.reset ( );
+                mMediaPlayer.setAudioStreamType ( AudioManager.STREAM_MUSIC );
 
                 mMediaPlayer.setOnErrorListener ( this );
                 mMediaPlayer.setOnPreparedListener ( this );
@@ -50,11 +58,11 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mMusicList.clear ( );
         }
 
-        public void setMusicList ( List<MusicInfoRoot.Data > musicList ) {
-                mMusicList=musicList;
+        public void setMusicList ( List< MusicEntity > musicList ) {
+                mMusicList = musicList;
         }
 
-        public void addMusic ( MusicInfoRoot.Data music ) {
+        public void addMusic ( MusicEntity music ) {
                 if ( music != null ) {
                         mMusicList.add ( music );
                 }
@@ -63,39 +71,46 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         public int getMusicListCount ( ) {
                 return null == mMusicList || mMusicList.isEmpty ( ) ? 0 : mMusicList.size ( );
         }
-        public void play ( ) {
-                mMediaPlayer.reset ( );
-                mMediaPlayer.setAudioStreamType ( AudioManager.STREAM_MUSIC );
 
-                String dataSource = mCurMusic.getUrl ( );
+        public MusicEntity getCurMusic ( ) {
+                return mCurMusic;
+        }
+
+        public void preparePlay ( ) {
+                if ( mMusicList.size ( ) == 0 ) {
+                        return;
+                }
+                mMediaPlayer.reset ( );
+                mCurMusic = mMusicList.remove ( 0 );
+                String dataSource = mCurMusic.getMusicPath ( ).getUrl ( );
                 try {
                         mMediaPlayer.setDataSource ( dataSource );
                         mMediaPlayer.prepareAsync ( );
                 } catch ( Exception e ) {
                         e.printStackTrace ( );
                 }
+                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PREPARE ) );
         }
+
         public void pause ( ) {
-                /*if ( mPlayState != MusicPlayState.MPS_PLAYING ) {
-                        return;
-                }*/
 
                 mMediaPlayer.pause ( );
-//                mPlayState = MusicPlayState.MPS_PAUSE;
+                isPause = true;
+                isPlaying = false;
+                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PAUSE ) );
         }
 
         public void stop ( ) {
-                /*if ( mPlayState != MusicPlayState.MPS_PLAYING && mPlayState != MusicPlayState.MPS_PAUSE ) {
-                        return;
-                }*/
 
                 mMediaPlayer.stop ( );
-//                mPlayState = MusicPlayState.MPS_STOP;
+                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.STOP ) );
         }
 
         public void playNext ( ) {
-                mCurMusic=mMusicList.remove ( 0 );
-                play ();
+                if ( mMusicList.size ( ) > 0 ) {
+                        mCurMusic = mMusicList.remove ( 0 );
+                        preparePlay ( );
+                }
         }
 
         public void seekTo ( int rate ) {
@@ -111,9 +126,9 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         }
 
 
-
         @Override
         public void onCompletion ( MediaPlayer mp ) {
+                playNext ( );
         }
 
         @Override
@@ -128,7 +143,9 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         @Override
         public void onPrepared ( MediaPlayer mp ) {
-
+                mp.start ( );
+                mMediaPlayer.start ( );
+                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PLAY ) );
         }
 
       /*  @Override

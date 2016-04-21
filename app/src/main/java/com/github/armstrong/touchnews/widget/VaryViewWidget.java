@@ -96,9 +96,9 @@ public class VaryViewWidget {
                 mEmptyView = emptyView;
         }
 
-        public void showView ( Constant.TYPE type ) {
+        public void showView ( Constant.INFO_TYPE INFOType ) {
                 View infoView = null;
-                switch ( type ) {
+                switch ( INFOType ) {
                         case LOADING:
                                 infoView = mLoadingView;
                                 break;
@@ -128,7 +128,7 @@ public class VaryViewWidget {
         }
 
         public void hideInfo ( ) {
-                showView ( Constant.TYPE.ORIGIN );
+                showView ( Constant.INFO_TYPE.ORIGIN );
         }
 
         public void reinitializeVaryView ( ) {

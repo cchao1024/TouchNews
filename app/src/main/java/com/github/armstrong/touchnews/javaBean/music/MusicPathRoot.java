@@ -1,4 +1,4 @@
-package com.github.armstrong.touchnews.javaBean;
+package com.github.armstrong.touchnews.javaBean.music;
 
 /**
  * Created by cchao on 2016/4/19.
@@ -21,7 +21,7 @@ package com.github.armstrong.touchnews.javaBean;
     }
 }
  */
-public class MusicInfoRoot {
+public class MusicPathRoot {
         private int code;
 
         private String status;

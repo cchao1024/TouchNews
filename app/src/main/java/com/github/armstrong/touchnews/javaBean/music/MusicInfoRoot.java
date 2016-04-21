@@ -34,7 +34,7 @@ import java.util.List;
                 "othername": ""
             },
 * */
-public  class MusicHashRoot {
+public  class MusicInfoRoot {
         private int code;
 
         private String status;

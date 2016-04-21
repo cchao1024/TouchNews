@@ -2,19 +2,24 @@ package com.github.armstrong.touchnews.ui.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
+import com.github.armstrong.touchnews.javaBean.MusicEntity;
 import com.github.armstrong.touchnews.presenter.MusicPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.armstrong.touchnews.util.ImageUtil;
 import com.github.armstrong.touchnews.view.IMusicView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by cchao on 2016/4/18.
@@ -22,63 +27,80 @@ import butterknife.ButterKnife;
  * Description:
  */
 
-public class MusicFragment extends BaseLazyFragment implements IMusicView{
-        @Bind ( R.id.btn_music_play)
+public class MusicFragment extends BaseLazyFragment implements IMusicView {
+        @Bind ( R.id.btn_music_play )
         ImageButton mPlayBtn;
-        @Bind ( R.id.btn_music_next)
+        @Bind ( R.id.btn_music_next )
         ImageButton mNextBtn;
-        View mView;
+        @Bind ( R.id.tv_music__name )
+        TextView mMusicName;
+        @Bind ( R.id.tv_music_singer )
+        TextView mMusicSinger;
+        @Bind ( R.id.iv_music_album )
+        ImageView mAlbum;
+        View mViewRoot;
         private MusicPresenter mMusicsPresenter = null;
-
+        MusicEntity mCurMusic;
 
         @Override
-        public View onCreateView ( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState ) {
-                mView=inflater.inflate ( R.layout.fragment_music,null );
-                ButterKnife.bind ( mView );
-                return mView;
+        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+                mViewRoot = inflater.inflate ( R.layout.fragment_music, null );
+                ButterKnife.bind ( this, mViewRoot );
+                return mViewRoot;
         }
+
+
         public void onFirstUserVisible ( ) {
-                mMusicsPresenter=new MusicPresenter ( mContext,this );
+                mMusicsPresenter = new MusicPresenter ( mContext, this );
         }
+
+
+        @OnClick ( { R.id.btn_music_next , R.id.btn_music_play } )
+        public void click ( View v ) {
+                switch ( v.getId ( ) ) {
+                        case R.id.btn_music_play:
+                                mMusicsPresenter.onPlay ( );
+                                break;
+                        case R.id.btn_music_next:
+                                mMusicsPresenter.onNext ( );
+                                break;
+                }
+        }
+
         @Override
-        public void initiationView ( ) {
-
+        public void onDestroy ( ) {
+                mMusicsPresenter.onDestroy();
+                super.onDestroy ( );
         }
 
-/*@InjectView(R.id.musics_player_background)
-        ImageView mBackgroundImage;
+        @Override
+        public void onMusicPlay ( ) {
+                mPlayBtn.setImageResource ( R.drawable.icon_music );
+                Snackbar.make ( mViewRoot, "onMusicPlay", Snackbar.LENGTH_SHORT ).show ( );
+        }
 
-        @InjectView(R.id.musics_player_disc_view)
-        PlayerDiscView mPlayerDiscView;
+        @Override
+        public void onMusicPause ( ) {
+                mPlayBtn.setImageResource ( R.drawable.btn_play_normal );
+                Snackbar.make ( mViewRoot, "onMusicPause", Snackbar.LENGTH_SHORT ).show ( );
+        }
 
-        @InjectView(R.id.musics_player_play_ctrl_btn)
-        ImageButton mPlayerCtrlBtn;
+        @Override
+        public void onMusicPrepare ( MusicEntity curMusic ) {
+                mCurMusic = curMusic;
+                mMusicName.setText ( mCurMusic.getMusicInfo ( ).getSongname ( ) );
+                mMusicSinger.setText ( mCurMusic.getMusicInfo ( ).getSingername ( ) );
+                mPlayBtn.setImageResource ( R.drawable.btn_play_normal );
+                Snackbar.make ( mViewRoot, "PREPARE", Snackbar.LENGTH_SHORT ).show ( );
+        }
 
-        @InjectView(R.id.musics_player_play_next_btn)
-        ImageButton mPlayerNextBtn;
-
-        @InjectView(R.id.musics_player_play_prev_btn)
-        ImageButton mPlayerPrevBtn;
-
-        @InjectView(R.id.musics_player_seekbar)
-        SeekBar mPlayerSeekBar;
-
-        @InjectView(R.id.musics_player_name)
-        TextView mTitle;
-
-        @InjectView(R.id.musics_player_songer_name)
-        TextView mSonger;
-
-        @InjectView(R.id.musics_player_current_time)
-        TextView mCurrentTime;
-
-        @InjectView(R.id.musics_player_total_time)
-        TextView mTotalTime;
-
-        @InjectView(R.id.musics_player_loading_view)
-        View mLoadingTargetView;
-
-
+        @Override
+        public void setAlbum ( ) {
+                if ( mCurMusic.getMusicSinger ( ) != null ) {
+                        ImageUtil.displayCircularImage ( mContext, mCurMusic.getMusicSinger().getImage (),mAlbum );
+                }
+        }
+/*
         private String mMusicsCollectId = UriHelper.URL_MUSICS_LIST_CHANNEL_ID;
 
         private List<MusicsListEntity> mPlayListData;

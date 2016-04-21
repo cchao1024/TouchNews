@@ -16,6 +16,8 @@ public class UriUtil {
         public static final String URL_MUSIC_HASH = "http://apis.baidu.com/geekery/music/query";
         //音乐地址 api
         public static final String URL_MUSIC_INFO = "http://apis.baidu.com/geekery/music/playinfo";
+        //歌手信息 api
+        public static final String URL_MUSIC_SINGER = "http://apis.baidu.com/geekery/music/singer";
         //通过IP获取定位城市
         public static final String URL_CITY = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=IP地址";
 }

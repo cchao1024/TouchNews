@@ -5,7 +5,7 @@ package com.github.armstrong.touchnews.javaBean.music;
  * E-mail:   cchao1024@163.com
  * Description: 音乐的Hash 实体数据
  */
-public class MusicHashEntity {
+public class MusicInfoEntity {
         /*"data": {
                         "bitRate": 128,
                         "hash": "370CE1F6507BC5F78B49587A31411212",

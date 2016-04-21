@@ -38,9 +38,9 @@ public class NewsListPresenter implements INewsListPresenter, NetRequestUtil.Req
         public void getRefreshData ( ) {
                 //无网刷新数据>底部显示SnackBar>点击打开设置界面
                 if ( ! NetUtil.isConnected ( ) ) {
-                        mNewsListView.showInfo ( Constant.TYPE.NO_NET, null );
+                        mNewsListView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
-                        mNewsListView.showInfo ( Constant.TYPE.LOADING,null);
+                        mNewsListView.showInfo ( Constant.INFO_TYPE.LOADING,null);
                         mNewsListMode.loadRefreshData ( );
                 }
         }
@@ -48,9 +48,9 @@ public class NewsListPresenter implements INewsListPresenter, NetRequestUtil.Req
         @Override
         public void getFirstData ( ) {
                 if ( ! NetUtil.isConnected ( ) ) {
-                        mNewsListView.showInfo ( Constant.TYPE.NO_NET, null );
+                        mNewsListView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
-                        mNewsListView.showInfo ( Constant.TYPE.LOADING,null );
+                        mNewsListView.showInfo ( Constant.INFO_TYPE.LOADING,null );
                         mNewsListMode.loadRefreshData ( );
                 }
         }

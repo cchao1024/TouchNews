@@ -10,7 +10,7 @@ public class Constant {
          *  显示提示信息给用户 e.g. 没有网络、正在加载、异常
          *  @see com.github.armstrong.touchnews.view.NewsListView
          */
-        public enum TYPE {
+        public enum INFO_TYPE {
                 NO_NET,ALERT, LOADING, EMPTY, ORIGIN
         }
 

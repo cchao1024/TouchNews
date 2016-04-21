@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.armstrong.touchnews.R;
@@ -128,22 +127,22 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         }
 
         /**
-         * @param type     枚举值 e.g. 没有网络、正在加载、异常
+         * @param INFOType     枚举值 e.g. 没有网络、正在加载、异常
          * @param infoText infoText 提示的文本内容
          */
         @Override
-        public void showInfo ( Constant.TYPE type, String infoText ) {
+        public void showInfo ( Constant.INFO_TYPE INFOType, String infoText ) {
                 if ( mVaryViewWidget == null ) {
                         mVaryViewWidget = new VaryViewWidget ( mSwipeRefreshLayout );
                 }
                 View infoView = null;
-                switch ( type ) {
+                switch ( INFOType ) {
                         case LOADING:
                                 infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.loading, null );
                                 break;
                 }
                 mVaryViewWidget.setLoadingView ( infoView );
-                mVaryViewWidget.showView ( type );
+                mVaryViewWidget.showView ( INFOType );
         }
 
         @Override
