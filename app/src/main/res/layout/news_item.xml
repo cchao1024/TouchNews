@@ -49,7 +49,7 @@
             android:layout_toEndOf="@id/imageView"
             android:lines="3"
             android:text="Small Text"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/textPrimaryGrey"
             android:textSize="@dimen/text_small"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

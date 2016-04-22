@@ -10,6 +10,7 @@ import com.github.armstrong.touchnews.javaBean.MusicEntity;
 public interface IMusicView {
         void onMusicPlay();
         void onMusicPause();
+        void onResumePlay();
         void onMusicPrepare ( MusicEntity curMusic );
         void setAlbum();
 }

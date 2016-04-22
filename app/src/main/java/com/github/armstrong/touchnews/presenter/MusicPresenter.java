@@ -35,7 +35,7 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
         IMusicView mMusicView;
         IMusicsModel mMusicsModel;
         //        List< MusicPathRoot.Data > mMusicInfoList;
-                List<MusicEntity > mMusicList;
+        List< MusicEntity > mMusicList;
         Gson mGson = new Gson ( );
         MusicPlayer mMusicPlayer;
         Context mContext;
@@ -43,12 +43,12 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
         public MusicPresenter ( Context context, IMusicView iMusicView ) {
                 mContext = context;
                 mMusicView = iMusicView;
-                mMusicsModel = new MusicsModel ( this );
-                mMusicsModel.loadMusicsHashList ( "流行", this );
-//                mMusicInfoList = new ArrayList<> ( );
+//              mMusicInfoList = new ArrayList<> ( );
                 mMusicList = new ArrayList<> ( );
                 mMusicPlayer = new MusicPlayer ( mContext );
-                EventBus.getDefault ().register ( this);
+                mMusicsModel = new MusicsModel ( this );
+                mMusicsModel.loadMusicsHashList ( "流行", this );
+                EventBus.getDefault ( ).register ( this );
         }
 
         @Subscribe ( threadMode = ThreadMode.MAIN )
@@ -63,20 +63,15 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                         case PAUSE:
                                 mMusicView.onMusicPause ( );
                                 break;
-                        case CONTINUE_PALY:
-//                                mPlayBtn.setImageResource ( R.drawable.icon_music );
-//                                Snackbar.make ( mViewRoot, "continue_play", Snackbar.LENGTH_SHORT ).show ( );
+                        case RESUME_PALY:
+                                mMusicView.onResumePlay ( );
                                 break;
                 }
         }
 
         @Override
         public void onPlay ( ) {
-                if ( mMusicPlayer.isPlaying ) {
-                        mMusicPlayer.pause ( );
-                } else {
-                        mMusicPlayer.preparePlay ( );
-                }
+                mMusicPlayer.play ( );
         }
 
         @Override
@@ -86,16 +81,16 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
 
         @Override
         public void onDestroy ( ) {
-                mMusicList.clear ();
-                EventBus.getDefault ().unregister ( this );
+                mMusicList.clear ( );
+                EventBus.getDefault ( ).unregister ( this );
         }
 
 
-        public void addMusicListToPlayer (  ) {
+        public void addMusicListToPlayer ( ) {
 //                if ( music != null ) {
 //                        mMusicInfoList.add ( music );
-                        mMusicPlayer.setMusicList ( mMusicList );
-                        mMusicPlayer.preparePlay ();
+                mMusicPlayer.setMusicList ( mMusicList );
+                mMusicPlayer.play ( );
 //                }
                 // 如果插入第一首歌，就播放
 //                if ( mMusicInfoList.size ( ) == 1 ) {
@@ -117,52 +112,57 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                         List< Data > dataList = data.getData ( );
                         for ( int i = 0 ; i < dataList.size ( ) ; i++ ) {
                                 Data musicInfo = dataList.get ( i );
-                                final MusicEntity musicEntity=new MusicEntity (musicInfo);
-                                if ( i >= 0 ) {
-                                        //获取播放路径
-                                        mMusicsModel.loadMusicPath ( musicInfo.getHash (), new NetRequestUtil.RequestListener ( ) {
-                                                @Override
-                                                public void onResponse ( JSONObject response ) {
-                                                        LogUtils.i ( response.toString ( ) );
-                                                        MusicPathRoot musicPathRoot = mGson.fromJson ( response.toString ( ), MusicPathRoot.class );
-                                                        if ( musicPathRoot.getCode ( ) == 0 ) {
+                                final MusicEntity musicEntity = new MusicEntity ( musicInfo );
+                                //获取到播放地址就加入到待播放列表 - 图片等获取到地址再显示
+                                //获取播放路径
+                                final int finalI = i;
+                                mMusicsModel.loadMusicPath ( musicInfo.getHash ( ), new NetRequestUtil.RequestListener ( ) {
+                                        @Override
+                                        public void onResponse ( JSONObject response ) {
+                                                LogUtils.i ( response.toString ( ) );
+                                                MusicPathRoot musicPathRoot = mGson.fromJson ( response.toString ( ), MusicPathRoot.class );
+                                                if ( musicPathRoot.getCode ( ) == 0 ) {
 //                                                                mMusicPresenter.addMusic ( musicPathRoot.getData ( ) );
-                                                                musicEntity.setMusicPath ( musicPathRoot.getData () );
-                                                                //获取到播放地址就加入到待播放列表 - 图片等获取到地址再显示
-                                                                mMusicList.add ( musicEntity );
-                                                                addMusicListToPlayer ();
-
+                                                        musicEntity.setMusicPath ( musicPathRoot.getData ( ) );
+                                                        //如果获取到第一首歌的播放地址，就播放
+                                                        mMusicList.add ( musicEntity );
+                                                        if ( finalI == 0 ) {
+                                                                addMusicListToPlayer ( );
                                                         }
                                                 }
+                                        }
 
-                                                @Override
-                                                public void onError ( VolleyError error ) {
-                                                }
-                                        } );
-                                        //获取歌手图片
-                                        mMusicsModel.loadSingerAlbum (musicInfo.getSingername (), new NetRequestUtil.RequestListener ( ) {
-                                                @Override
-                                                public void onResponse ( JSONObject response ) {
-                                                        LogUtils.i ( response.toString ( ) );
-                                                        MusicSingerRoot musicSingerRoot = mGson.fromJson ( response.toString ( ), MusicSingerRoot.class );
-                                                        if ( musicSingerRoot.getCode ( ) == 0 ) {
+                                        @Override
+                                        public void onError ( VolleyError error ) {
+                                        }
+                                } );
+
+                        //获取歌手图片
+                        mMusicsModel.loadSingerAlbum ( musicInfo.getSingername ( ), new NetRequestUtil.RequestListener ( ) {
+                                @Override
+                                public void onResponse ( JSONObject response ) {
+                                        LogUtils.i ( response.toString ( ) );
+                                        MusicSingerRoot musicSingerRoot = mGson.fromJson ( response.toString ( ), MusicSingerRoot.class );
+                                        if ( musicSingerRoot.getCode ( ) == 0 ) {
 //                                                                mMusicPresenter.addMusic ( musicInfoRoot.getData ( ) );
-                                                                musicEntity.setMusicSinger ( musicSingerRoot.getData ());
-                                                                mMusicView.setAlbum ();
-                                                        }
-                                                }
-
-                                                @Override
-                                                public void onError ( VolleyError error ) {
-                                                }
-                                        } );
+                                                musicEntity.setMusicSinger ( musicSingerRoot.getData ( ) );
+                                                mMusicView.setAlbum ( );
+                                        }
                                 }
-                        }
 
-                }}
-
-                @Override
-                public void onError ( VolleyError error){
+                                @Override
+                                public void onError ( VolleyError error ) {
+                                }
+                        } );
 
                 }
+
         }
+
+}
+
+        @Override
+        public void onError ( VolleyError error ) {
+
+        }
+}

@@ -9,7 +9,7 @@ import android.drm.DrmStore;
  */
 public class MusicEvent {
         public  enum MUSIC_TYPE{
-                PREPARE,PLAY,PAUSE,CONTINUE_PALY,STOP
+                PREPARE,PLAY,PAUSE, RESUME_PALY,STOP
         }
         private MUSIC_TYPE type;
         public MusicEvent (MUSIC_TYPE type ) {

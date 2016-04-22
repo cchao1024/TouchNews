@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 
 import com.github.armstrong.touchnews.javaBean.MusicEntity;
 import com.github.armstrong.touchnews.javaBean.event.MusicEvent;
+import com.github.armstrong.touchnews.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,7 +32,6 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         private MusicEntity mCurMusic;
         private Context mContext;
         public boolean isPause;
-        public boolean isPlaying;
 
         public MusicPlayer ( Context context ) {
                 mContext = context;
@@ -76,27 +76,32 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 return mCurMusic;
         }
 
-        public void preparePlay ( ) {
-                if ( mMusicList.size ( ) == 0 ) {
-                        return;
+        public void play ( ) {
+                if ( isPause ) {
+                        mMediaPlayer.start ( );
+                        EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.RESUME_PALY ) );
+                } else if ( isPlaying ( ) ) {
+                        this.pause ( );
+                } else {
+                        if ( mMusicList.size ( ) > 0 ) {
+                                mCurMusic = mMusicList.remove ( 0 );
+                                String dataSource = mCurMusic.getMusicPath ( ).getUrl ( );
+                                mMediaPlayer.reset ( );
+                                try {
+                                        mMediaPlayer.setDataSource ( dataSource );
+                                        mMediaPlayer.prepareAsync ( );
+                                } catch ( Exception e ) {
+                                        e.printStackTrace ( );
+                                }
+                                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PREPARE ) );
+                        }
+
                 }
-                mMediaPlayer.reset ( );
-                mCurMusic = mMusicList.remove ( 0 );
-                String dataSource = mCurMusic.getMusicPath ( ).getUrl ( );
-                try {
-                        mMediaPlayer.setDataSource ( dataSource );
-                        mMediaPlayer.prepareAsync ( );
-                } catch ( Exception e ) {
-                        e.printStackTrace ( );
-                }
-                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PREPARE ) );
         }
 
         public void pause ( ) {
-
                 mMediaPlayer.pause ( );
                 isPause = true;
-                isPlaying = false;
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PAUSE ) );
         }
 
@@ -108,8 +113,10 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         public void playNext ( ) {
                 if ( mMusicList.size ( ) > 0 ) {
-                        mCurMusic = mMusicList.remove ( 0 );
-                        preparePlay ( );
+//                        mCurMusic = mMusicList.remove ( 0 );
+                        play ( );
+                } else {
+                        ToastUtil.showShortToast ( null, "没有下一首了" );
                 }
         }
 
@@ -117,11 +124,9 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
              /*   if ( mPlayState == MusicPlayState.MPS_LIST_EMPTY ) {
                         return;
                 }*/
-
 //                int r = reviceSeekValue ( rate );
                 int time = mMediaPlayer.getDuration ( );
 //                int curTime = ( int ) ( ( float ) r / 100 * time );
-
 //                mMediaPlayer.seekTo ( curTime );
         }
 
@@ -141,10 +146,14 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         }
 
+        public boolean isPlaying ( ) {
+                return mMediaPlayer.isPlaying ( );
+        }
+
         @Override
         public void onPrepared ( MediaPlayer mp ) {
                 mp.start ( );
-                mMediaPlayer.start ( );
+                isPause = false;
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PLAY ) );
         }
 

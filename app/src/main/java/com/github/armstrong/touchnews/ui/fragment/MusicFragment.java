@@ -69,35 +69,42 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
 
         @Override
         public void onDestroy ( ) {
-                mMusicsPresenter.onDestroy();
+                mMusicsPresenter.onDestroy ( );
                 super.onDestroy ( );
         }
 
         @Override
         public void onMusicPlay ( ) {
-                mPlayBtn.setImageResource ( R.drawable.icon_music );
+                mPlayBtn.setImageResource ( R.drawable.btn_music_play );
                 Snackbar.make ( mViewRoot, "onMusicPlay", Snackbar.LENGTH_SHORT ).show ( );
         }
 
         @Override
         public void onMusicPause ( ) {
-                mPlayBtn.setImageResource ( R.drawable.btn_play_normal );
+                mPlayBtn.setImageResource ( R.drawable.btn_music_pause );
                 Snackbar.make ( mViewRoot, "onMusicPause", Snackbar.LENGTH_SHORT ).show ( );
         }
 
         @Override
+        public void onResumePlay ( ) {
+                mPlayBtn.setImageResource ( R.drawable.btn_music_play );
+        }
+
+        @Override
         public void onMusicPrepare ( MusicEntity curMusic ) {
-                mCurMusic = curMusic;
-                mMusicName.setText ( mCurMusic.getMusicInfo ( ).getSongname ( ) );
-                mMusicSinger.setText ( mCurMusic.getMusicInfo ( ).getSingername ( ) );
-                mPlayBtn.setImageResource ( R.drawable.btn_play_normal );
-                Snackbar.make ( mViewRoot, "PREPARE", Snackbar.LENGTH_SHORT ).show ( );
+                if ( curMusic != null ) {
+                        mCurMusic = curMusic;
+                        mMusicName.setText ( mCurMusic.getMusicInfo ( ).getSongname ( ) );
+                        mMusicSinger.setText ( mCurMusic.getMusicInfo ( ).getSingername ( ) );
+                        mPlayBtn.setImageResource ( R.drawable.btn_music_play );
+                        Snackbar.make ( mViewRoot, "PREPARE", Snackbar.LENGTH_SHORT ).show ( );
+                }
         }
 
         @Override
         public void setAlbum ( ) {
                 if ( mCurMusic.getMusicSinger ( ) != null ) {
-                        ImageUtil.displayCircularImage ( mContext, mCurMusic.getMusicSinger().getImage (),mAlbum );
+                        ImageUtil.displayCircularImage ( mContext, mCurMusic.getMusicSinger ( ).getImage ( ), mAlbum );
                 }
         }
 /*
