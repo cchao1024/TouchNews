@@ -48,7 +48,7 @@ public class NetRequestUtil {
          * @param param    param
          * @param listener callback
          */
-        public void getJson ( String url, HashMap< String, String > param, final RequestListener listener ) {
+        public void getJson ( String url, Map< String, String > param, final RequestListener listener ) {
                 url += prepareParam ( param );
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest ( Request.Method.GET, url, new Response.Listener< JSONObject > ( ) {
                         @Override

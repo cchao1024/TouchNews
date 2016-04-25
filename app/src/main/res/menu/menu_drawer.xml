@@ -20,8 +20,8 @@
         <item
             android:orderInCategory="4"
             android:id="@+id/menu_item_drawer_chat"
-            android:icon="@drawable/icon_smile"
-            android:title="@string/video"/>
+            android:icon="@drawable/icon_chat"
+            android:title="@string/chat"/>
 
     </group>
 

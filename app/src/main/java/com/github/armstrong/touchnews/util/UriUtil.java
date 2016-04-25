@@ -23,5 +23,7 @@ public class UriUtil {
         //歌手信息 api
         public static final String URL_MUSIC_SINGER = "http://apis.baidu.com/geekery/music/singer";
         //通过IP获取定位城市
-        public static final String URL_CITY = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=IP地址";
+        public static final String URL_CITY = "http://pv.sohu.com/cityjson";
+        //图灵api
+        public static final String URL_CHAT = "http://apis.baidu.com/heweather/weather/free";
 }

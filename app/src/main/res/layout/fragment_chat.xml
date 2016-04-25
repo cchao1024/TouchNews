@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/lyt_chat"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:scrollbars="none" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_chat_edit_bar" >
+
+            <Button
+                android:id="@+id/chat_send"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="发送"
+                android:textColor="@color/textPrimaryGrey"
+                android:textSize="13.0sp" />
+
+            <EditText
+                android:id="@+id/chat_editmessage"
+                android:layout_width="match_parent"
+                android:layout_height="40.0dip"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/bg_chat_editv"
+                android:layout_toLeftOf="@id/chat_send"
+                android:singleLine="true"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+</LinearLayout>
