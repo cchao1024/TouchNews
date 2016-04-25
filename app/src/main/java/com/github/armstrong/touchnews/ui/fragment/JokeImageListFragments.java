@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.armstrong.touchnews.R;
-import com.github.armstrong.touchnews.adapter.NewsListRecyclerAdapter;
-import com.github.armstrong.touchnews.javaBean.news.Contentlist;
-import com.github.armstrong.touchnews.presenter.NewsListPresenter;
+import com.github.armstrong.touchnews.adapter.JokeImageListRecyclerAdapter;
+import com.github.armstrong.touchnews.javaBean.joke.JokeImageRoot;
+import com.github.armstrong.touchnews.presenter.JokeImageListPresenter;
 import com.github.armstrong.touchnews.presenter.i.IContentListPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.util.Constant;
-import com.github.armstrong.touchnews.view.NewsListView;
+import com.github.armstrong.touchnews.view.JokeImageListView;
 import com.github.armstrong.touchnews.widget.VaryViewWidget;
 
 import java.util.ArrayList;
@@ -30,23 +30,21 @@ import butterknife.ButterKnife;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListFragments extends BaseLazyFragment implements NewsListView, SwipeRefreshLayout.OnRefreshListener {
-        @Bind ( R.id.swipe_refresh_news_list )
+public class JokeImageListFragments extends BaseLazyFragment implements JokeImageListView, SwipeRefreshLayout.OnRefreshListener {
+        @Bind ( R.id.swipe_refresh_joke_image_list )
         SwipeRefreshLayout mSwipeRefreshLayout;
-        @Bind ( R.id.recycle_view_news )
+        @Bind ( R.id.recycle_view_joke_image )
         RecyclerView mRecyclerView;
         View mRootView;
-        List< Contentlist > mNewsItemList;
-        NewsListRecyclerAdapter mNewsListRecyclerAdapter;
-        IContentListPresenter mNewsListPresenter;
-        //新闻频道的ID
-        private String mChannelId = null;
+        List< JokeImageRoot.Contentlist > mContentList;
+        JokeImageListRecyclerAdapter mRecyclerAdapter;
+        IContentListPresenter mJokeImageListPresenter;
         VaryViewWidget mVaryViewWidget;
 
         @Override
         public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
                 super.onCreateView ( inflater, container, savedInstanceState );
-                mRootView = inflater.inflate ( R.layout.fragment_news_list, null );
+                mRootView = inflater.inflate ( R.layout.fragment_joke_image, null );
                 ButterKnife.bind ( this, mRootView );
                 return mRootView;
         }
@@ -57,11 +55,11 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         }
 
         private void initViews ( ) {
-                mNewsItemList = new ArrayList<> ( );
+                mContentList = new ArrayList<> ( );
                 mRecyclerView.setHasFixedSize ( true );
                 mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
 
-                mNewsListRecyclerAdapter = new NewsListRecyclerAdapter ( mContext, mNewsItemList );
+                mRecyclerAdapter = new JokeImageListRecyclerAdapter ( mContext, mContentList );
                 mRecyclerView.addOnScrollListener (new RecyclerView.OnScrollListener() {
                         private int lastVisibleItem;
                         @Override
@@ -73,56 +71,45 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                                 super.onScrollStateChanged(recyclerView, newState);
                                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                                        && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount()) {
+                                        && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount()) {
                                         //加载更多
-
                                         LogUtils.d(getClass ().getSimpleName (),"loading more data");
-                                        mNewsListPresenter.getMoreData ();
+                                        mJokeImageListPresenter.getMoreData ();
                                 }
                         }
                 });
-                mRecyclerView.setAdapter ( mNewsListRecyclerAdapter );
+                mRecyclerView.setAdapter ( mRecyclerAdapter );
 
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
                 mSwipeRefreshLayout.setOnRefreshListener ( this );
 
         }
 
-        /**
-         * 设置新闻频道的唯一ID值
-         *
-         * @param channelId id值  @link：http://apistore.baidu.com/apiworks/servicedetail/688.html
-         */
-        public void setChannelId ( String channelId ) {
-                mChannelId = channelId;
-        }
-
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
-                mNewsListPresenter = new NewsListPresenter ( this, mChannelId );
-                mNewsListPresenter.getFirstData ( );
+                mJokeImageListPresenter = new JokeImageListPresenter ( this, "1" );
+                mJokeImageListPresenter.getFirstData ( );
         }
 
         @Override
         public void onRefresh ( ) {
-                mNewsListPresenter.getRefreshData ( );
+                mJokeImageListPresenter.getRefreshData ( );
         }
 
         @Override
-        public void refreshData ( List< Contentlist > newsList ) {
-                mNewsItemList.clear ( );
-                mNewsItemList.addAll ( newsList );
-                mNewsListRecyclerAdapter.notifyDataSetChanged ( );
+        public void refreshData ( List< JokeImageRoot.Contentlist > newsList ) {
+                mContentList.clear ( );
+                mContentList.addAll ( newsList );
+                mRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
-
         }
 
         @Override
-        public void addMoreListData ( List< Contentlist > newsList ) {
-                mNewsItemList.addAll ( newsList );
-                mNewsListRecyclerAdapter.notifyDataSetChanged ( );
+        public void addMoreListData ( List< JokeImageRoot.Contentlist > newsList ) {
+                mContentList.addAll ( newsList );
+                mRecyclerAdapter.notifyDataSetChanged ( );
         }
 
         /**

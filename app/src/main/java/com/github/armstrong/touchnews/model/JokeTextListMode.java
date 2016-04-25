@@ -12,16 +12,16 @@ import java.util.Map;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListMode implements IListMode {
+public class JokeTextListMode implements IListMode {
         NetRequestUtil.RequestListener mRequestListener;
         int mCurrentPage = 1;
         Map< String, String > param = new HashMap<> ( );
         Map< String, String > headers = new HashMap<> ( );
 
-        public NewsListMode ( NetRequestUtil.RequestListener requestListener, String channelId ) {
+        public JokeTextListMode ( NetRequestUtil.RequestListener requestListener, String page ) {
                 mRequestListener = requestListener;
                 headers.put ( "apikey", "1bb91df70ccde8148a2c3da582ca9ff2" );
-                param.put ( "channelId", channelId );
+                param.put ( "page", page );
         }
 
         @Override
@@ -33,6 +33,6 @@ public class NewsListMode implements IListMode {
         @Override
         public void loadMoreData ( ) {
                 param.put ( "page", "" + mCurrentPage++ );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_NEWS, param, headers, mRequestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_JOKE_Text, param, headers, mRequestListener );
         }
 }

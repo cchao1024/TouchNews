@@ -1,7 +1,8 @@
 package com.github.armstrong.touchnews.presenter;
 
-import com.github.armstrong.touchnews.model.i.IFragmentsContainerModel;
+import com.github.armstrong.touchnews.model.JokeContainerFragmentModel;
 import com.github.armstrong.touchnews.model.NewsContainerFragmentModel;
+import com.github.armstrong.touchnews.model.i.IFragmentsContainerModel;
 import com.github.armstrong.touchnews.presenter.i.IFragmentsContainerPresenter;
 import com.github.armstrong.touchnews.view.FragmentsContainerView;
 
@@ -10,13 +11,13 @@ import com.github.armstrong.touchnews.view.FragmentsContainerView;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsFragmentsPresenter implements IFragmentsContainerPresenter {
+public class JokeFragmentsContainerPresenter implements IFragmentsContainerPresenter {
         FragmentsContainerView mView;
         IFragmentsContainerModel mModel;
 
-        public NewsFragmentsPresenter ( FragmentsContainerView view ) {
+        public JokeFragmentsContainerPresenter ( FragmentsContainerView view ) {
                 mView = view;
-                mModel = new NewsContainerFragmentModel ( this );
+                mModel = new JokeContainerFragmentModel ( this );
         }
 
         @Override

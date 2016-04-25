@@ -26,6 +26,10 @@
         <item>财经焦点</item>
         <item>国际焦点</item>
     </string-array>
+    <string-array name="joke_titles">
+        <item>文字</item>
+        <item>图片</item>
+    </string-array>
     <string-array name="news_channelId">
         <item>5572a108b3cdc86cf39001cd</item>
         <item>5572a109b3cdc86cf39001da</item>

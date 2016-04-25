@@ -1,21 +1,14 @@
 package com.github.armstrong.touchnews.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
-import com.github.armstrong.touchnews.javaBean.news.Contentlist;
-import com.github.armstrong.touchnews.ui.activity.HomeActivity;
-import com.github.armstrong.touchnews.ui.activity.NewsDetailActivity;
-import com.github.armstrong.touchnews.util.ImageUtil;
+import com.github.armstrong.touchnews.javaBean.joke.JokeTextRoot;
 
 import java.util.List;
 
@@ -24,16 +17,16 @@ import java.util.List;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
+public class JokeTextListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         public Context mContext;
-        public List< Contentlist > mData;
+        public List< JokeTextRoot.Contentlist > mData;
         public LayoutInflater mLayoutInflater;
 
 //        private View.OnClickListener mOnClickListener;
 
-        public NewsListRecyclerAdapter ( Context context, List< Contentlist > data ) {
+        public JokeTextListRecyclerAdapter ( Context context, List< JokeTextRoot.Contentlist > data ) {
                 mContext = context;
                 mData = data;
                 mLayoutInflater = LayoutInflater.from ( context );
@@ -51,7 +44,7 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
                 if ( viewType == TYPE_ITEM ) {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_news, parent, false );
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_joke_text, parent, false );
                         return new MViewHolder ( view );
                 } else {
                         View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
@@ -67,10 +60,9 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
         @Override
         public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
                 if(holder instanceof MViewHolder) {
-                        Contentlist contentEntity = mData.get ( position );
+                        JokeTextRoot.Contentlist contentEntity = mData.get ( position );
                         ((MViewHolder)holder).mTitle.setText ( contentEntity.getTitle ( ) );
-                        ((MViewHolder)holder).mDescription.setText ( contentEntity.getDesc ( ) );
-                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ((MViewHolder)holder).mImage );
+                        ((MViewHolder)holder).mContent.setText ( contentEntity.getText ( ) );
                 }
         }
 
@@ -81,27 +73,25 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
 
         public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
                 public TextView mTitle;
-                public TextView mDescription;
-                public ImageView mImage;
+                public TextView mContent;
 
                 public MViewHolder ( View view ) {
                         super ( view );
                         mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
-                        mDescription = ( TextView ) view.findViewById ( R.id.tv_description );
-                        mImage = ( ImageView ) view.findViewById ( R.id.imageView );
+                        mContent = ( TextView ) view.findViewById ( R.id.tv_content );
                         view.setOnClickListener ( this );
                 }
 
                 @Override
                 public void onClick ( View v ) {
-                        Intent intent = new Intent ( mContext, NewsDetailActivity.class );
+                       /* Intent intent = new Intent ( mContext, NewsDetailActivity.class );
                         intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
 //                     View transitionView = view.findViewById(R.id.ivNews);
                         ActivityOptionsCompat options =
                                 ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
                                         mImage, mContext.getString ( R.string.transition__img ) );
 
-                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
+                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );*/
 
                 }
         }

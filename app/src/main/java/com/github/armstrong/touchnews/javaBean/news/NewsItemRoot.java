@@ -6,7 +6,7 @@ package com.github.armstrong.touchnews.javaBean.news;
  * Description: 新闻Item实体
  */
 
-public class NewsEntity {
+public class NewsItemRoot {
         private int showapi_res_code;
 
         private String showapi_res_error;
