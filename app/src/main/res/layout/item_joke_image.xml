@@ -25,8 +25,8 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_save"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bg_music_default"
             android:layout_below="@+id/tv_title"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>

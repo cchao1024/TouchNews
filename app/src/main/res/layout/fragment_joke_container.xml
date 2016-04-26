@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         app:tabBackground="@color/colorPrimary"
         app:tabMode="fixed"
+        android:elevation="@dimen/margin_small"
         app:tabTextColor="@android:color/black">
     </android.support.design.widget.TabLayout>
 

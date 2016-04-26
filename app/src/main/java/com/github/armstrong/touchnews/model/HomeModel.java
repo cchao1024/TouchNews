@@ -14,6 +14,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.github.armstrong.touchnews.BaseApplication;
 import com.github.armstrong.touchnews.model.i.IHomeModel;
 import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
+import com.github.armstrong.touchnews.ui.fragment.ChatFragment;
 import com.github.armstrong.touchnews.ui.fragment.JokeContainerFragment;
 import com.github.armstrong.touchnews.ui.fragment.MusicFragment;
 import com.github.armstrong.touchnews.ui.fragment.NewsContainerFragment;
@@ -51,6 +52,7 @@ public class HomeModel implements IHomeModel {
                 mFragments.add ( new NewsContainerFragment ( ) );
                 mFragments.add ( new JokeContainerFragment ( ) );
                 mFragments.add ( new MusicFragment ( ) );
+                mFragments.add ( new ChatFragment ( ) );
                 return mFragments;
         }
 
