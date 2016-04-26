@@ -3,6 +3,7 @@ package com.github.armstrong.touchnews.widget;
 import android.content.Context;
 import android.support.annotation.BoolRes;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  * Description: 一条聊天信息的View
  */
 public class ChatItemView extends LinearLayout {
-        LinearLayout mRootView;
+
         @Bind ( R.id.iv_chat_item )
         ImageView mImageView;
         @Bind ( R.id.tv_chat_item )
@@ -33,8 +34,8 @@ public class ChatItemView extends LinearLayout {
 
         public ChatItemView ( Context context, AttributeSet attrs ) {
                 super ( context, attrs );
-                mRootView = ( LinearLayout ) LayoutInflater.from ( context ).inflate ( R.layout.item_chat_view, this );
-                ButterKnife.bind ( this, mRootView );
+                 LayoutInflater.from ( context ).inflate ( R.layout.item_chat_view, this );
+                ButterKnife.bind ( this, this );
         }
 
         /**
@@ -44,11 +45,11 @@ public class ChatItemView extends LinearLayout {
         public void setItem ( boolean isRespond, String message ) {
                 if ( ! isRespond ) {
                         //是发出的信息则将头像放在右边
-                        mRootView.removeViewAt ( 0 );
-
-                        mRootView.addView ( mImageView);
+                        this.removeView ( mImageView );
+                        this.addView ( mImageView);
                         mImageView.setImageResource ( R.drawable.icon_music );
                         mTextView.setBackgroundResource ( R.drawable.bg_chat_request );
+                        this.setGravity ( Gravity.RIGHT );
                 }
                 mTextView.setText ( message );
         }

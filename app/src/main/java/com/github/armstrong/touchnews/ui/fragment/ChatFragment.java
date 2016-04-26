@@ -94,7 +94,8 @@ public class ChatFragment extends BaseLazyFragment implements IChatView {
                                         textView.setBackgroundResource ( R.drawable.icon_chat_request_0 );*/
                                         ChatItemView itemView=new ChatItemView ( mContext);
                                         itemView.setItem ( false,message );
-                                        mLinearContent.addView (itemView,new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT ));
+                                        mLinearContent.addView (itemView,new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                                                .LayoutParams.WRAP_CONTENT ));
                                         mChatPresenter.onSendMessage (message);
                                 }
                                 break;
@@ -108,7 +109,7 @@ public class ChatFragment extends BaseLazyFragment implements IChatView {
                 textView.setBackgroundResource ( R.drawable.bg_chat_respond);*/
                 ChatItemView itemView=new ChatItemView ( mContext);
                 itemView.setItem ( true,message );
-                mLinearContent.addView (itemView,new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT ));
+                mLinearContent.addView (itemView,new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT ));
 
         }
 }
