@@ -2,23 +2,24 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/iv_chat_item"
+        android:id="@+id/iv_chat_item_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/icon_music"/>
+        android:background="@drawable/icon_chat_service_pic"/>
 
     <TextView
         android:id="@+id/tv_chat_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:autoLink="all"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/bg_chat_respond"
+        android:textSize="@dimen/text_medium"
+        android:text="Large Text"/>
+    <ImageView
+        android:id="@+id/iv_chat_item_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:autoLink="all"
-        android:layout_marginLeft="@dimen/margin_small"
-        android:layout_marginStart="@dimen/margin_small"
-        android:padding="@dimen/margin_medium"
-        android:background="@drawable/bg_chat_respond"
-        android:textSize="@dimen/text_large"
-        android:text="Large Text"/>
-
+        android:background="@drawable/icon_chat_client_pic"/>
 </merge>
