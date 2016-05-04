@@ -79,9 +79,10 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         public void play ( ) {
                 if ( isPause ) {
                         mMediaPlayer.start ( );
+                        isPause=false;
                         EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.RESUME_PALY ) );
                 } else if ( isPlaying ( ) ) {
-                        this.pause ( );
+                        this.pauseM ( );
                 } else {
                         if ( mMusicList.size ( ) > 0 ) {
                                 mCurMusic = mMusicList.remove ( 0 );
@@ -99,7 +100,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 }
         }
 
-        public void pause ( ) {
+        public void pauseM ( ) {
                 mMediaPlayer.pause ( );
                 isPause = true;
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PAUSE ) );
@@ -114,6 +115,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         public void playNext ( ) {
                 if ( mMusicList.size ( ) > 0 ) {
 //                        mCurMusic = mMusicList.remove ( 0 );
+                        mMediaPlayer.stop ();
                         play ( );
                 } else {
                         ToastUtil.showShortToast ( null, "没有下一首了" );
@@ -145,7 +147,11 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
 
         }
-
+        public void onDestoy(  ){
+                mMediaPlayer.release ();
+                mCurMusic=null;
+                mMusicList.clear ();
+        }
         public boolean isPlaying ( ) {
                 return mMediaPlayer.isPlaying ( );
         }

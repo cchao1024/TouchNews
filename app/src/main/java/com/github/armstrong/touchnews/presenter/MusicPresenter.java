@@ -47,7 +47,7 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                 mMusicList = new ArrayList<> ( );
                 mMusicPlayer = new MusicPlayer ( mContext );
                 mMusicsModel = new MusicsModel ( this );
-                mMusicsModel.loadMusicsHashList ( "流行", this );
+                mMusicsModel.loadMusicsHashList ( "经典", this );
                 EventBus.getDefault ( ).register ( this );
         }
 
@@ -59,6 +59,7 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                                 break;
                         case PREPARE:
                                 mMusicView.onMusicPrepare ( mMusicPlayer.getCurMusic ( ) );
+                                mMusicView.setAlbum();
                                 break;
                         case PAUSE:
                                 mMusicView.onMusicPause ( );
@@ -137,7 +138,7 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                                         }
                                 } );
 
-                        //获取歌手图片
+                        //获取歌手图片信息
                         mMusicsModel.loadSingerAlbum ( musicInfo.getSingername ( ), new NetRequestUtil.RequestListener ( ) {
                                 @Override
                                 public void onResponse ( JSONObject response ) {
@@ -146,7 +147,8 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
                                         if ( musicSingerRoot.getCode ( ) == 0 ) {
 //                                                                mMusicPresenter.addMusic ( musicInfoRoot.getData ( ) );
                                                 musicEntity.setMusicSinger ( musicSingerRoot.getData ( ) );
-                                                mMusicView.setAlbum ( );
+                                                if ( finalI == 0 ) {
+                                                mMusicView.setAlbum ( );}
                                         }
                                 }
 

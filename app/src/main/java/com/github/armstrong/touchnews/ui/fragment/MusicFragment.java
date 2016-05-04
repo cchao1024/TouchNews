@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.javaBean.MusicEntity;
 import com.github.armstrong.touchnews.presenter.MusicPresenter;
+import com.github.armstrong.touchnews.presenter.i.IMusicPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.util.ImageUtil;
 import com.github.armstrong.touchnews.view.IMusicView;
@@ -28,6 +30,8 @@ import butterknife.OnClick;
  */
 
 public class MusicFragment extends BaseLazyFragment implements IMusicView {
+        @Bind (R.id.root_music_fragment)
+        RelativeLayout mRootLayout;
         @Bind ( R.id.btn_music_play )
         ImageButton mPlayBtn;
         @Bind ( R.id.btn_music_next )
@@ -39,7 +43,7 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
         @Bind ( R.id.iv_music_album )
         ImageView mAlbum;
         View mViewRoot;
-        private MusicPresenter mMusicsPresenter = null;
+        private IMusicPresenter mMusicsPresenter = null;
         MusicEntity mCurMusic;
 
         @Override
@@ -103,8 +107,10 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
 
         @Override
         public void setAlbum ( ) {
-                if ( mCurMusic.getMusicSinger ( ) != null ) {
-                        ImageUtil.displayCircularImage ( mContext, mCurMusic.getMusicSinger ( ).getImage ( ), mAlbum );
+                if ( mCurMusic!=null&&mCurMusic.getMusicSinger ( ) != null ) {
+                        String url= mCurMusic.getMusicSinger ( ).getImage ( );
+                        ImageUtil.displayCircularImage ( mContext, url, mAlbum );
+                        ImageUtil.displayBlurImage ( mContext,url,mRootLayout );
                 }
         }
 /*
@@ -284,7 +290,7 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
         @Override
         public void stopPlayMusic() {
                 isPlaying = false;
-                mPlayerDiscView.pause();
+                mPlayerDiscView.pauses();
                 mPlayerCtrlBtn.setImageResource(R.drawable.btn_play_selector);
                 mContext.sendBroadcast(new Intent(MusicPlayState.ACTION_MUSIC_STOP));
         }
@@ -292,7 +298,7 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
         @Override
         public void pausePlayMusic() {
                 isPlaying = false;
-                mPlayerDiscView.pause();
+                mPlayerDiscView.pauses();
                 mPlayerCtrlBtn.setImageResource(R.drawable.btn_play_selector);
                 mContext.sendBroadcast(new Intent(MusicPlayState.ACTION_MUSIC_PAUSE));
         }
