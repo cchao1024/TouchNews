@@ -13,7 +13,7 @@ import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.NewsListRecyclerAdapter;
 import com.github.armstrong.touchnews.javaBean.news.Contentlist;
 import com.github.armstrong.touchnews.presenter.NewsListPresenter;
-import com.github.armstrong.touchnews.presenter.i.INewsListPresenter;
+import com.github.armstrong.touchnews.presenter.i.IContentListPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.util.Constant;
 import com.github.armstrong.touchnews.view.NewsListView;
@@ -38,7 +38,7 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         View mRootView;
         List< Contentlist > mNewsItemList;
         NewsListRecyclerAdapter mNewsListRecyclerAdapter;
-        INewsListPresenter mNewsListPresenter;
+        IContentListPresenter mNewsListPresenter;
         //新闻频道的ID
         private String mChannelId = null;
         VaryViewWidget mVaryViewWidget;
@@ -108,7 +108,6 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         @Override
         public void onRefresh ( ) {
                 mNewsListPresenter.getRefreshData ( );
-
         }
 
         @Override

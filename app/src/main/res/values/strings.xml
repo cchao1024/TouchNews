@@ -6,8 +6,9 @@
     <string name="close">关闭</string>
     <string name="news">新闻资讯</string>
     <string name="image">图片咯</string>
+    <string name="joke">开心一下</string>
     <string name="music">音乐鉴赏</string>
-    <string name="video">视频咯</string>
+    <string name="chat">聊天机器人</string>
     <string name="edit">编辑</string>
     <string name="share">分享</string>
     <string name="loading">正在加载</string>

@@ -1,5 +1,7 @@
 package com.github.armstrong.touchnews.model.i;
 
+import com.github.armstrong.touchnews.util.NetRequestUtil;
+
 import java.util.List;
 
 /**
@@ -10,5 +12,5 @@ import java.util.List;
 public interface IHomeModel {
         List getFragments ( );
 
-        void loadNavigation();
+        void loadNavigation( NetRequestUtil.RequestListener requestListener);
 }

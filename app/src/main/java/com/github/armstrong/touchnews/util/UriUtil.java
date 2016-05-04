@@ -6,10 +6,16 @@ package com.github.armstrong.touchnews.util;
  * Description: uri 的util
  */
 public class UriUtil {
-        //apiKey
+        //baiDu_apiKey
         public static final String API_KEY = "96a573502b09d771c6431c106d04613a";
+        //turing_apiKey
+        public static final String TURING_KEY = "16d2878f1e41520c14dde5ed52920423";
         //新闻api
         public static final String URL_NEWS = "http://apis.baidu.com/showapi_open_bus/channel_news/search_news";
+        //图片笑话
+        public static final String URL_JOKE_IMAGE = "http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_pic";
+       //文字笑话
+        public static final String URL_JOKE_Text = "http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text";
         //天气api
         public static final String URL_WEATHER = "http://apis.baidu.com/heweather/weather/free";
         //音乐Hash api
@@ -19,5 +25,7 @@ public class UriUtil {
         //歌手信息 api
         public static final String URL_MUSIC_SINGER = "http://apis.baidu.com/geekery/music/singer";
         //通过IP获取定位城市
-        public static final String URL_CITY = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=IP地址";
+        public static final String URL_CITY = "http://pv.sohu.com/cityjson";
+        //图灵api
+        public static final String URL_CHAT = "http://www.tuling123.com/openapi/api";
 }

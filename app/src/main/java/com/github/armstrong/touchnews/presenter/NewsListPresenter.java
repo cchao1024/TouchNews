@@ -3,10 +3,10 @@ package com.github.armstrong.touchnews.presenter;
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
 import com.github.armstrong.touchnews.javaBean.news.Contentlist;
-import com.github.armstrong.touchnews.javaBean.news.NewsEntity;
+import com.github.armstrong.touchnews.javaBean.news.NewsItemRoot;
 import com.github.armstrong.touchnews.javaBean.news.Pagebean;
 import com.github.armstrong.touchnews.model.NewsListMode;
-import com.github.armstrong.touchnews.presenter.i.INewsListPresenter;
+import com.github.armstrong.touchnews.presenter.i.IContentListPresenter;
 import com.github.armstrong.touchnews.util.Constant;
 import com.github.armstrong.touchnews.util.NetRequestUtil;
 import com.github.armstrong.touchnews.util.NetUtil;
@@ -23,7 +23,7 @@ import java.util.ListIterator;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListPresenter implements INewsListPresenter, NetRequestUtil.RequestListener {
+public class NewsListPresenter implements IContentListPresenter, NetRequestUtil.RequestListener {
         NewsListView mNewsListView;
         NewsListMode mNewsListMode;
         Gson mGson;
@@ -63,9 +63,9 @@ public class NewsListPresenter implements INewsListPresenter, NetRequestUtil.Req
         @Override
         public void onResponse ( JSONObject response ) {
                 LogUtils.i ( response );
-                NewsEntity newsEntity = mGson.fromJson ( response.toString ( ), NewsEntity.class );
-                if ( newsEntity.getShowapi_res_code ( ) == 0 && newsEntity.getShowapi_res_body ( ) != null ) {
-                        Pagebean pagebean = newsEntity.getShowapi_res_body ( ).getPagebean ( );
+                NewsItemRoot newsItemRoot = mGson.fromJson ( response.toString ( ), NewsItemRoot.class );
+                if ( newsItemRoot.getShowapi_res_code ( ) == 0 && newsItemRoot.getShowapi_res_body ( ) != null ) {
+                        Pagebean pagebean = newsItemRoot.getShowapi_res_body ( ).getPagebean ( );
                         List< Contentlist > contentlist = pagebean.getContentlist ( );
                         //没图你说个球呀
                         ListIterator< Contentlist > iterator = contentlist.listIterator ( );

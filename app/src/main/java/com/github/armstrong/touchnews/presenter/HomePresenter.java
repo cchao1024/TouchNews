@@ -19,15 +19,14 @@ import org.json.JSONObject;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class HomePresenter implements IHomePresenter,NetRequestUtil.RequestListener{
+public class HomePresenter implements IHomePresenter{
         HomeView mHomeView;
         IHomeModel mHomeModel;
-        Gson gson;
+        Gson gson=new Gson();
 
         public HomePresenter ( HomeView homeView ) {
                 mHomeView = homeView;
-                mHomeModel = new HomeModel ( this ,this);
-                gson=new Gson();
+                mHomeModel = new HomeModel ( this);
         }
 
         @Override
@@ -37,26 +36,25 @@ public class HomePresenter implements IHomePresenter,NetRequestUtil.RequestListe
 
         @Override
         public void getNavigation() {
-                mHomeModel.loadNavigation();
-        }
+                mHomeModel.loadNavigation ( new NetRequestUtil.RequestListener ( ) {
+                        @Override
+                        public void onResponse ( JSONObject response ) {
+                                Log.e("weather", response.toString() );
+                                try {
+                                        JSONObject jsonObject=new JSONObject(response.toString());
+                                        JSONObject jsonWeather=jsonObject.getJSONArray("HeWeather data service 3.0").getJSONObject(0);
+                                        String s=jsonWeather.toString();
+                                        Weather weather=gson.fromJson(jsonWeather.toString(), Weather.class);
+                                        mHomeView.setNavigation(weather);
+                                } catch (JSONException e) {
+                                        e.printStackTrace();
+                                }
+                        }
 
-        @Override
-        public void onResponse(JSONObject response) {
-                Log.e("weather", response.toString() );
-                try {
-                        JSONObject jsonObject=new JSONObject(response.toString());
-                        JSONObject jsonWeather=jsonObject.getJSONArray("HeWeather data service 3.0").getJSONObject(0);
-                        String s=jsonWeather.toString();
-                        Weather weather=gson.fromJson(jsonWeather.toString(), Weather.class);
-                        mHomeView.setNavigation(weather);
+                        @Override
+                        public void onError ( VolleyError error ) {
 
-                } catch (JSONException e) {
-                        e.printStackTrace();
-                }
-        }
-
-        @Override
-        public void onError(VolleyError error) {
-
+                        }
+                } );
         }
 }

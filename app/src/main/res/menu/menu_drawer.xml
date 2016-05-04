@@ -10,8 +10,8 @@
         <item
             android:orderInCategory="2"
             android:id="@+id/menu_item_drawer_image"
-            android:icon="@android:drawable/ic_dialog_email"
-            android:title="@string/image"/>
+            android:icon="@drawable/icon_smile"
+            android:title="@string/joke"/>
         <item
             android:orderInCategory="3"
             android:id="@+id/menu_item_drawer_music"
@@ -20,8 +20,8 @@
         <item
             android:orderInCategory="4"
             android:id="@+id/menu_item_drawer_chat"
-            android:icon="@drawable/icon_smile"
-            android:title="@string/video"/>
+            android:icon="@drawable/icon_chat"
+            android:title="@string/chat"/>
 
     </group>
 

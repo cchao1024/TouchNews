@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="weather_code">
-        <item>100</item>
-        <item>101</item>
-        <item>102</item>
-        <item>103</item>
-        <item>999</item>
-
-    </integer-array>
-    <array name="weather_icon">
-        <item>@drawable/weather_100</item>
-        <item>@drawable/weather_101</item>
-        <item>@drawable/weather_102</item>
-        <item>@drawable/weather_103</item>
-        <item>@drawable/weather_999</item>
-    </array>
     <string-array name="news_titles">
         <item>国内焦点</item>
         <item>社会焦点</item>
@@ -25,6 +10,10 @@
         <item>房产焦点</item>
         <item>财经焦点</item>
         <item>国际焦点</item>
+    </string-array>
+    <string-array name="joke_titles">
+        <item>文字</item>
+        <item>图片</item>
     </string-array>
     <string-array name="news_channelId">
         <item>5572a108b3cdc86cf39001cd</item>
@@ -37,7 +26,6 @@
         <item>5572a108b3cdc86cf39001d0</item>
         <item>5572a108b3cdc86cf39001ce</item>
     </string-array>
-
     <string-array name="image_titles">
         <item>----11----</item>
         <item>----12----</item>
@@ -49,5 +37,54 @@
         <item>----18----</item>
         <item>----19----</item>
     </string-array>
+    <integer-array name="weather_code">
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>207</item>
+        <item>300</item>
+        <item>301</item>
+        <item>302</item>
+        <item>305</item>
+        <item>306</item>
+        <item>307</item>
+        <item>310</item>
+        <item>311</item>
+        <item>312</item>
+        <item>400</item>
+        <item>401</item>
+        <item>402</item>
+        <item>404</item>
+        <item>501</item>
+        <item>502</item>
+        <item>999</item>
+        <item>999</item>
 
+    </integer-array>
+    <array name="weather_icon">
+        <item>@drawable/weather_100</item>
+        <item>@drawable/weather_101</item>
+        <item>@drawable/weather_102</item>
+        <item>@drawable/weather_103</item>
+        <item>@drawable/weather_104</item>
+        <item>@drawable/weather_207</item>
+        <item>@drawable/weather_300</item>
+        <item>@drawable/weather_301</item>
+        <item>@drawable/weather_302</item>
+        <item>@drawable/weather_305</item>
+        <item>@drawable/weather_306</item>
+        <item>@drawable/weather_307</item>
+        <item>@drawable/weather_310</item>
+        <item>@drawable/weather_311</item>
+        <item>@drawable/weather_312</item>
+        <item>@drawable/weather_400</item>
+        <item>@drawable/weather_401</item>
+        <item>@drawable/weather_402</item>
+        <item>@drawable/weather_404</item>
+        <item>@drawable/weather_501</item>
+        <item>@drawable/weather_502</item>
+        <item>@drawable/weather_999</item>
+    </array>
 </resources>

@@ -73,7 +73,6 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
 
         @Override
         public void onDestroy ( ) {
-                mMusicsPresenter.onDestroy ( );
                 super.onDestroy ( );
         }
 

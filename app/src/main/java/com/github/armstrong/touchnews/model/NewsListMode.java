@@ -1,6 +1,6 @@
 package com.github.armstrong.touchnews.model;
 
-import com.github.armstrong.touchnews.model.i.INewsListMode;
+import com.github.armstrong.touchnews.model.i.IListMode;
 import com.github.armstrong.touchnews.util.NetRequestUtil;
 import com.github.armstrong.touchnews.util.UriUtil;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListMode implements INewsListMode {
+public class NewsListMode implements IListMode {
         NetRequestUtil.RequestListener mRequestListener;
         int mCurrentPage = 1;
         Map< String, String > param = new HashMap<> ( );

@@ -56,7 +56,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/white"
+                android:background="@color/grey12"
                 android:max="100"
                 android:visibility="invisible"
                 android:progressDrawable="@drawable/selector_progressbar_web_view"/>

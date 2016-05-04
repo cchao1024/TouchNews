@@ -51,10 +51,10 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
                 if ( viewType == TYPE_ITEM ) {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.news_item, parent, false );
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_news, parent, false );
                         return new MViewHolder ( view );
                 } else {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.news_item_footer, parent, false );
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
                         return new RecyclerView.ViewHolder ( view){
                                 @Override
                                 public String toString ( ) {
@@ -94,9 +94,6 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
 
                 @Override
                 public void onClick ( View v ) {
-                        /*if ( mOnClickListener != null ) {
-                                mOnClickListener.onClick ( v );
-                        }*/
                         Intent intent = new Intent ( mContext, NewsDetailActivity.class );
                         intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
 //                     View transitionView = view.findViewById(R.id.ivNews);

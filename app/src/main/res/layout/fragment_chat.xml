@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey13"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_small">
+
+    <ScrollView
+        android:id="@+id/scroll_chat"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:id="@+id/lyt_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_large"
+            android:scrollbars="none"/>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="50dp">
+
+
+        <EditText
+            android:id="@+id/chat_edit"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/bg_chat_editv"
+            android:singleLine="true"
+            android:textSize="18.0sp"/>
+
+        <TextView
+            android:id="@+id/chat_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/bg_chat_send_disabled"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="发送"
+            android:textColor="@color/textPrimaryGrey"
+            android:textSize="@dimen/text_medium"/>
+    </LinearLayout>
+
+</RelativeLayout>

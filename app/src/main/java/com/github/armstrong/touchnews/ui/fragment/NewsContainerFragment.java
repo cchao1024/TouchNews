@@ -1,12 +1,9 @@
 package com.github.armstrong.touchnews.ui.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,9 +14,7 @@ import android.view.ViewGroup;
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.NewsFragmentsPagerAdapter;
 import com.github.armstrong.touchnews.presenter.i.IFragmentsContainerPresenter;
-import com.github.armstrong.touchnews.presenter.NewsFragmentsPresenter;
-import com.github.armstrong.touchnews.ui.activity.HomeActivity;
-import com.github.armstrong.touchnews.ui.activity.base.BaseActivity;
+import com.github.armstrong.touchnews.presenter.NewsFragmentsContainerPresenter;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.view.FragmentsContainerView;
 
@@ -50,7 +45,7 @@ public class NewsContainerFragment extends BaseLazyFragment implements Fragments
         }
 
         private void initiation ( ) {
-                mPresenter = new NewsFragmentsPresenter ( this );
+                mPresenter = new NewsFragmentsContainerPresenter ( this );
                 mPresenter.setFragments ( );
 
         }

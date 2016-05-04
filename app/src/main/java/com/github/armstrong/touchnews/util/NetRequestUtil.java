@@ -48,7 +48,7 @@ public class NetRequestUtil {
          * @param param    param
          * @param listener callback
          */
-        public void getJson ( String url, HashMap< String, String > param, final RequestListener listener ) {
+        public void getJson ( String url, Map< String, String > param, final RequestListener listener ) {
                 url += prepareParam ( param );
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest ( Request.Method.GET, url, new Response.Listener< JSONObject > ( ) {
                         @Override
@@ -103,8 +103,24 @@ public class NetRequestUtil {
 
         }
 
-        public void post ( String url, Object tag, RequestListener listener ) {
-//                post ( url, tag, null, listener );
+        public void post ( String url, final Map< String, String > param, final NetRequestUtil.RequestListener listener ) {
+                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest ( Request.Method.POST, url, new Response.Listener< JSONObject > ( ) {
+                        @Override
+                        public void onResponse ( JSONObject response ) {
+                                listener.onResponse ( response );
+                        }
+                }, new Response.ErrorListener ( ) {
+                        @Override
+                        public void onErrorResponse ( VolleyError error ) {
+                                listener.onError ( error );
+                        }
+                } ){
+                        @Override
+                        protected Map< String, String > getParams ( ) throws AuthFailureError {
+                                return param;
+                        }
+                };
+                mRequestQueue.add ( jsonObjectRequest );
         }
 
         private String prepareParam ( Map< String, String > paramMap ) {
