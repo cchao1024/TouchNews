@@ -109,7 +109,7 @@ public class MusicFragment extends BaseLazyFragment implements IMusicView {
                 if ( mCurMusic!=null&&mCurMusic.getMusicSinger ( ) != null ) {
                         String url= mCurMusic.getMusicSinger ( ).getImage ( );
                         ImageUtil.displayCircularImage ( mContext, url, mAlbum );
-                        ImageUtil.displayBlurImage ( mContext,url,mRootLayout );
+//                        ImageUtil.displayBlurImage ( mContext,url,mRootLayout );
                 }
         }
 /*

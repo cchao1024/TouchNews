@@ -1,6 +1,9 @@
 package com.github.armstrong.touchnews.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.javaBean.joke.JokeImageRoot;
+import com.github.armstrong.touchnews.ui.activity.HomeActivity;
+import com.github.armstrong.touchnews.ui.activity.ImageBrowseActivity;
 import com.github.armstrong.touchnews.util.ImageUtil;
 
 import java.util.List;
@@ -50,7 +55,7 @@ public class JokeImageListRecyclerAdapter extends RecyclerView.Adapter< Recycler
                         return new MViewHolder ( view );
                 } else {
                         View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
-                        return new RecyclerView.ViewHolder ( view){
+                        return new RecyclerView.ViewHolder ( view ) {
                                 @Override
                                 public String toString ( ) {
                                         return super.toString ( );
@@ -60,17 +65,33 @@ public class JokeImageListRecyclerAdapter extends RecyclerView.Adapter< Recycler
         }
 
         @Override
-        public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
-                if(holder instanceof MViewHolder) {
+        public void onBindViewHolder ( final RecyclerView.ViewHolder holder, final int position ) {
+                if ( holder instanceof MViewHolder ) {
                         JokeImageRoot.Contentlist contentEntity = mData.get ( position );
-                        ((MViewHolder)holder).mTitle.setText ( contentEntity.getTitle ( ) );
-                        ImageUtil.displayImage ( mContext, contentEntity.getImg ( ), ((MViewHolder)holder).mImage );
+                        ( ( MViewHolder ) holder ).mTitle.setText ( contentEntity.getTitle ( ) );
+                        final ImageView imageView = ( ( MViewHolder ) holder ).mImage;
+                        ImageUtil.displayImage ( mContext, contentEntity.getImg ( ), imageView );
+
+                        imageView.setOnClickListener ( new View.OnClickListener ( ) {
+                                @Override
+                                public void onClick ( View v ) {
+                                        Intent intent = new Intent ( mContext, ImageBrowseActivity.class );
+                                        intent.putExtra ( "url", mData.get ( position ).getImg ( ) );
+//                     View transitionView = view.findViewById(R.id.ivNews);
+                                        ActivityOptionsCompat options =
+                                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
+                                                        imageView, mContext.getString ( R.string.transition__img ) );
+
+                                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
+
+                                }
+                        } );
                 }
         }
 
         @Override
         public int getItemCount ( ) {
-                return mData.size ( )+1;
+                return mData.size ( ) + 1;
         }
 
         public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,7 +102,6 @@ public class JokeImageListRecyclerAdapter extends RecyclerView.Adapter< Recycler
                         super ( view );
                         mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
                         mImage = ( ImageView ) view.findViewById ( R.id.imageView );
-                        view.setOnClickListener ( this );
                 }
 
                 @Override

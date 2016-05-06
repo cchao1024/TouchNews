@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
@@ -27,6 +28,8 @@ public class ChatItemView extends LinearLayout {
         ImageView mImageViewRight;
         @Bind ( R.id.tv_chat_item )
         TextView mTextView;
+        @Bind ( R.id.layout_chat_item_tv )
+        RelativeLayout mRelativeLayout;
 
         public ChatItemView ( Context context ) {
                 this ( context, null );
@@ -34,7 +37,7 @@ public class ChatItemView extends LinearLayout {
 
         public ChatItemView ( Context context, AttributeSet attrs ) {
                 super ( context, attrs );
-                 LayoutInflater.from ( context ).inflate ( R.layout.item_chat_view, this );
+                LayoutInflater.from ( context ).inflate ( R.layout.item_chat_view, this );
                 ButterKnife.bind ( this, this );
         }
 
@@ -47,11 +50,12 @@ public class ChatItemView extends LinearLayout {
                         //响应的信息
                         mImageViewRight.setVisibility ( View.INVISIBLE );
                         mTextView.setBackgroundResource ( R.drawable.bg_chat_respond );
-                }else {
+
+                } else {
                         //请求信息
                         mImageViewLeft.setVisibility ( View.INVISIBLE );
                         mTextView.setBackgroundResource ( R.drawable.bg_chat_request );
-                        this.setGravity ( Gravity.RIGHT );
+                        mRelativeLayout.setGravity ( Gravity.RIGHT );
 
                 }
                 mTextView.setText ( message );

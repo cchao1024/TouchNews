@@ -75,7 +75,6 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                                         && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount()) {
                                         //加载更多
-
                                         LogUtils.d(getClass ().getSimpleName (),"loading more data");
                                         mNewsListPresenter.getMoreData ();
                                 }

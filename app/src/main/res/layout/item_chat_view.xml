@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+              android:layout_margin="@dimen/margin_tiny"
+                android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_chat_item_left"
@@ -7,19 +10,26 @@
         android:layout_height="wrap_content"
         android:background="@drawable/icon_chat_service_pic"/>
 
+    <RelativeLayout
+        android:id="@+id/layout_chat_item_tv"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tv_chat_item"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:autoLink="all"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_margin="@dimen/margin_tiny"
         android:background="@drawable/bg_chat_respond"
         android:textSize="@dimen/text_medium"
         android:text="Large Text"/>
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/iv_chat_item_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/icon_chat_client_pic"/>
-</merge>
+</LinearLayout>

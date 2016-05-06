@@ -1,5 +1,7 @@
 package com.github.armstrong.touchnews.javaBean;
 
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -137,7 +139,7 @@ import java.util.List;
  */
 
 
-public  class Weather {
+public  class Weather{
     private Aqi aqi;
 
     private Basic basic;

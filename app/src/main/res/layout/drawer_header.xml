@@ -20,6 +20,7 @@
         android:textSize="@dimen/text_large"/>
 
     <ImageView
+        android:id="@+id/btn_user_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -29,8 +30,10 @@
         android:src="@drawable/icon_user_exit"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/layout_drawer_header_weather"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_user_exit"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

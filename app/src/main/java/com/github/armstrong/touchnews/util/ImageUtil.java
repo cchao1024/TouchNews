@@ -20,7 +20,7 @@ import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
+//import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by cchao on 2016/4/7.
@@ -50,7 +50,7 @@ public class ImageUtil {
                 } );
         }
 
-        public static void displayBlurImage ( Context context, String url, ImageView imageView ) {
+        /*public static void displayBlurImage ( Context context, String url, ImageView imageView ) {
                 Glide.with ( context ).load ( url )
                         .bitmapTransform ( new BlurTransformation ( context ) )
                         .into ( imageView );
@@ -63,6 +63,6 @@ public class ImageUtil {
                                 view.setBackground ( resource );
                         }
                 } );
-        }
+        }*/
 
 }

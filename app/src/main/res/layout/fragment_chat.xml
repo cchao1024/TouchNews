@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_above="@+id/rl_bottom"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:fillViewport="false">
 
         <LinearLayout
             android:id="@+id/lyt_chat"
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_tiny"
             android:paddingBottom="@dimen/margin_large"
             android:scrollbars="none"/>
     </ScrollView>

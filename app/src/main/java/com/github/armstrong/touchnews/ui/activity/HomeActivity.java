@@ -1,5 +1,6 @@
 package com.github.armstrong.touchnews.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
@@ -31,6 +33,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
         MyViewpager mFragmentViewPager;
         @Bind ( R.id.navigation_home )
         NavigationView mNavigationView;
+        @Bind ( R.id.layout_drawer_header_weather )
+        RelativeLayout mRelativeLayoutWeather;
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
 
@@ -125,7 +129,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
                 int[] weatherDrawableID = getResources ( ).getIntArray ( R.array.weather_icon );
                 //设置天气类型图标
-//                iconWeather.setImageResource ( R.drawable.weather_999 );
                 for ( int i = 0 ; i < weatherCodeArr.length ; i++ ) {
                         if ( weatherCodeArr[ i ] == weatherCode ) {
                                 tvTypeText.setCompoundDrawablesWithIntrinsicBounds (0,weatherDrawableID[ i ],0,0 );
@@ -134,6 +137,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 tvTypeText.setText ( weather.getNow ( ).getCond ( ).getTxt ( ) );
                 tvTemperature.setText ( weather.getNow ( ).getTmp ( ) );
                 tvPosition.setText ( weather.getBasic ( ).getCity ( ) );
-
+                mRelativeLayoutWeather.setOnClickListener ( new View.OnClickListener ( ) {
+                        @Override
+                        public void onClick ( View v ) {
+                                Intent intent=new Intent ( HomeActivity.this,WeatherDetailActivity.class );
+                                startActivity ( intent );
+                        }
+                } );
         }
 }

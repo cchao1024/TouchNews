@@ -31,7 +31,7 @@ public class HomePresenter implements IHomePresenter{
 
         @Override
         public void getFragments( ) {
-                mHomeView.setFragmentPager( mHomeModel.getFragments ( ));
+                mHomeView.setFragmentPager ( mHomeModel.getFragments ( ));
         }
 
         @Override

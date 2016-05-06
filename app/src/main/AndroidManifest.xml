@@ -31,6 +31,9 @@
         <activity
             android:name=".ui.activity.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+        <activity
+            android:name=".ui.activity.ImageBrowseActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
     </application>
 
 </manifest>
