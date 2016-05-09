@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout
     android:id="@+id/root_music_fragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_music_default"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_music__name"
@@ -41,21 +47,17 @@
         android:id="@+id/iv_music_album"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
+        android:layout_marginTop="45dp"
         android:background="@drawable/bg_default_album_border"
         android:padding="@dimen/margin_small"
-        android:src="@drawable/bg_default_album"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"/>
+        android:src="@drawable/bg_default_album"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_music_album"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="62dp">
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/margin_huge">
 
         <ImageButton
             android:id="@+id/btn_music_play"
@@ -75,7 +77,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/btn_music_play"
             android:background="@android:color/transparent"
-            android:src="@drawable/icon_next_play_normal"/>
+            android:src="@drawable/btn_music_next"/>
     </RelativeLayout>
     <!--<LinearLayout
             android:id="@+id/musics_player_progress_container"
@@ -122,4 +124,4 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_small"/>
         </LinearLayout>-->
-</RelativeLayout>
+</LinearLayout>

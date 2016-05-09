@@ -1,7 +1,6 @@
 package com.github.armstrong.touchnews.presenter;
 
 import com.github.armstrong.touchnews.model.JokeContainerFragmentModel;
-import com.github.armstrong.touchnews.model.NewsContainerFragmentModel;
 import com.github.armstrong.touchnews.model.i.IFragmentsContainerModel;
 import com.github.armstrong.touchnews.presenter.i.IFragmentsContainerPresenter;
 import com.github.armstrong.touchnews.view.FragmentsContainerView;
@@ -22,6 +21,6 @@ public class JokeFragmentsContainerPresenter implements IFragmentsContainerPrese
 
         @Override
         public void setFragments ( ) {
-                mView.initFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
+                mView.onSetFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
         }
 }

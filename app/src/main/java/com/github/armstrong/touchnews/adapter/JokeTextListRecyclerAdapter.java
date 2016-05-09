@@ -84,14 +84,6 @@ public class JokeTextListRecyclerAdapter extends RecyclerView.Adapter< RecyclerV
 
                 @Override
                 public void onClick ( View v ) {
-                       /* Intent intent = new Intent ( mContext, NewsDetailActivity.class );
-                        intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
-//                     View transitionView = view.findViewById(R.id.ivNews);
-                        ActivityOptionsCompat options =
-                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
-                                        mImage, mContext.getString ( R.string.transition__img ) );
-
-                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );*/
 
                 }
         }

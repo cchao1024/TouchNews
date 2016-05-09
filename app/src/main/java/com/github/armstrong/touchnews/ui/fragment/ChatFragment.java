@@ -2,13 +2,17 @@ package com.github.armstrong.touchnews.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -17,6 +21,8 @@ import android.widget.TextView;
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.presenter.ChatPresenter;
 import com.github.armstrong.touchnews.presenter.i.IChatPresenter;
+import com.github.armstrong.touchnews.ui.activity.HomeActivity;
+import com.github.armstrong.touchnews.ui.fragment.base.BaseFragment;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.view.IChatView;
 import com.github.armstrong.touchnews.widget.ChatItemView;
@@ -30,7 +36,7 @@ import butterknife.OnClick;
  * E-mail:   cchao1024@163.com
  * Description: 聊天机器人
  */
-public class ChatFragment extends BaseLazyFragment implements IChatView,View.OnLayoutChangeListener {
+public class ChatFragment extends BaseFragment implements IChatView {
         @Bind ( R.id.scroll_chat )
         ScrollView mScrollView;
         @Bind ( R.id.lyt_chat )
@@ -43,11 +49,16 @@ public class ChatFragment extends BaseLazyFragment implements IChatView,View.OnL
         IChatPresenter mChatPresenter;
 
         @Override
+        public void onCreate ( Bundle savedInstanceState ) {
+                super.onCreate ( savedInstanceState );
+                setHasOptionsMenu ( true );
+        }
+
+        @Override
         public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
                 super.onCreateView ( inflater, container, savedInstanceState );
                 mRootView = inflater.inflate ( R.layout.fragment_chat, null );
-                ButterKnife.bind ( this, mRootView );
-                initiation ( );
+
                 return mRootView;
         }
 
@@ -74,20 +85,6 @@ public class ChatFragment extends BaseLazyFragment implements IChatView,View.OnL
 
                         }
                 } );
-                mRootView.getViewTreeObserver ( ).addOnGlobalLayoutListener ( new ViewTreeObserver.OnGlobalLayoutListener ( ) {
-                                                                                      @Override
-                                                                                      public void onGlobalLayout ( ) {
-                                                                                              int heightDiff = mRootView.getHeight ( ) -
-                                                                                                      mRootView.getHeight ( );
-                                                                                              if ( heightDiff > 100 ) {
-                                                                                                      // 如果高度差超过100像素，就很有可能是有软键盘...
-                                                                                                      scrollToBottom ( );
-                                                                                              } else {
-                                                                                              }
-                                                                                      }
-                                                                              }
-
-                );
         }
 
         private void scrollToBottom ( ) {
@@ -102,6 +99,24 @@ public class ChatFragment extends BaseLazyFragment implements IChatView,View.OnL
         @Override
         public void onViewCreated ( View view, Bundle savedInstanceState ) {
                 super.onViewCreated ( view, savedInstanceState );
+                initiation ( );
+
+        }
+
+        @Override
+        public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
+                inflater.inflate ( R.menu.menu_main, menu );
+                super.onCreateOptionsMenu ( menu, inflater );
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected ( MenuItem item ) {
+                switch ( item.getItemId ( ) ) {
+                        case R.id.action_search:
+                                return true;
+                }
+                return false;
         }
 
         @Override
@@ -145,27 +160,5 @@ public class ChatFragment extends BaseLazyFragment implements IChatView,View.OnL
                 mLinearContent.addView ( itemView, new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT ) );
                 scrollToBottom ( );
         }
-        @Override
-        public void onLayoutChange(View v, int left, int top, int right,
-                                   int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                int keyHeight = 10;
-                //old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
 
-//      System.out.println(oldLeft + " " + oldTop +" " + oldRight + " " + oldBottom);
-//      System.out.println(left + " " + top +" " + right + " " + bottom);
-
-
-                //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-                if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
-
-//                        Toast.makeText(MainActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
-                        scrollToBottom ();
-
-                }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
-
-//                        Toast.makeText(MainActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
-
-                }
-
-        }
 }

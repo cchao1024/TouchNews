@@ -1,8 +1,10 @@
 package com.github.armstrong.touchnews.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AppCompatActivity;
+
+import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 
 import java.util.List;
 
@@ -12,12 +14,13 @@ import java.util.List;
  * Description:
  */
 public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
-        private List< Fragment > mListFragments = null;
+        private List< BaseLazyFragment > mListFragments = null;
+        AppCompatActivity mActivity;
 
-        public HomeFragmentPagerAdapter ( FragmentManager fm, List fragments ) {
+        public HomeFragmentPagerAdapter ( FragmentManager fm, List fragments , AppCompatActivity activity) {
                 super ( fm );
                 mListFragments = fragments;
-
+                mActivity=activity;
         }
 
         @Override
@@ -30,8 +33,9 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         }
 
         @Override
-        public Fragment getItem ( int position ) {
+        public BaseLazyFragment getItem ( int position ) {
                 if ( mListFragments != null && position >= 0 && position < mListFragments.size ( ) ) {
+
                         return mListFragments.get ( position );
                 } else {
                         return null;

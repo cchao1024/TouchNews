@@ -13,22 +13,21 @@ import android.view.ViewGroup;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.NewsFragmentsPagerAdapter;
-import com.github.armstrong.touchnews.presenter.i.IFragmentsContainerPresenter;
 import com.github.armstrong.touchnews.presenter.NewsFragmentsContainerPresenter;
-import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.armstrong.touchnews.presenter.i.IFragmentsContainerPresenter;
+import com.github.armstrong.touchnews.ui.fragment.base.BaseFragment;
 import com.github.armstrong.touchnews.view.FragmentsContainerView;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/3/30.
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsContainerFragment extends BaseLazyFragment implements FragmentsContainerView {
+public class NewsContainerFragment extends BaseFragment implements FragmentsContainerView {
         @Bind ( R.id.tab_news )
         TabLayout mTabLayout;
         @Bind ( R.id.viewpager_news )
@@ -36,25 +35,16 @@ public class NewsContainerFragment extends BaseLazyFragment implements Fragments
         FragmentPagerAdapter mFragmentsPagerAdapter;
         IFragmentsContainerPresenter mPresenter;
 
-
-
         @Override
         public void onCreate ( Bundle savedInstanceState ) {
                 super.onCreate ( savedInstanceState );
                 setHasOptionsMenu ( true );
         }
 
-        private void initiation ( ) {
-                mPresenter = new NewsFragmentsContainerPresenter ( this );
-                mPresenter.setFragments ( );
-
-        }
-
         @Override
         public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
                 super.onCreateView ( inflater, container, savedInstanceState );
                 View view = inflater.inflate ( R.layout.fragment_news, null );
-                ButterKnife.bind ( this, view );
                 return view;
         }
 
@@ -63,22 +53,32 @@ public class NewsContainerFragment extends BaseLazyFragment implements Fragments
                 super.onViewCreated ( view, savedInstanceState );
                 initiation ( );
         }
+
+
+        private void initiation ( ) {
+                mToolbar.setTitle ( R.string.news );
+                mPresenter = new NewsFragmentsContainerPresenter ( this );
+                mPresenter.setFragments ( );
+
+        }
+
         @Override
         public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
-                inflater.inflate ( R.menu.menu_news_container,menu );
+                inflater.inflate ( R.menu.menu_news_container, menu );
                 super.onCreateOptionsMenu ( menu, inflater );
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
+        public boolean onOptionsItemSelected ( MenuItem item ) {
+                switch ( item.getItemId ( ) ) {
                         case R.id.action_search:
                                 return true;
                 }
                 return false;
         }
+
         @Override
-        public void initFragment ( List fragments, String[] titles ) {
+        public void onSetFragment ( List fragments, String[] titles ) {
                 mFragmentsPagerAdapter = new NewsFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), titles, fragments );
                 mViewPager.setOffscreenPageLimit ( fragments.size ( ) );
                 mViewPager.setAdapter ( mFragmentsPagerAdapter );

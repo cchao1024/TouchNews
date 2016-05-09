@@ -13,10 +13,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_large"
         android:drawableTop="@drawable/icon_user"
         android:gravity="center_horizontal"
         android:text="cchao"
+        android:textColor="@color/textWhite"
         android:textSize="@dimen/text_large"/>
 
     <ImageView
@@ -45,10 +46,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:drawableTop="@drawable/weather_100"
+            android:drawableTop="@drawable/weather_999"
             android:gravity="center"
             android:layout_toLeftOf="@+id/linearLayout"
             android:layout_marginRight="@dimen/margin_medium"
+            android:textColor="@color/textWhite"
             android:text="晴"/>
 
         <LinearLayout
@@ -67,6 +69,7 @@
                 android:drawableRight="@drawable/icon_temperature"
                 android:text="32"
                 android:paddingBottom="@dimen/margin_medium"
+                android:textColor="@color/textWhite"
                 android:textAppearance="?textAppearanceLargePopupMenu"
                 android:textSize="@dimen/text_large"/>
             <TextView
@@ -75,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="广州"
+                android:textColor="@color/textWhite"
                 android:textSize="@dimen/text_small"/>
         </LinearLayout>
     </RelativeLayout>

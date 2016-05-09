@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +34,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
         MyViewpager mFragmentViewPager;
         @Bind ( R.id.navigation_home )
         NavigationView mNavigationView;
-        @Bind ( R.id.layout_drawer_header_weather )
-        RelativeLayout mRelativeLayoutWeather;
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
 
@@ -45,7 +44,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 setContentView ( R.layout.activity_home );
                 ButterKnife.bind ( this );
                 initNavigation ( );
+                addDrawerListener (mToolbar );
                 initViews ( );
+        }
+
+        public void addDrawerListener ( Toolbar toolbar) {
+                mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,
+                        R.string.close);
+                mActionBarDrawerToggle.syncState();
+                mDrawerLayout.addDrawerListener (mActionBarDrawerToggle);
         }
 
         private void initNavigation ( ) {
@@ -60,6 +67,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
                                 for ( int i = 0 ; i < menu.size ( ) ; i++ ) {
                                         if ( item.getOrder ( ) == i + 1 ) {
                                                 mFragmentViewPager.setCurrentItem ( i, false );
+
                                                 item.setChecked ( true );
                                         } else {
                                                 item.setChecked ( false );
@@ -75,22 +83,14 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 mHomePresenter = new HomePresenter ( this );
                 mHomePresenter.getFragments ( );
                 mHomePresenter.getNavigation ( );
-//                FloatingActionButton fab = ( FloatingActionButton ) findViewById ( R.id.fab );
-//                fab.setOnClickListener ( new View.OnClickListener ( ) {
-//                        @Override
-//                        public void onClick ( View view ) {
-//                                Snackbar.make ( view, "Replace with your own action", Snackbar.LENGTH_LONG )
-//                                        .setAction ( "Action", null ).show ( );
-//                        }
-//                } );
         }
 
-        @Override
+       /* @Override
         public boolean onCreateOptionsMenu ( Menu menu ) {
                 // Inflate the menu; this adds items to the action bar if it is present.
                 getMenuInflater ( ).inflate ( R.menu.menu_main, menu );
                 return true;
-        }
+        }*/
 
         @Override
         public boolean onOptionsItemSelected ( MenuItem item ) {
@@ -110,11 +110,11 @@ public class HomeActivity extends BaseActivity implements HomeView {
         @Override
         public void setFragmentPager ( List fragments ) {
                 mFragmentViewPager.setOffscreenPageLimit ( fragments.size ( ) );
-                mFragmentViewPager.setAdapter ( new HomeFragmentPagerAdapter ( getSupportFragmentManager ( ), fragments ) );
+                mFragmentViewPager.setAdapter ( new HomeFragmentPagerAdapter ( getSupportFragmentManager ( ), fragments ,this) );
         }
 
         @Override
-        public void setNavigation ( Weather weather ) {
+        public void setNavigation (  Weather weather ) {
 //                Log.e("setNavigation", weather.getBasic().getCity());
                 View headerView = mNavigationView.getHeaderView ( 0 );
 //                ImageView iconWeather = ( ( ImageView ) headerView.findViewById ( R.id.iv_weather_icon ) );
@@ -128,7 +128,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 int weatherCode = Integer.valueOf ( weather.getNow ( ).getCond ( ).getCode ( ) );
                 int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
                 int[] weatherDrawableID = getResources ( ).getIntArray ( R.array.weather_icon );
-                //设置天气类型图标
+                tvTypeText.setCompoundDrawablesWithIntrinsicBounds (0,R.drawable.weather_999,0,0);
+                        //设置天气类型图标
                 for ( int i = 0 ; i < weatherCodeArr.length ; i++ ) {
                         if ( weatherCodeArr[ i ] == weatherCode ) {
                                 tvTypeText.setCompoundDrawablesWithIntrinsicBounds (0,weatherDrawableID[ i ],0,0 );
@@ -137,10 +138,13 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 tvTypeText.setText ( weather.getNow ( ).getCond ( ).getTxt ( ) );
                 tvTemperature.setText ( weather.getNow ( ).getTmp ( ) );
                 tvPosition.setText ( weather.getBasic ( ).getCity ( ) );
-                mRelativeLayoutWeather.setOnClickListener ( new View.OnClickListener ( ) {
+                headerView.findViewById ( R.id.layout_drawer_header_weather ).setOnClickListener ( new View.OnClickListener ( ) {
                         @Override
                         public void onClick ( View v ) {
                                 Intent intent=new Intent ( HomeActivity.this,WeatherDetailActivity.class );
+                                Bundle bundle=new Bundle (  );
+//                                bundle.putSerializable ( "data",weather );
+//                                intent.putExtra ("bundle", bundle );
                                 startActivity ( intent );
                         }
                 } );

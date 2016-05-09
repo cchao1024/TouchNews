@@ -16,7 +16,10 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by cchao on 2016/4/25.
@@ -37,6 +40,7 @@ public class JokeTextListPresenter implements IContentListPresenter, NetRequestU
         @Override
         public void getRefreshData ( ) {
                 //无网刷新数据>底部显示SnackBar>点击打开设置界面
+                //// TODO: 2016/5/9
                 if ( ! NetUtil.isConnected ( ) ) {
                         mJokeImageListView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
@@ -67,6 +71,10 @@ public class JokeTextListPresenter implements IContentListPresenter, NetRequestU
                 if ( jokeTextRoot.getShowapi_res_code ( ) == 0 && jokeTextRoot.getShowapi_res_body ( ) != null ) {
 
                         List< JokeTextRoot.Contentlist > contentlist = jokeTextRoot.getShowapi_res_body ( ).getContentlist ( );
+                        //将文本中的</p><p> 替换
+                        for( int i=0;i<contentlist.size ();i++){
+                                 filterP(contentlist.get ( i ));
+                        }
                         mJokeImageListView.hideInfo ( );
                         if ( jokeTextRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
                                 mJokeImageListView.refreshData ( contentlist );
@@ -74,6 +82,13 @@ public class JokeTextListPresenter implements IContentListPresenter, NetRequestU
                                 mJokeImageListView.addMoreListData ( contentlist );
                         }
                 }
+        }
+
+        private void filterP ( JokeTextRoot.Contentlist contentlist ) {
+                String string = contentlist.getText ();
+                String regex="</?p>";
+                string= string.replaceAll ( regex,"\n" );
+                contentlist.setText (string);
         }
 
         @Override

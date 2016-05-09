@@ -12,5 +12,5 @@ public interface FragmentsContainerView {
          * 初始化  FragmentViewpager
          * @param fragments ViewPager数据源
          */
-        void initFragment( List fragments ,String[] titles);
+        void onSetFragment ( List fragments , String[] titles);
 }

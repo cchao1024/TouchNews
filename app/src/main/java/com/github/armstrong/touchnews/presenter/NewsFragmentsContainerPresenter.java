@@ -21,6 +21,6 @@ public class NewsFragmentsContainerPresenter implements IFragmentsContainerPrese
 
         @Override
         public void setFragments ( ) {
-                mView.initFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
+                mView.onSetFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
         }
 }
