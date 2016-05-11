@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
+<RelativeLayout
     android:id="@+id/root_music_fragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_music_default"
-    android:orientation="vertical">
+    android:background="@drawable/bg_music_default">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
+    <ListView
+        android:id="@+id/list_view_music_search"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_marginLeft="@dimen/margin_huge"
+        android:layout_marginRight="@dimen/margin_huge"
+        android:visibility="gone"
+        android:scrollbars="none"
+        android:background="@color/grey14"
+        android:layout_below="@+id/toolbar"/>
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:orientation="vertical">
 
         <TextView
@@ -48,16 +58,22 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="45dp"
         android:background="@drawable/bg_default_album_border"
         android:padding="@dimen/margin_small"
-        android:src="@drawable/bg_default_album"/>
+        android:layout_marginTop="@dimen/margin_huge"
+        android:src="@drawable/bg_default_album"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="@dimen/margin_huge">
+
+        android:layout_marginTop="@dimen/margin_huge"
+        android:layout_below="@+id/iv_music_album"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageButton
             android:id="@+id/btn_music_play"
@@ -124,4 +140,4 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_small"/>
         </LinearLayout>-->
-</LinearLayout>
+</RelativeLayout>

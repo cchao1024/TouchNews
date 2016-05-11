@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.javaBean.Weather;
 import com.github.armstrong.touchnews.ui.activity.base.BaseActivity;
+import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,21 +19,26 @@ import butterknife.ButterKnife;
  */
 public class WeatherDetailActivity extends BaseActivity {
         @Bind ( R.id.tv_weather_position )
-        TextView mWeatherPositon;
+        TextView mWeatherPosition;
         @Bind ( R.id.tv_weather_tex )
         TextView mWeatherText;
+        @Bind ( R.id.tv_weather_all )
+        TextView mWeatherAll;
         Weather mWeatherData;
+
         @Override
         protected void onCreate ( @Nullable Bundle savedInstanceState ) {
                 super.onCreate ( savedInstanceState );
                 setContentView ( R.layout.activity_weather );
                 ButterKnife.bind ( this );
-                mWeatherData= ( Weather ) (getIntent ().getBundleExtra ( "bundle" ).getSerializable ( "data" ));
-                initViews();
+//             mWeatherData= ( Weather ) (getIntent ().getBundleExtra ( "bundle" ).getSerializable ( "data" ));
+                mWeatherData = new Gson ( ).fromJson ( getIntent ( ).getStringExtra ( "data" ), Weather.class );
+                initViews ( );
         }
 
         private void initViews ( ) {
-                mWeatherPositon.append (mWeatherData.getBasic ().getCity ()+"、"+mWeatherData.getBasic ().getCity ()  );
-                mWeatherText.append ( mWeatherData.getNow ().getCond ().getTxt ());
+                mWeatherPosition.append ( mWeatherData.getBasic ( ).getCity ( ) + "、" + mWeatherData.getBasic ( ).getCity ( ) );
+                mWeatherText.append ( mWeatherData.getNow ( ).getCond ( ).getTxt ( ) );
+                mWeatherAll.append (  getIntent ( ).getStringExtra ( "data" ) );
         }
 }

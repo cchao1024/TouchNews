@@ -2,6 +2,7 @@ package com.github.armstrong.touchnews.javaBean;
 
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -139,7 +140,8 @@ import java.util.List;
  */
 
 
-public  class Weather{
+public  class Weather implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Aqi aqi;
 
     private Basic basic;

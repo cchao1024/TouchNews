@@ -54,13 +54,15 @@ public class JokeContainerFragment extends BaseFragment implements FragmentsCont
                 return view;
         }
 
+
         @Override
-        public void onViewCreated ( View view, @Nullable Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
+        public void onFirstUserVisible ( ) {
+                super.onFirstUserVisible ( );
                 mPresenter = new JokeFragmentsContainerPresenter ( this );
                 mPresenter.setFragments ( );
                 mToolbar.setTitle ( R.string.joke );
         }
+
         @Override
         public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
                 inflater.inflate ( R.menu.menu_main, menu );

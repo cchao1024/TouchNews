@@ -34,7 +34,7 @@ import java.util.List;
 public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestListener {
         IMusicView mMusicView;
         IMusicsModel mMusicsModel;
-        //        List< MusicPathRoot.Data > mMusicInfoList;
+        //List< MusicPathRoot.Data > mMusicInfoList;
         List< MusicEntity > mMusicList;
         Gson mGson = new Gson ( );
         MusicPlayer mMusicPlayer;
@@ -84,6 +84,11 @@ public class MusicPresenter implements IMusicPresenter, NetRequestUtil.RequestLi
         public void onDestroy ( ) {
                 mMusicList.clear ( );
                 EventBus.getDefault ( ).unregister ( this );
+        }
+
+        @Override
+        public void getMusic ( String musicName ) {
+
         }
 
 

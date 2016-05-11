@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
     <TextView
         android:id="@+id/tv_weather_position"
         android:layout_width="wrap_content"
@@ -19,4 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="天气："/>
+    <TextView
+        android:id="@+id/tv_weather_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="json："/>
 </LinearLayout>

@@ -2,19 +2,21 @@ package com.github.armstrong.touchnews.ui.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,14 +24,14 @@ import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.javaBean.MusicEntity;
 import com.github.armstrong.touchnews.presenter.MusicPresenter;
 import com.github.armstrong.touchnews.presenter.i.IMusicPresenter;
-import com.github.armstrong.touchnews.ui.activity.HomeActivity;
 import com.github.armstrong.touchnews.ui.fragment.base.BaseFragment;
-import com.github.armstrong.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.armstrong.touchnews.util.ImageUtil;
+import com.github.armstrong.touchnews.util.ToastUtil;
 import com.github.armstrong.touchnews.view.IMusicView;
 
+import org.w3c.dom.Text;
+
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -40,9 +42,11 @@ import butterknife.OnClick;
 
 public class MusicFragment extends BaseFragment implements IMusicView {
         @Bind ( R.id.root_music_fragment )
-        LinearLayout mRootLayout;
+        RelativeLayout mRootLayout;
         @Bind ( R.id.btn_music_play )
         ImageButton mPlayBtn;
+        @Bind ( R.id.list_view_music_search )
+        ListView mListView;
         @Bind ( R.id.btn_music_next )
         ImageButton mNextBtn;
         @Bind ( R.id.tv_music__name )
@@ -52,8 +56,10 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         @Bind ( R.id.iv_music_album )
         ImageView mAlbum;
         View mViewRoot;
+        SearchView mMenuItemSearch;
         private IMusicPresenter mMusicsPresenter = null;
         MusicEntity mCurMusic;
+        ArrayAdapter< String > mStringArrayAdapter;
 
         @Override
         public void onCreate ( Bundle savedInstanceState ) {
@@ -77,6 +83,17 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 mMusicsPresenter = new MusicPresenter ( mContext, this );
+                mStringArrayAdapter = new ArrayAdapter< String > ( mContext, android.R.layout.simple_expandable_list_item_1, getResources ( )
+                        .getStringArray ( R.array.news_titles ) );
+
+                mListView.setAdapter ( mStringArrayAdapter );
+                mListView.setOnItemClickListener ( new AdapterView.OnItemClickListener ( ) {
+                        @Override
+                        public void onItemClick ( AdapterView< ? > parent, View view, int position, long id ) {
+                                ToastUtil.showShortToast ( mContext, position + "" );
+                                mMusicsPresenter.getMusic ( ( ( TextView ) view ).getText ( ).toString ( ) );
+                        }
+                } );
         }
 
         @OnClick ( { R.id.btn_music_next , R.id.btn_music_play } )
@@ -95,12 +112,43 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
                 inflater.inflate ( R.menu.menu_music, menu );
                 super.onCreateOptionsMenu ( menu, inflater );
+                mMenuItemSearch = ( SearchView ) MenuItemCompat.getActionView ( menu.findItem ( R.id.action_search ) );
+                mMenuItemSearch.setOnCloseListener ( new SearchView.OnCloseListener ( ) {
+                        @Override
+                        public boolean onClose ( ) {
+                                mListView.setVisibility ( View.GONE );
+                                return false;
+                        }
+                } );
+                //文本输入框可见、显示ListView
+                mMenuItemSearch.setOnQueryTextFocusChangeListener ( new View.OnFocusChangeListener ( ) {
+                        @Override
+                        public void onFocusChange ( View v, boolean hasFocus ) {
+                                if ( hasFocus ) {
+                                        mListView.setVisibility ( View.VISIBLE );
+                                }
+                        }
+                } );
+                mMenuItemSearch.setOnQueryTextListener ( new SearchView.OnQueryTextListener ( ) {
+                        @Override
+                        public boolean onQueryTextSubmit ( String query ) {
+                                return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange ( String newText ) {
+                                ToastUtil.showShortToast ( mContext, newText );
+                                return true;
+                        }
+                } );
+
         }
 
         @Override
         public boolean onOptionsItemSelected ( MenuItem item ) {
                 switch ( item.getItemId ( ) ) {
                         case R.id.action_search:
+                                Snackbar.make ( mViewRoot, "action_search", Snackbar.LENGTH_SHORT ).show ( );
                                 return true;
                 }
                 return false;

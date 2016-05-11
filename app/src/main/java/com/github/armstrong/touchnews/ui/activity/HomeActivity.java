@@ -10,17 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.armstrong.touchnews.R;
 import com.github.armstrong.touchnews.adapter.HomeFragmentPagerAdapter;
 import com.github.armstrong.touchnews.javaBean.Weather;
-import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
 import com.github.armstrong.touchnews.presenter.HomePresenter;
+import com.github.armstrong.touchnews.presenter.i.IHomePresenter;
 import com.github.armstrong.touchnews.ui.activity.base.BaseActivity;
 import com.github.armstrong.touchnews.view.HomeView;
 import com.github.armstrong.touchnews.widget.MyViewpager;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -44,22 +44,22 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 setContentView ( R.layout.activity_home );
                 ButterKnife.bind ( this );
                 initNavigation ( );
-                addDrawerListener (mToolbar );
+                addDrawerListener ( mToolbar );
                 initViews ( );
         }
 
-        public void addDrawerListener ( Toolbar toolbar) {
-                mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,
-                        R.string.close);
-                mActionBarDrawerToggle.syncState();
-                mDrawerLayout.addDrawerListener (mActionBarDrawerToggle);
+        public void addDrawerListener ( Toolbar toolbar ) {
+                mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, toolbar, R.string.open,
+                        R.string.close );
+                mActionBarDrawerToggle.syncState ( );
+                mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );
         }
 
         private void initNavigation ( ) {
-                mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open,
-                        R.string.close);
-                mActionBarDrawerToggle.syncState();
-                mDrawerLayout.addDrawerListener (mActionBarDrawerToggle);
+                mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, mToolbar, R.string.open,
+                        R.string.close );
+                mActionBarDrawerToggle.syncState ( );
+                mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );
                 mNavigationView.setNavigationItemSelectedListener ( new NavigationView.OnNavigationItemSelectedListener ( ) {
                         @Override
                         public boolean onNavigationItemSelected ( MenuItem item ) {
@@ -110,43 +110,45 @@ public class HomeActivity extends BaseActivity implements HomeView {
         @Override
         public void setFragmentPager ( List fragments ) {
                 mFragmentViewPager.setOffscreenPageLimit ( fragments.size ( ) );
-                mFragmentViewPager.setAdapter ( new HomeFragmentPagerAdapter ( getSupportFragmentManager ( ), fragments ,this) );
+                mFragmentViewPager.setAdapter ( new HomeFragmentPagerAdapter ( getSupportFragmentManager ( ), fragments, this ) );
         }
 
         @Override
-        public void setNavigation (  Weather weather ) {
+        public void setNavigation ( final Weather weather ) {
 //                Log.e("setNavigation", weather.getBasic().getCity());
-                View headerView = mNavigationView.getHeaderView ( 0 );
+                if ( weather != null &&weather.getNow ( )!=null) {
+                        View headerView = mNavigationView.getHeaderView ( 0 );
 //                ImageView iconWeather = ( ( ImageView ) headerView.findViewById ( R.id.iv_weather_icon ) );
-                //天气类型 - 晴、多云
-                TextView tvTypeText = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_txt ) );
-                //当前气温 - 32 *C
-                TextView tvTemperature = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_temperature ) );
-                //城市位置 - 广州
-                TextView tvPosition = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_position ) );
-                //天气类型代码
-                int weatherCode = Integer.valueOf ( weather.getNow ( ).getCond ( ).getCode ( ) );
-                int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
-                int[] weatherDrawableID = getResources ( ).getIntArray ( R.array.weather_icon );
-                tvTypeText.setCompoundDrawablesWithIntrinsicBounds (0,R.drawable.weather_999,0,0);
+                        //天气类型 - 晴、多云
+                        TextView tvTypeText = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_txt ) );
+                        //当前气温 - 32 *C
+                        TextView tvTemperature = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_temperature ) );
+                        //城市位置 - 广州
+                        TextView tvPosition = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_position ) );
+                        //天气类型代码
+
+
+                        int weatherCode = Integer.valueOf ( weather.getNow ( ).getCond ( ).getCode ( ) );
+                        int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
+                        int[] weatherDrawableID = getResources ( ).getIntArray ( R.array.weather_icon );
+                        tvTypeText.setCompoundDrawablesWithIntrinsicBounds ( 0, R.drawable.weather_999, 0, 0 );
                         //设置天气类型图标
-                for ( int i = 0 ; i < weatherCodeArr.length ; i++ ) {
-                        if ( weatherCodeArr[ i ] == weatherCode ) {
-                                tvTypeText.setCompoundDrawablesWithIntrinsicBounds (0,weatherDrawableID[ i ],0,0 );
+                        for ( int i = 0 ; i < weatherCodeArr.length ; i++ ) {
+                                if ( weatherCodeArr[ i ] == weatherCode ) {
+                                        tvTypeText.setCompoundDrawablesWithIntrinsicBounds ( 0, weatherDrawableID[ i ], 0, 0 );
+                                }
                         }
+                        tvTypeText.setText ( weather.getNow ( ).getCond ( ).getTxt ( ) );
+                        tvTemperature.setText ( weather.getNow ( ).getTmp ( ) );
+                        tvPosition.setText ( weather.getBasic ( ).getCity ( ) );
+                        headerView.findViewById ( R.id.layout_drawer_header_weather ).setOnClickListener ( new View.OnClickListener ( ) {
+                                @Override
+                                public void onClick ( View v ) {
+                                        Intent intent = new Intent ( HomeActivity.this, WeatherDetailActivity.class );
+                                        intent.putExtra ( "data", new Gson ( ).toJson ( weather ) );
+                                        startActivity ( intent );
+                                }
+                        } );
                 }
-                tvTypeText.setText ( weather.getNow ( ).getCond ( ).getTxt ( ) );
-                tvTemperature.setText ( weather.getNow ( ).getTmp ( ) );
-                tvPosition.setText ( weather.getBasic ( ).getCity ( ) );
-                headerView.findViewById ( R.id.layout_drawer_header_weather ).setOnClickListener ( new View.OnClickListener ( ) {
-                        @Override
-                        public void onClick ( View v ) {
-                                Intent intent=new Intent ( HomeActivity.this,WeatherDetailActivity.class );
-                                Bundle bundle=new Bundle (  );
-//                                bundle.putSerializable ( "data",weather );
-//                                intent.putExtra ("bundle", bundle );
-                                startActivity ( intent );
-                        }
-                } );
         }
 }

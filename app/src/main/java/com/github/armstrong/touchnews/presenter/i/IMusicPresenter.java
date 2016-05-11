@@ -9,4 +9,5 @@ public interface IMusicPresenter {
         void onPlay();
         void onNext();
         void onDestroy ( );
+        void getMusic(String musicName);
 }

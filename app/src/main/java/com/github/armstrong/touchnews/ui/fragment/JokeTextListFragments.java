@@ -58,7 +58,13 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
         public void onViewCreated ( View view, Bundle savedInstanceState ) {
                 super.onViewCreated ( view, savedInstanceState );
         }
-
+        @Override
+        public void onFirstUserVisible ( ) {
+                super.onFirstUserVisible ( );
+                initViews ( );
+                mJokeImageListPresenter = new JokeTextListPresenter ( this, "1" );
+                mJokeImageListPresenter.getFirstData ( );
+        }
         private void initViews ( ) {
                 mContentList = new ArrayList<> ( );
                 mRecyclerView.setHasFixedSize ( true );
@@ -90,14 +96,6 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
                 mSwipeRefreshLayout.setOnRefreshListener ( this );
 
-        }
-
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                initViews ( );
-                mJokeImageListPresenter = new JokeTextListPresenter ( this, "1" );
-                mJokeImageListPresenter.getFirstData ( );
         }
 
         @Override

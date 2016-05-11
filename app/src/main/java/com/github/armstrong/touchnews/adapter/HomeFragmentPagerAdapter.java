@@ -35,7 +35,6 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         @Override
         public BaseLazyFragment getItem ( int position ) {
                 if ( mListFragments != null && position >= 0 && position < mListFragments.size ( ) ) {
-
                         return mListFragments.get ( position );
                 } else {
                         return null;

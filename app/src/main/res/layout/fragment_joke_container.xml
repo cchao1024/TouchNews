@@ -7,7 +7,7 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.design.widget.AppBarLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -36,8 +36,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_joke_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 </LinearLayout>
