@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -30,6 +31,10 @@ import com.github.armstrong.touchnews.util.ToastUtil;
 import com.github.armstrong.touchnews.view.IMusicView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -59,6 +64,8 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         SearchView mMenuItemSearch;
         private IMusicPresenter mMusicsPresenter = null;
         MusicEntity mCurMusic;
+        List< String > mSearchChoose;
+        List<String> mSearchChooseDef;
         ArrayAdapter< String > mStringArrayAdapter;
 
         @Override
@@ -83,17 +90,43 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 mMusicsPresenter = new MusicPresenter ( mContext, this );
-                mStringArrayAdapter = new ArrayAdapter< String > ( mContext, android.R.layout.simple_expandable_list_item_1, getResources ( )
-                        .getStringArray ( R.array.news_titles ) );
-
-                mListView.setAdapter ( mStringArrayAdapter );
+                mSearchChooseDef = new ArrayList ( );
+                mSearchChoose = new ArrayList ( );
+                //添加默认待选List
+                for ( String str : ( getResources ( ).getStringArray ( R.array.music_search_default ) ) ) {
+                        mSearchChooseDef.add ( str );
+                        mSearchChoose.add ( str );
+                }
+                //进入页面就播放随机一种类别歌曲
+                mMusicsPresenter.getMusic ( mSearchChoose.get ( ( int ) ( Math.random ( ) * mSearchChoose.size ( ) ) ) );
+                initSearchList ( );
+        }
+        private void initSearchList ( ) {
                 mListView.setOnItemClickListener ( new AdapterView.OnItemClickListener ( ) {
                         @Override
                         public void onItemClick ( AdapterView< ? > parent, View view, int position, long id ) {
-                                ToastUtil.showShortToast ( mContext, position + "" );
+                                //待选关键字 点击  List 关闭
+                                mListView.setVisibility ( View.GONE );
+                                //根据歌曲名搜索歌曲播放地址
                                 mMusicsPresenter.getMusic ( ( ( TextView ) view ).getText ( ).toString ( ) );
+                                mMenuItemSearch.clearFocus ( );
+                                mMenuItemSearch.onActionViewCollapsed ( );
                         }
                 } );
+                mStringArrayAdapter = new ArrayAdapter< String > ( mContext, R.layout.item_music_search_item, mSearchChoose );
+                mListView.setAdapter ( mStringArrayAdapter );
+        }
+
+        /**
+         * @param result 根据输入关键字返回的待选
+         */
+        @Override
+        public void updateSearchList ( List< String > result ) {
+                if ( result != null && result.size ( ) > 1 ) {
+                        mSearchChoose.clear ( );
+                        mSearchChoose.addAll ( result );
+                        mStringArrayAdapter.notifyDataSetChanged ( );
+                }
         }
 
         @OnClick ( { R.id.btn_music_next , R.id.btn_music_play } )
@@ -117,6 +150,8 @@ public class MusicFragment extends BaseFragment implements IMusicView {
                         @Override
                         public boolean onClose ( ) {
                                 mListView.setVisibility ( View.GONE );
+                                //刷新待选List 为默认值
+                                updateSearchList ( mSearchChooseDef );
                                 return false;
                         }
                 } );
@@ -137,7 +172,10 @@ public class MusicFragment extends BaseFragment implements IMusicView {
 
                         @Override
                         public boolean onQueryTextChange ( String newText ) {
-                                ToastUtil.showShortToast ( mContext, newText );
+                                //文本输入改变实时搜索关键字
+                                mMusicsPresenter.searchMusic ( newText );
+                                //文本输入改变 List 滑动到顶部
+                                mListView.setSelection ( 0 );
                                 return true;
                         }
                 } );
@@ -148,7 +186,9 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         public boolean onOptionsItemSelected ( MenuItem item ) {
                 switch ( item.getItemId ( ) ) {
                         case R.id.action_search:
-                                Snackbar.make ( mViewRoot, "action_search", Snackbar.LENGTH_SHORT ).show ( );
+                                //清空搜索结果-List
+                                mSearchChoose.clear ( );
+                                mStringArrayAdapter.notifyDataSetChanged ( );
                                 return true;
                 }
                 return false;
@@ -187,6 +227,9 @@ public class MusicFragment extends BaseFragment implements IMusicView {
                 }
         }
 
+        /**
+         *  设置专辑图 、 背景高斯
+         */
         @Override
         public void setAlbum ( ) {
                 if ( mCurMusic != null && mCurMusic.getMusicSinger ( ) != null ) {
@@ -195,6 +238,7 @@ public class MusicFragment extends BaseFragment implements IMusicView {
 //                        ImageUtil.displayBlurImage ( mContext,url,mRootLayout );
                 }
         }
+
 
 }
 

@@ -10,4 +10,5 @@ public interface IMusicPresenter {
         void onNext();
         void onDestroy ( );
         void getMusic(String musicName);
+        void searchMusic(String key);
 }

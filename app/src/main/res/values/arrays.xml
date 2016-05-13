@@ -15,6 +15,19 @@
         <item>文字</item>
         <item>图片</item>
     </string-array>
+    <string-array name="music_search_default">
+        <item>推荐</item>
+        <item>流行</item>
+        <item>伤感</item>
+        <item>轻音乐</item>
+        <item>经典</item>
+        <item>校园</item>
+        <item>舞曲</item>
+        <item>DJ</item>
+        <item>网络</item>
+        <item>神曲</item>
+        <item>我是歌手</item>
+    </string-array>
     <string-array name="news_channelId">
         <item>5572a108b3cdc86cf39001cd</item>
         <item>5572a109b3cdc86cf39001da</item>

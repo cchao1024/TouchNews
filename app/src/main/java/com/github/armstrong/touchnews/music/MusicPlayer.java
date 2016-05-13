@@ -37,7 +37,6 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mContext = context;
                 initiation ( );
         }
-
         private void initiation ( ) {
                 mMediaPlayer = new MediaPlayer ( );
                 mMusicList = new ArrayList<> ( );
@@ -51,7 +50,6 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mMediaPlayer.setOnBufferingUpdateListener ( this );
 
         }
-
         public void exit ( ) {
                 mMediaPlayer.reset ( );
                 mMediaPlayer.release ( );
@@ -60,6 +58,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         public void setMusicList ( List< MusicEntity > musicList ) {
                 mMusicList = musicList;
+                mMediaPlayer.reset ( );
         }
 
         public void addMusic ( MusicEntity music ) {

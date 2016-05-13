@@ -12,16 +12,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
-    <ListView
-        android:id="@+id/list_view_music_search"
-        android:layout_width="wrap_content"
-        android:layout_height="160dp"
-        android:layout_marginLeft="@dimen/margin_huge"
-        android:layout_marginRight="@dimen/margin_huge"
-        android:visibility="gone"
-        android:scrollbars="none"
-        android:background="@color/grey14"
-        android:layout_below="@+id/toolbar"/>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -95,6 +86,16 @@
             android:background="@android:color/transparent"
             android:src="@drawable/btn_music_next"/>
     </RelativeLayout>
+    <ListView
+        android:id="@+id/list_view_music_search"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_marginLeft="@dimen/margin_huge"
+        android:layout_marginRight="@dimen/margin_huge"
+        android:visibility="gone"
+        android:scrollbars="none"
+        android:background="@color/grey14"
+        android:layout_below="@+id/toolbar"/>
     <!--<LinearLayout
             android:id="@+id/musics_player_progress_container"
             android:layout_width="match_parent"
