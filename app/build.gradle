@@ -5,7 +5,7 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        applicationId "com.github.armstrong.touchnews"
+        applicationId "com.github.cchao.touchnews"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -35,4 +35,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'pl.tajchert:waitingdots:0.2.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
 }

@@ -24,7 +24,7 @@
                 layout="@layout/toolbar"/>
 
         </android.support.design.widget.AppBarLayout>-->
-        <com.github.armstrong.touchnews.widget.MyViewpager
+        <com.github.cchao.touchnews.widget.MyViewpager
             android:id="@+id/viewpager_home_fragments_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

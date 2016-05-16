@@ -76,7 +76,7 @@
         <item>999</item>
 
     </integer-array>
-    <array name="weather_icon">
+    <string-array name="weather_icon">
         <item>@drawable/weather_100</item>
         <item>@drawable/weather_101</item>
         <item>@drawable/weather_102</item>
@@ -99,5 +99,5 @@
         <item>@drawable/weather_501</item>
         <item>@drawable/weather_502</item>
         <item>@drawable/weather_999</item>
-    </array>
+    </string-array>
 </resources>
