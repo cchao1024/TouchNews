@@ -1,5 +1,6 @@
 package com.github.cchao.touchnews.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -11,7 +12,6 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
  * E-mail:   cchao1024@163.com
  * Description: 欢迎页
  */
-public class SplashActivity extends BaseActivity {
-        final  int DELAY_TIME=1500;
-        @Bind (R.id.tv_version)
+public class SplashActivity extends Activity {
+        final int DELAY_TIME = 1500;
+        @Bind ( R.id.tv_version )
         TextView mVersionText;
 
         @Override
@@ -31,8 +31,8 @@ public class SplashActivity extends BaseActivity {
                 super.onCreate ( savedInstanceState );
                 setContentView ( R.layout.activity_splash );
                 ButterKnife.bind ( this );
-                setVersionText();
-                setStartAty();
+                setVersionText ( );
+                setStartAty ( );
         }
 
         /**
@@ -41,18 +41,19 @@ public class SplashActivity extends BaseActivity {
         private void setVersionText ( ) {
                 mVersionText.append ( getAppVersionName ( this ) );
         }
+
         //获取当前版本号
-        private  String getAppVersionName(Context context) {
+        private String getAppVersionName ( Context context ) {
                 String versionName = "";
                 try {
-                        PackageManager packageManager = context.getPackageManager();
-                        PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName (), 0);
+                        PackageManager packageManager = context.getPackageManager ( );
+                        PackageInfo packageInfo = packageManager.getPackageInfo ( getPackageName ( ), 0 );
                         versionName = packageInfo.versionName;
-                        if ( TextUtils.isEmpty(versionName)) {
+                        if ( TextUtils.isEmpty ( versionName ) ) {
                                 return "";
                         }
-                } catch (Exception e) {
-                        e.printStackTrace();
+                } catch ( Exception e ) {
+                        e.printStackTrace ( );
                 }
                 return versionName;
         }
@@ -61,14 +62,14 @@ public class SplashActivity extends BaseActivity {
          * DELAY_TIME 延迟后启动HomeAty
          */
         private void setStartAty ( ) {
-                new Handler (  ).postDelayed ( new Runnable ( ) {
+                new Handler ( ).postDelayed ( new Runnable ( ) {
                         @Override
                         public void run ( ) {
-                                Intent intent=new Intent (SplashActivity.this ,HomeActivity.class );
+                                Intent intent = new Intent ( SplashActivity.this, HomeActivity.class );
                                 startActivity ( intent );
-                                finish ();
+                                finish ( );
                         }
-                } ,DELAY_TIME);
+                }, DELAY_TIME );
         }
 
 

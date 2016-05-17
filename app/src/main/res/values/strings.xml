@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TouchNews</string>
+    <string name="app_name">指尖资讯</string>
     <string name="action_settings">Settings</string>
     <string name="transition__img">切换动画</string>
     <string name="open">打开</string>
