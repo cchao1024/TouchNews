@@ -1,11 +1,15 @@
 #指尖资讯
+
 > 基于MVP架构、遵循Material Design的Android应用。包括新闻，图片，笑话，天气，聊天机器人等等。欢迎吐槽，欢迎点赞. 
+
 #这是效果图
 
 ![Splash](http://img.blog.csdn.net/20160517153223672) ![navigateView](http://img.blog.csdn.net/20160517152740944) ![newsFragments](http://img.blog.csdn.net/20160517154123285) ![ImageShowAty](http://img.blog.csdn.net/20160517153649284) ![musicFragment](http://img.blog.csdn.net/20160517153327998) ![musicSeach](http://img.blog.csdn.net/20160517153345657) ![chatFragment](http://img.blog.csdn.net/20160517153359452) ![项目结构](http://img.blog.csdn.net/20160517120012181)
+
 ##Gif
 
 #说明
+
 > 项目基于MVP架构、通篇使用免费Api > [百度Api](http://apistore.baidu.com/)。以下是各个模块介绍：
 
 - **新闻资讯**
@@ -26,8 +30,10 @@
 - **天气页**
 
 	天气页从[和风天气](http://www.heweather.com/)获取的到json数据，有两个data 键，用了个包才解析成功，图标默认蓝色背景，也就是navigation图片上不协调的，p图什么的最烦了。
+	
 
 #开源框架引用
+
 
 - **ButterKnife**
 Link: https://github.com/JakeWharton/butterknife
@@ -56,7 +62,9 @@ Link: http://www.umeng.com/
 
 - **waitingdots**
 Link: https://github.com/tajchert/WaitingDots
+
 #Download
+
 - **Git** :  https://git.oschina.net/cchao1024_120/TouchNews
 
 - **[app下载链接、点我下载](https://www.pgyer.com/touchnews)**
@@ -64,9 +72,12 @@ Link: https://github.com/tajchert/WaitingDots
 - **二维码扫一扫**：![二维码](http://img.blog.csdn.net/20160517165411722)
 
 #About Me
+
 > - E-mail: **cchao1024@163.com**
 > - QQ : **1037322351**
+
 #License
+
 Copyright 2016 cchao
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -74,7 +85,6 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
 
 
 
