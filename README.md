@@ -65,7 +65,8 @@ Link: https://github.com/tajchert/WaitingDots
 
 #Download
 
-- **Git** :  https://git.oschina.net/cchao1024_120/TouchNews
+- **GitHub** :  https://github.com/cchao1024/TouchNews
+- **Git@ OSC** :  https://git.oschina.net/cchao1024_120/TouchNews
 
 - **[app下载链接、点我下载](https://www.pgyer.com/touchnews)**
 
