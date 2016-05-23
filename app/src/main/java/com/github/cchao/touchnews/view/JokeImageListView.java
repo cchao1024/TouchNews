@@ -16,14 +16,14 @@ public interface JokeImageListView {
          *
          * @param newsList newsList
          */
-        void refreshData ( List< JokeImageRoot.Contentlist > newsList );
+        void onRefreshData ( List< JokeImageRoot.Contentlist > newsList );
 
         /**
          * 添加数据
          *
          * @param newsList add newsList
          */
-        void addMoreListData ( List< JokeImageRoot.Contentlist > newsList );
+        void onReceiveMoreListData ( List< JokeImageRoot.Contentlist > newsList );
 
         /**
          * 显示信息  e.g. 没有网络、正在加载、异常

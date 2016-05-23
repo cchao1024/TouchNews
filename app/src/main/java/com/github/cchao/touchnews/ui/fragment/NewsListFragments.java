@@ -114,12 +114,14 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
          * @param newsList newsList
          */
         @Override
-        public void refreshData ( List< Contentlist > newsList ) {
+        public void onRefreshData ( List< Contentlist > newsList ) {
                 mNewsItemList.clear ( );
                 mNewsItemList.addAll ( newsList );
                 mNewsListRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
-
+                if(mNewsItemList.size ()<7){
+                        mNewsListPresenter.getMoreData ( );
+                }
         }
 
         /**
@@ -128,9 +130,12 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
          * @param newsList add newsList
          */
         @Override
-        public void addMoreListData ( List< Contentlist > newsList ) {
+        public void onReceiveMoreListData ( List< Contentlist > newsList ) {
                 mNewsItemList.addAll ( newsList );
                 mNewsListRecyclerAdapter.notifyDataSetChanged ( );
+                if(mNewsItemList.size ()<7){
+                        mNewsListPresenter.getMoreData ( );
+                }
         }
 
         /**

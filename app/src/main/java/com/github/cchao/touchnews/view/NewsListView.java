@@ -16,14 +16,14 @@ public interface NewsListView {
          *
          * @param newsList newsList
          */
-        void refreshData ( List< Contentlist > newsList );
+        void onRefreshData ( List< Contentlist > newsList );
 
         /**
          * 添加数据
          *
          * @param newsList add newsList
          */
-        void addMoreListData ( List< Contentlist > newsList );
+        void onReceiveMoreListData ( List< Contentlist > newsList );
 
         /**
          * 显示信息  e.g. 没有网络、正在加载、异常

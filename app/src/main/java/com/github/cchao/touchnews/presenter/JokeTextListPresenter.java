@@ -72,9 +72,9 @@ public class JokeTextListPresenter implements IContentListPresenter, NetRequestU
                         }
                         mJokeImageListView.hideInfo ( );
                         if ( jokeTextRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
-                                mJokeImageListView.refreshData ( contentlist );
+                                mJokeImageListView.onRefreshData ( contentlist );
                         } else {
-                                mJokeImageListView.addMoreListData ( contentlist );
+                                mJokeImageListView.onReceiveMoreListData ( contentlist );
                         }
                 }
         }

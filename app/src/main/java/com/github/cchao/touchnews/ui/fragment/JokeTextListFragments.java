@@ -16,6 +16,8 @@ import com.github.cchao.touchnews.presenter.JokeTextListPresenter;
 import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.cchao.touchnews.util.Constant;
+import com.github.cchao.touchnews.util.NetUtil;
+import com.github.cchao.touchnews.util.SnackBarUtil;
 import com.github.cchao.touchnews.view.JokeTextListView;
 import com.github.cchao.touchnews.widget.VaryViewWidget;
 
@@ -39,7 +41,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
         View mRootView;
         List< JokeTextRoot.Contentlist > mContentList;
         JokeTextListRecyclerAdapter mRecyclerAdapter;
-        IContentListPresenter mJokeImageListPresenter;
+        IContentListPresenter mJokeTextListPresenter;
         VaryViewWidget mVaryViewWidget;
 
         @Override
@@ -58,8 +60,8 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
-                mJokeImageListPresenter = new JokeTextListPresenter ( this, "1" );
-                mJokeImageListPresenter.getFirstData ( );
+                mJokeTextListPresenter = new JokeTextListPresenter ( this, "1" );
+                mJokeTextListPresenter.getFirstData ( );
         }
         private void initViews ( ) {
                 mContentList = new ArrayList<> ( );
@@ -83,7 +85,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
                                         && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount ( ) ) {
                                         //加载更多
                                         LogUtils.d ( getClass ( ).getSimpleName ( ), "info_loading more data" );
-                                        mJokeImageListPresenter.getMoreData ( );
+                                        mJokeTextListPresenter.getMoreData ( );
                                 }
                         }
                 } );
@@ -96,7 +98,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
 
         @Override
         public void onRefresh ( ) {
-                mJokeImageListPresenter.getRefreshData ( );
+                mJokeTextListPresenter.getRefreshData ( );
         }
 
         /**
@@ -104,17 +106,23 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
          * @param newsList newsList
          */
         @Override
-        public void refreshData ( List< JokeTextRoot.Contentlist > newsList ) {
+        public void onRefreshData ( List< JokeTextRoot.Contentlist > newsList ) {
                 mContentList.clear ( );
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
+                if(mContentList.size ()<7){
+                        mJokeTextListPresenter.getMoreData ( );
+                }
         }
 
         @Override
-        public void addMoreListData ( List< JokeTextRoot.Contentlist > newsList ) {
+        public void onReceiveMoreListData ( List< JokeTextRoot.Contentlist > newsList ) {
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
+                if(mContentList.size ()<7){
+                        mJokeTextListPresenter.getMoreData ( );
+                }
         }
 
         /**
@@ -130,6 +138,28 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
                 switch ( INFOType ) {
                         case LOADING:
                                 infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_loading, null );
+                                break;
+                        case NO_NET:
+                                //已有数据（那就是刷新或者加载更多）-> 那么在底部snack检测网络设置
+                                if ( mContentList.size ( ) > 1 ) {
+                                        SnackBarUtil.showLong ( mRootView, R.string.none_net_show_action ).setAction ( R.string.set, new View.OnClickListener ( ) {
+                                                @Override
+                                                public void onClick ( View v ) {
+                                                        NetUtil.openSetting ( getActivity ( ) );
+                                                        mSwipeRefreshLayout.setRefreshing ( false );
+                                                }
+                                        } );
+                                } else {
+                                        //没有数据（那就是第一次加载数据）->点击重试>从新加载第一次资源
+                                        infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_no_net, null );
+                                        infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
+                                                @Override
+                                                public void onClick ( View v ) {
+                                                        mJokeTextListPresenter.getFirstData ( );
+                                                }
+                                        } );
+                                        mVaryViewWidget.setNoNetView ( infoView );
+                                }
                                 break;
                 }
                 mVaryViewWidget.setLoadingView ( infoView );

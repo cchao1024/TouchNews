@@ -77,9 +77,9 @@ public class NewsListPresenter implements IContentListPresenter, NetRequestUtil.
                         }
                         mNewsListView.hideInfo (  );
                         if ( pagebean.getCurrentPage ( ) == 1 ) {
-                                mNewsListView.refreshData ( contentlist );
+                                mNewsListView.onRefreshData ( contentlist );
                         }else{
-                                mNewsListView.addMoreListData ( contentlist );
+                                mNewsListView.onReceiveMoreListData ( contentlist );
                         }
                 }
         }

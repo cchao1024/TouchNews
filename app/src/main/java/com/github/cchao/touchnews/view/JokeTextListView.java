@@ -16,7 +16,7 @@ public interface JokeTextListView {
          *
          * @param newsList newsList
          */
-        void refreshData ( List< JokeTextRoot.Contentlist > newsList );
+        void onRefreshData ( List< JokeTextRoot.Contentlist > newsList );
 
         /**
          * 显示信息  e.g. 没有网络、正在加载、异常
@@ -32,7 +32,7 @@ public interface JokeTextListView {
          *
          * @param newsList add newsList
          */
-        void addMoreListData ( List< JokeTextRoot.Contentlist > newsList );
+        void onReceiveMoreListData ( List< JokeTextRoot.Contentlist > newsList );
 
         void hideInfo ( );
 }

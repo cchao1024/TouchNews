@@ -67,9 +67,9 @@ public class JokeImageListPresenter implements IContentListPresenter, NetRequest
                         List< JokeImageRoot.Contentlist > contentlist = jokeImageRoot.getShowapi_res_body ( ).getContentlist ( );
                         mJokeImageListView.hideInfo ( );
                         if ( jokeImageRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
-                                mJokeImageListView.refreshData ( contentlist );
+                                mJokeImageListView.onRefreshData ( contentlist );
                         } else {
-                                mJokeImageListView.addMoreListData ( contentlist );
+                                mJokeImageListView.onReceiveMoreListData ( contentlist );
                         }
                 }
         }
