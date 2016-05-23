@@ -12,5 +12,9 @@
     <string name="edit">编辑</string>
     <string name="share">分享</string>
     <string name="loading">正在加载</string>
+    <string name="none_net">网络未连接，点击重试</string>
+    <string name="none_net_show_action">网络未连接</string>
+    <string name="set">设置</string>
     <string name="action_search">search</string>
+    <string name="again_press_exit">再按一次退出程序</string>
 </resources>

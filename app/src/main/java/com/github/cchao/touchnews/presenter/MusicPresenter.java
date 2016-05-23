@@ -83,6 +83,7 @@ public class MusicPresenter implements IMusicPresenter {
         public void onDestroy ( ) {
                 mMusicList.clear ( );
                 EventBus.getDefault ( ).unregister ( this );
+                mMusicPlayer.onDestroy ();
         }
 
         @Override

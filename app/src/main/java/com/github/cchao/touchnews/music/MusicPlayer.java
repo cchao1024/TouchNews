@@ -50,11 +50,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mMediaPlayer.setOnBufferingUpdateListener ( this );
 
         }
-        public void exit ( ) {
-                mMediaPlayer.reset ( );
-                mMediaPlayer.release ( );
-                mMusicList.clear ( );
-        }
+
 
         public void setMusicList ( List< MusicEntity > musicList ) {
                 mMusicList = musicList;
@@ -157,7 +153,8 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
 
         }
-        public void onDestoy(  ){
+        public void onDestroy(  ){
+                mMediaPlayer.reset ( );
                 mMediaPlayer.release ();
                 mCurMusic=null;
                 mMusicList.clear ();

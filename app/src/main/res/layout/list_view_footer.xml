@@ -11,6 +11,6 @@
         android:gravity="center"
         android:padding="@dimen/news_item_margin"
         android:text="@string/loading"
-        android:textSize="@dimen/text_huge"
+        android:textSize="@dimen/text_large"
         />
 </LinearLayout>

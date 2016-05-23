@@ -73,7 +73,7 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                                         && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount()) {
                                         //加载更多
-                                        LogUtils.d(getClass ().getSimpleName (),"loading more data");
+                                        LogUtils.d(getClass ().getSimpleName (),"info_loading more data");
                                         mJokeImageListPresenter.getMoreData ();
                                 }
                         }
@@ -132,7 +132,7 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                 View infoView = null;
                 switch ( INFOType ) {
                         case LOADING:
-                                infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.loading, null );
+                                infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_loading, null );
                                 break;
                 }
                 mVaryViewWidget.setLoadingView ( infoView );

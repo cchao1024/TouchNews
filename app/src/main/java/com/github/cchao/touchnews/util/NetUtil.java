@@ -66,14 +66,10 @@ public class NetUtil
         /**
          * 打开网络设置界面
          */
-        public static void openSetting(Activity activity)
+        public static void openSetting(Context context)
         {
-                Intent intent = new Intent("/");
-                ComponentName cm = new ComponentName ("com.android.settings",
-                        "com.android.settings.WirelessSettings");
-                intent.setComponent(cm);
-                intent.setAction("android.intent.action.VIEW");
-                activity.startActivityForResult(intent, 0);
+                Intent  intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                context.startActivity ( intent );
         }
 
 }

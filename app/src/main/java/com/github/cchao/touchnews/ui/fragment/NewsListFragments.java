@@ -16,6 +16,8 @@ import com.github.cchao.touchnews.presenter.NewsListPresenter;
 import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.cchao.touchnews.util.Constant;
+import com.github.cchao.touchnews.util.NetUtil;
+import com.github.cchao.touchnews.util.SnackBarUtil;
 import com.github.cchao.touchnews.view.NewsListView;
 import com.github.cchao.touchnews.widget.VaryViewWidget;
 
@@ -57,24 +59,26 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                 mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
 
                 mNewsListRecyclerAdapter = new NewsListRecyclerAdapter ( mContext, mNewsItemList );
-                mRecyclerView.addOnScrollListener (new RecyclerView.OnScrollListener() {
+                mRecyclerView.addOnScrollListener ( new RecyclerView.OnScrollListener ( ) {
                         private int lastVisibleItem;
+
                         @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                                super.onScrolled(recyclerView, dx, dy);
-                                lastVisibleItem =((LinearLayoutManager)recyclerView.getLayoutManager ()).findLastVisibleItemPosition();
+                        public void onScrolled ( RecyclerView recyclerView, int dx, int dy ) {
+                                super.onScrolled ( recyclerView, dx, dy );
+                                lastVisibleItem = ( ( LinearLayoutManager ) recyclerView.getLayoutManager ( ) ).findLastVisibleItemPosition ( );
                         }
+
                         @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                                super.onScrollStateChanged(recyclerView, newState);
-                                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                                        && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount()) {
+                        public void onScrollStateChanged ( RecyclerView recyclerView, int newState ) {
+                                super.onScrollStateChanged ( recyclerView, newState );
+                                if ( newState == RecyclerView.SCROLL_STATE_IDLE
+                                        && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount ( ) ) {
                                         //加载更多
-                                        LogUtils.d(getClass ().getSimpleName (),"loading more data");
-                                        mNewsListPresenter.getMoreData ();
+                                        LogUtils.d ( getClass ( ).getSimpleName ( ), "info_loading more data" );
+                                        mNewsListPresenter.getMoreData ( );
                                 }
                         }
-                });
+                } );
                 mRecyclerView.setAdapter ( mNewsListRecyclerAdapter );
 
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
@@ -106,6 +110,7 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
 
         /**
          * 刷新数据
+         *
          * @param newsList newsList
          */
         @Override
@@ -119,6 +124,7 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
 
         /**
          * 上拉 添加数据
+         *
          * @param newsList add newsList
          */
         @Override
@@ -128,7 +134,7 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         }
 
         /**
-         * @param INFOType     枚举值 e.g. 没有网络、正在加载、异常
+         * @param INFOType 枚举值 e.g. 没有网络、正在加载、异常
          * @param infoText infoText 提示的文本内容
          */
         @Override
@@ -139,10 +145,32 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                 View infoView = null;
                 switch ( INFOType ) {
                         case LOADING:
-                                infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.loading, null );
+                                infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_loading, null );
+                                mVaryViewWidget.setLoadingView ( infoView );
+                                break;
+                        case NO_NET:
+                                //已有数据（那就是刷新或者加载更多）-> 那么在底部snack检测网络设置
+                                if ( mNewsItemList.size ( ) > 1 ) {
+                                        SnackBarUtil.showLong ( mRootView, R.string.none_net_show_action ).setAction ( R.string.set, new View.OnClickListener ( ) {
+                                                @Override
+                                                public void onClick ( View v ) {
+                                                        NetUtil.openSetting ( getActivity ( ) );
+                                                        mSwipeRefreshLayout.setRefreshing ( false );
+                                                }
+                                        } );
+                                } else {
+                                        //没有数据（那就是第一次加载数据）->点击重试>从新加载第一次资源
+                                        infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_no_net, null );
+                                        infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
+                                                @Override
+                                                public void onClick ( View v ) {
+                                                        mNewsListPresenter.getFirstData ( );
+                                                }
+                                        } );
+                                        mVaryViewWidget.setNoNetView ( infoView );
+                                }
                                 break;
                 }
-                mVaryViewWidget.setLoadingView ( infoView );
                 mVaryViewWidget.showView ( INFOType );
         }
 

@@ -188,6 +188,7 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         @Override
         public void onDestroy ( ) {
                 super.onDestroy ( );
+                mMusicsPresenter.onDestroy ();
         }
 
         /**

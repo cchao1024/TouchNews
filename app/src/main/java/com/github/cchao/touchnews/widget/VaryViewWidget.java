@@ -106,7 +106,7 @@ public class VaryViewWidget {
                                 infoView = mLoadingView;
                                 break;
                         case NO_NET:
-                                infoView = mAlertView;
+                                infoView = mNoNetView;
                                 break;
                         case ALERT:
                                 infoView = mAlertView;

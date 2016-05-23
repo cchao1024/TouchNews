@@ -39,6 +39,11 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
                 mLayoutInflater = LayoutInflater.from ( context );
         }
 
+        /**
+         * 获取当前滑动到的view 类型
+         * @param position 当前滑动位置
+         * @return 内容或者footView
+         */
         @Override
         public int getItemViewType ( int position ) {
                 if ( position + 1 == getItemCount ( ) ) {
@@ -54,35 +59,32 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
                         View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_news, parent, false );
                         return new MViewHolder ( view );
                 } else {
+                        //最后放置一个加载更多的 footView
                         View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
-                        return new RecyclerView.ViewHolder ( view){
-                                @Override
-                                public String toString ( ) {
-                                        return super.toString ( );
-                                }
-                        };
+                        return new RecyclerView.ViewHolder ( view ) { };
                 }
         }
 
         @Override
         public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
-                if(holder instanceof MViewHolder) {
+                if ( holder instanceof MViewHolder ) {
                         Contentlist contentEntity = mData.get ( position );
-                        ((MViewHolder)holder).mTitle.setText ( contentEntity.getTitle ( ) );
-                        ((MViewHolder)holder).mDescription.setText ( contentEntity.getDesc ( ) );
-                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ((MViewHolder)holder).mImage );
+                        ( ( MViewHolder ) holder ).mTitle.setText ( contentEntity.getTitle ( ) );
+                        ( ( MViewHolder ) holder ).mDescription.setText ( contentEntity.getDesc ( ) );
+                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ( ( MViewHolder ) holder ).mImage );
                 }
         }
 
         @Override
         public int getItemCount ( ) {
-                return mData.size ( )+1;
+                //多一个放加载更多
+                return mData.size ( ) + 1;
         }
 
         public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-                public TextView mTitle;
-                public TextView mDescription;
-                public ImageView mImage;
+                public TextView mTitle;//标题
+                public TextView mDescription;//描述内容
+                public ImageView mImage;//预览图
 
                 public MViewHolder ( View view ) {
                         super ( view );
@@ -94,13 +96,13 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
 
                 @Override
                 public void onClick ( View v ) {
+                        //点击跳转新闻页
                         Intent intent = new Intent ( mContext, NewsDetailActivity.class );
                         intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
 //                     View transitionView = view.findViewById(R.id.ivNews);
                         ActivityOptionsCompat options =
                                 ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
                                         mImage, mContext.getString ( R.string.transition__img ) );
-
                         ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
 
                 }

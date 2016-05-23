@@ -3,7 +3,9 @@ package com.github.cchao.touchnews.ui.activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +21,7 @@ import com.github.cchao.touchnews.javaBean.Weather;
 import com.github.cchao.touchnews.presenter.HomePresenter;
 import com.github.cchao.touchnews.presenter.i.IHomePresenter;
 import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
+import com.github.cchao.touchnews.util.SnackBarUtil;
 import com.github.cchao.touchnews.view.HomeView;
 import com.github.cchao.touchnews.widget.MyViewpager;
 import com.google.gson.Gson;
@@ -37,6 +40,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         NavigationView mNavigationView;
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
+
 
 
         @Override
@@ -158,4 +162,16 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         } );
                 }
         }
+        long preTime=0;
+        @Override
+        public void onBackPressed ( ) {
+                if(System.currentTimeMillis ()-preTime<=750){
+                        super.onBackPressed ( );
+                        finish ();
+                }else{
+                        preTime= System.currentTimeMillis ();
+                        SnackBarUtil.showShort ( mFragmentViewPager,R.string.again_press_exit );
+                }
+        }
+
 }
