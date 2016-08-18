@@ -22,7 +22,11 @@
             android:icon="@drawable/icon_chat"
             android:orderInCategory="4"
             android:title="@string/chat"/>
-
+        <item
+            android:id="@+id/menu_item_drawer_wx"
+            android:icon="@drawable/icon_wx"
+            android:orderInCategory="5"
+            android:title="@string/wx"/>
     </group>
 
 </menu>

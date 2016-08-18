@@ -14,6 +14,7 @@ import com.github.cchao.touchnews.BaseApplication;
 import com.github.cchao.touchnews.model.i.IHomeModel;
 import com.github.cchao.touchnews.presenter.i.IHomePresenter;
 import com.github.cchao.touchnews.ui.fragment.ChatFragment;
+import com.github.cchao.touchnews.ui.fragment.WxSelectFragment;
 import com.github.cchao.touchnews.ui.fragment.JokeContainerFragment;
 import com.github.cchao.touchnews.ui.fragment.MusicFragment;
 import com.github.cchao.touchnews.ui.fragment.NewsContainerFragment;
@@ -49,6 +50,7 @@ public class HomeModel implements IHomeModel {
                 mFragments.add ( new JokeContainerFragment ( ) );
                 mFragments.add ( new MusicFragment ( ) );
                 mFragments.add ( new ChatFragment ( ) );
+                mFragments.add ( new WxSelectFragment ( ) );
                 return mFragments;
         }
 

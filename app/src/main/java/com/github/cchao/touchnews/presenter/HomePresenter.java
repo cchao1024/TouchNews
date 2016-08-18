@@ -50,7 +50,6 @@ public class HomePresenter implements IHomePresenter {
                                         e.printStackTrace();
                                 }
                         }
-
                         @Override
                         public void onError ( VolleyError error ) {
 

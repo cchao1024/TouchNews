@@ -58,8 +58,8 @@ public class MusicFragment extends BaseFragment implements IMusicView {
         SearchView mMenuItemSearch;
         private IMusicPresenter mMusicsPresenter = null;
         MusicEntity mCurMusic;
-        List< String > mSearchChoose;
-        List<String> mSearchChooseDef;
+        List< String> mSearchChoose;
+        List< String> mSearchChooseDef;
         ArrayAdapter< String > mStringArrayAdapter;
 
         @Override

@@ -53,7 +53,6 @@ public class ChatFragment extends BaseFragment implements IChatView {
         public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
                 super.onCreateView ( inflater, container, savedInstanceState );
                 mRootView = inflater.inflate ( R.layout.fragment_chat, null );
-
                 return mRootView;
         }
 

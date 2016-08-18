@@ -17,4 +17,5 @@
     <string name="set">设置</string>
     <string name="action_search">search</string>
     <string name="again_press_exit">再按一次退出程序</string>
+    <string name="wx">微信精选</string>
 </resources>

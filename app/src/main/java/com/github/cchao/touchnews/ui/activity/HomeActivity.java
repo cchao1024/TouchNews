@@ -3,9 +3,7 @@ package com.github.cchao.touchnews.ui.activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomeView {
+
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
         @Bind ( R.id.viewpager_home_fragments_container )
@@ -40,7 +39,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
         NavigationView mNavigationView;
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
-
 
 
         @Override
@@ -72,7 +70,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
                                 for ( int i = 0 ; i < menu.size ( ) ; i++ ) {
                                         if ( item.getOrder ( ) == i + 1 ) {
                                                 mFragmentViewPager.setCurrentItem ( i, false );
-
                                                 item.setChecked ( true );
                                         } else {
                                                 item.setChecked ( false );
@@ -121,7 +118,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         @Override
         public void setNavigation ( final Weather weather ) {
 //                Log.e("setNavigation", weather.getBasic().getCity());
-                if ( weather != null &&weather.getNow ( )!=null) {
+                if ( weather != null && weather.getNow ( ) != null ) {
                         View headerView = mNavigationView.getHeaderView ( 0 );
 //                ImageView iconWeather = ( ( ImageView ) headerView.findViewById ( R.id.iv_weather_icon ) );
                         //天气类型 - 晴、多云
@@ -136,13 +133,13 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         int weatherCode = Integer.valueOf ( weather.getNow ( ).getCond ( ).getCode ( ) );
                         int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
                         tvTypeText.setCompoundDrawablesWithIntrinsicBounds ( 0, R.drawable.weather_999, 0, 0 );
-                        TypedArray ar = getResources().obtainTypedArray(R.array.weather_icon);
-                        int len = ar.length();
-                        int[] weatherDrawableID = new int[len];
-                        for (int i = 0; i < len; i++) {
+                        TypedArray ar = getResources ( ).obtainTypedArray ( R.array.weather_icon );
+                        int len = ar.length ( );
+                        int[] weatherDrawableID = new int[ len ];
+                        for ( int i = 0 ; i < len ; i++ ) {
                                 weatherDrawableID[ i ] = ar.getResourceId ( i, 0 );
                         }
-                        ar.recycle();
+                        ar.recycle ( );
                         //设置天气类型图标
                         for ( int i = 0 ; i < weatherCodeArr.length ; i++ ) {
                                 if ( weatherCodeArr[ i ] == weatherCode ) {
@@ -162,15 +159,17 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         } );
                 }
         }
-        long preTime=0;
+
+        long preTime = 0;
+
         @Override
         public void onBackPressed ( ) {
-                if(System.currentTimeMillis ()-preTime<=750){
+                if ( System.currentTimeMillis ( ) - preTime <= 1500 ) {
                         super.onBackPressed ( );
-                        finish ();
-                }else{
-                        preTime= System.currentTimeMillis ();
-                        SnackBarUtil.showShort ( mFragmentViewPager,R.string.again_press_exit );
+                        finish ( );
+                } else {
+                        preTime = System.currentTimeMillis ( );
+                        SnackBarUtil.showShort ( mFragmentViewPager, R.string.again_press_exit );
                 }
         }
 
