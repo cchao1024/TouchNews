@@ -1,6 +1,5 @@
 package com.github.cchao.touchnews.ui.activity;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -15,20 +14,23 @@ import com.github.cchao.touchnews.util.ImageUtil;
  */
 public class ImageBrowseActivity extends BaseActivity {
         @Override
-        protected void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( R.layout.activity_image_browse );
-                String url=getIntent ().getStringExtra ( "url" );
-                ImageUtil.displayImage ( this,url, ( ImageView ) findViewById ( R.id.iv_browse) );
+        protected int getLayoutID ( ) {
+                return R.layout.activity_image_browse;
         }
+
         @Override
-        public boolean onOptionsItemSelected(MenuItem item)
-        {
-                if(item.getItemId() == android.R.id.home)
-                {
-                        finish();
+        protected void initialize ( ) {
+                super.initialize ( );
+                String url = getIntent ( ).getStringExtra ( "url" );
+                ImageUtil.displayImage ( this, url, ( ImageView ) findViewById ( R.id.iv_browse ) );
+        }
+
+        @Override
+        public boolean onOptionsItemSelected ( MenuItem item ) {
+                if ( item.getItemId ( ) == android.R.id.home ) {
+                        finish ( );
                         return true;
                 }
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected ( item );
         }
 }

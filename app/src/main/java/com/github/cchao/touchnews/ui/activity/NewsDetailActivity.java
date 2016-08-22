@@ -2,7 +2,6 @@ package com.github.cchao.touchnews.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +19,6 @@ import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.github.cchao.touchnews.util.ImageUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/4/7.
@@ -37,10 +35,13 @@ public class NewsDetailActivity extends BaseActivity implements Toolbar.OnMenuIt
         Contentlist mContentlist;
 
         @Override
-        public void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( R.layout.activity_new_detail );
-                ButterKnife.bind ( this );
+        protected int getLayoutID ( ) {
+                return R.layout.activity_new_detail ;
+        }
+
+        @Override
+        protected void initialize ( ) {
+                super.initialize ( );
                 initViews ( );
                 setWebView ( );
                 setNavigationClick ( );

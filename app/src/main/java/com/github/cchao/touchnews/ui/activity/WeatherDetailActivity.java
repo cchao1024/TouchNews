@@ -1,7 +1,5 @@
 package com.github.cchao.touchnews.ui.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -11,7 +9,6 @@ import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.google.gson.Gson;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/5/6.
@@ -28,32 +25,34 @@ public class WeatherDetailActivity extends BaseActivity {
         Weather mWeatherData;
 
         @Override
-        protected void onCreate ( @Nullable Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( R.layout.activity_weather );
-                ButterKnife.bind ( this );
+        protected int getLayoutID ( ) {
+                return R.layout.activity_weather;
+        }
+
+        @Override
+        protected void initialize ( ) {
+                super.initialize ( );
                 //解析传过来的Json
                 mWeatherData = new Gson ( ).fromJson ( getIntent ( ).getStringExtra ( "data" ), Weather.class );
                 initViews ( );
         }
 
         /**
-         *  赋值
+         * 赋值
          */
         private void initViews ( ) {
                 mWeatherPosition.append ( mWeatherData.getBasic ( ).getCity ( ) + "、" + mWeatherData.getBasic ( ).getCity ( ) );
                 mWeatherText.append ( mWeatherData.getNow ( ).getCond ( ).getTxt ( ) );
                 //好烦呀，全部打印出来算了
-                mWeatherAll.append (  getIntent ( ).getStringExtra ( "data" ) );
+                mWeatherAll.append ( getIntent ( ).getStringExtra ( "data" ) );
         }
 
         @Override
         public boolean onOptionsItemSelected ( MenuItem item ) {
-                if(item.getItemId() == android.R.id.home)
-                {
-                        finish();
+                if ( item.getItemId ( ) == android.R.id.home ) {
+                        finish ( );
                         return true;
                 }
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected ( item );
         }
 }

@@ -1,12 +1,12 @@
 package com.github.cchao.touchnews.util;
 
 
-import com.github.cchao.touchnews.javaBean.UserID;
+import com.github.cchao.touchnews.javaBean.WxArticle;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by cchao on 2016/8/18.
@@ -14,7 +14,7 @@ import retrofit2.http.Query;
  * Description: retrofit api 接口
  */
 public interface ApiService {
-        //身份证信息
-        @GET ( "http://apis.baidu.com/apistore/idservice/id" )
-        Call< UserID > getID ( @Header ( "apikey" ) String apikey, @Query ( "id" ) String id );
+        //wx
+        @GET ( "showapi_open_bus/weixin/weixin_article_list" )
+        Observable< WxArticle > getID ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
 }

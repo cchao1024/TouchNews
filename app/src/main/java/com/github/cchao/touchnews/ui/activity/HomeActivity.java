@@ -2,7 +2,6 @@ package com.github.cchao.touchnews.ui.activity;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +26,6 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomeView {
 
@@ -42,10 +40,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
 
         @Override
-        protected void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( R.layout.activity_home );
-                ButterKnife.bind ( this );
+        protected int getLayoutID ( ) {
+                return R.layout.activity_home ;
+        }
+        @Override
+        protected void initialize ( ) {
+                super.initialize ( );
                 initNavigation ( );
                 addDrawerListener ( mToolbar );
                 initViews ( );

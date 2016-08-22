@@ -13,41 +13,46 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="com.github.cchao.touchnews.BaseApplication"
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--umeng - analytics-->
-        <meta-data android:value="5739942de0f55a0b3c001aab" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="APP01" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5739942de0f55a0b3c001aab"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="APP01"/>
 
         <activity
-            android:name="com.github.cchao.touchnews.ui.activity.HomeActivity"
+            android:name=".ui.activity.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:theme="@style/AppTheme.NoActionBar" android:launchMode="singleTop">
         </activity>
 
         <activity
-            android:name="com.github.cchao.touchnews.ui.activity.SplashActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:name=".ui.activity.SplashActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name="com.github.cchao.touchnews.ui.activity.NewsDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+            android:name=".ui.activity.NewsDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" android:launchMode="singleTop"/>
         <activity
-            android:name="com.github.cchao.touchnews.ui.activity.ImageBrowseActivity"
-            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+            android:name=".ui.activity.ImageBrowseActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" android:launchMode="singleTop"/>
         <activity
-            android:name="com.github.cchao.touchnews.ui.activity.WeatherDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar.Translucent"/>
+            android:name=".ui.activity.WeatherDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" android:launchMode="singleTop"/>
+        <activity
+            android:name=".ui.activity.WebActivity"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" android:launchMode="singleTop"/>
     </application>
 
 </manifest>

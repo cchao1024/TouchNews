@@ -17,14 +17,8 @@ import butterknife.ButterKnife;
  * Description:  持有Presenter的Fragment
  */
 public abstract class PresentFragment < P extends BasePresenter > extends BaseFragment {
-        View mRootView;
-        P mPresenter;
-
-        @Override
-        public void onCreate ( @Nullable Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                initialize ( );
-        }
+        protected View mRootView;
+        protected P mPresenter;
 
         @Nullable
         @Override
@@ -33,9 +27,16 @@ public abstract class PresentFragment < P extends BasePresenter > extends BaseFr
                 ButterKnife.bind ( this, mRootView );
                 return mRootView;
         }
+
+        @Override
+        public void onViewCreated ( View view, Bundle savedInstanceState ) {
+                super.onViewCreated ( view, savedInstanceState );
+                initialize ( );
+        }
+
         protected void initialize ( ) {
                 mPresenter = getPresenter ( );
-                mPresenter.attachView ( this );
+                mPresenter.bindView ( this );
         }
 
         //布局ID
@@ -51,7 +52,7 @@ public abstract class PresentFragment < P extends BasePresenter > extends BaseFr
                 super.onDestroyView ( );
                 ButterKnife.unbind ( this );
                 if ( mPresenter != null ) {
-                        mPresenter.detachView ( );
+                        mPresenter.unbindView ( );
                 }
         }
 }

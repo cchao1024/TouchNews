@@ -2,10 +2,10 @@ package com.github.cchao.touchnews.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Toast;
 
-import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.BaseApplication;
 
 /**
@@ -39,6 +39,14 @@ public class ToastUtil {
                 }
         }
 
+        public static void showShortToast ( CharSequence msg ) {
+                showToast ( BaseApplication.getContext ( ), msg, Toast.LENGTH_SHORT );
+        }
+
+        public static void showShortToast ( @StringRes int resId ) {
+                showToast ( BaseApplication.getContext ( ), resId, Toast.LENGTH_SHORT );
+        }
+
         public static void showShortToast ( Context context, int resId ) {
                 if ( context == null ) {
                         showToast ( BaseApplication.getContext ( ), resId, Toast.LENGTH_SHORT );
@@ -66,6 +74,10 @@ public class ToastUtil {
                         showToast ( context.getApplicationContext ( ), resId, Toast.LENGTH_LONG );
                 }
         }
+        public static void showLongToast (@StringRes int resId ) {
+                showToast ( BaseApplication.getContext ( ), resId, Toast.LENGTH_LONG );
+
+        }
 
         private static void showToast ( Context context, CharSequence msg, int duration ) {
                 try {
@@ -74,7 +86,7 @@ public class ToastUtil {
                         toast.setDuration ( duration );
                         toast.show ( );
                 } catch ( Exception e ) {
-                        LogUtils.d ( e.getMessage ( ) );
+                        LogUtil.d ( e.getMessage ( ) );
                 }
         }
 
@@ -88,7 +100,7 @@ public class ToastUtil {
                         toast.setDuration ( duration );
                         toast.show ( );
                 } catch ( Exception e ) {
-                        LogUtils.d ( e.getMessage ( ) );
+                        LogUtil.d ( e.getMessage ( ) );
                 }
         }
 
