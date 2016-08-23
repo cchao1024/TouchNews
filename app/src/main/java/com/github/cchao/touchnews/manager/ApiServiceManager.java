@@ -1,6 +1,6 @@
 package com.github.cchao.touchnews.manager;
 
-import com.github.cchao.touchnews.util.ApiService;
+import com.github.cchao.touchnews.util.BaiDuApiService;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -26,12 +26,12 @@ public class ApiServiceManager {
          * @param baseUrl baseUrl
          * @return
          */
-        public static ApiService getApiService ( String baseUrl ) {
+        public static BaiDuApiService getApiService ( String baseUrl ) {
                 Retrofit retrofit = new Retrofit.Builder()
                         .addConverterFactory( GsonConverterFactory.create())
                         .addCallAdapterFactory( RxJavaCallAdapterFactory.create())
                         .baseUrl ( baseUrl )
                         .build();
-                return retrofit.create(ApiService.class);
+                return retrofit.create(BaiDuApiService.class);
         }
 }

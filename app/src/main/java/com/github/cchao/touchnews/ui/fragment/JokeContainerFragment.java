@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.JokeFragmentsPagerAdapter;
+import com.github.cchao.touchnews.ui.adapter.JokeFragmentsPagerAdapter;
 import com.github.cchao.touchnews.presenter.JokeFragmentsContainerPresenter;
 import com.github.cchao.touchnews.presenter.i.IFragmentsContainerPresenter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;

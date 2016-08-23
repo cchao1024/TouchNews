@@ -3,7 +3,7 @@ package com.github.cchao.touchnews.model;
 import com.github.cchao.touchnews.model.i.IMusicsModel;
 import com.github.cchao.touchnews.presenter.i.IMusicPresenter;
 import com.github.cchao.touchnews.util.NetRequestUtil;
-import com.github.cchao.touchnews.util.UriUtil;
+import com.github.cchao.touchnews.util.UrlUtil;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class MusicsModel implements IMusicsModel {
          */
         public void loadMusicsHashList ( String s, NetRequestUtil.RequestListener requestListener ) {
                 param.put ( "s", s );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_MUSIC_HASH, param, headers, requestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_HASH, param, headers, requestListener );
         }
 
 
@@ -41,7 +41,7 @@ public class MusicsModel implements IMusicsModel {
         public void loadSingerAlbum ( String singerName, NetRequestUtil.RequestListener requestListener ) {
                 param.clear ( );
                 param.put ( "name", singerName );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_MUSIC_SINGER, param, headers, requestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_SINGER, param, headers, requestListener );
         }
 
 
@@ -62,7 +62,7 @@ public class MusicsModel implements IMusicsModel {
                 //根据hash获取Music播放地址
                 param.clear ( );
                 param.put ( "hash", hash );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_MUSIC_INFO, param, headers, requestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_INFO, param, headers, requestListener );
 
 //                        }
         }

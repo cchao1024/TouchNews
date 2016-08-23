@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.adapter;
+package com.github.cchao.touchnews.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

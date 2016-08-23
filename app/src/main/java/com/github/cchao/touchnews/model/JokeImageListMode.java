@@ -2,7 +2,7 @@ package com.github.cchao.touchnews.model;
 
 import com.github.cchao.touchnews.model.i.IListMode;
 import com.github.cchao.touchnews.util.NetRequestUtil;
-import com.github.cchao.touchnews.util.UriUtil;
+import com.github.cchao.touchnews.util.UrlUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +33,6 @@ public class JokeImageListMode implements IListMode {
         @Override
         public void loadMoreData ( ) {
                 param.put ( "page", "" + mCurrentPage++ );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_JOKE_IMAGE, param, headers, mRequestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_JOKE_IMAGE, param, headers, mRequestListener );
         }
 }

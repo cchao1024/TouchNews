@@ -1,6 +1,6 @@
 package com.github.cchao.touchnews.view;
 
-import com.github.cchao.touchnews.javaBean.MusicEntity;
+import com.github.cchao.touchnews.javaBean.music.MusicEntity;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
-import com.github.cchao.touchnews.javaBean.MusicEntity;
+import com.github.cchao.touchnews.javaBean.music.MusicEntity;
 import com.github.cchao.touchnews.javaBean.event.MusicEvent;
 import com.github.cchao.touchnews.javaBean.music.MusicPathRoot;
 import com.github.cchao.touchnews.javaBean.music.Data;

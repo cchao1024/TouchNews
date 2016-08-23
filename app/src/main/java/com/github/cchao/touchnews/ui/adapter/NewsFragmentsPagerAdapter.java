@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.adapter;
+package com.github.cchao.touchnews.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

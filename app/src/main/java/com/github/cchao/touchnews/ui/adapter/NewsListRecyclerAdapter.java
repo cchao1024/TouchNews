@@ -1,7 +1,9 @@
-package com.github.cchao.touchnews.adapter;
+package com.github.cchao.touchnews.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.contants.Keys;
-import com.github.cchao.touchnews.javaBean.WxArticle.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
-import com.github.cchao.touchnews.ui.activity.WebActivity;
+import com.github.cchao.touchnews.javaBean.news.Contentlist;
+import com.github.cchao.touchnews.ui.activity.HomeActivity;
+import com.github.cchao.touchnews.ui.activity.NewsDetailActivity;
 import com.github.cchao.touchnews.util.ImageUtil;
 
 import java.util.List;
@@ -20,18 +22,18 @@ import java.util.List;
 /**
  * Created by cchao on 2016/4/5.
  * E-mail:   cchao1024@163.com
- * Description: 微信精选Adapter
+ * Description:
  */
-public class WxArticleRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
+public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         public Context mContext;
-        public List< ContentlistBean > mData;
+        public List< Contentlist > mData;
         public LayoutInflater mLayoutInflater;
 
 //        private View.OnClickListener mOnClickListener;
 
-        public WxArticleRecyclerAdapter ( Context context, List< ContentlistBean > data ) {
+        public NewsListRecyclerAdapter ( Context context, List< Contentlist > data ) {
                 mContext = context;
                 mData = data;
                 mLayoutInflater = LayoutInflater.from ( context );
@@ -39,7 +41,6 @@ public class WxArticleRecyclerAdapter extends RecyclerView.Adapter< RecyclerView
 
         /**
          * 获取当前滑动到的view 类型
-         *
          * @param position 当前滑动位置
          * @return 内容或者footView
          */
@@ -67,20 +68,10 @@ public class WxArticleRecyclerAdapter extends RecyclerView.Adapter< RecyclerView
         @Override
         public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
                 if ( holder instanceof MViewHolder ) {
-                        final ContentlistBean contentEntity = mData.get ( position );
-                        ( ( MViewHolder ) holder ).mTitle.setText ( contentEntity.getTypeName ( ) );
-                        ( ( MViewHolder ) holder ).mDescription.setText ( contentEntity.getTitle ( ) );
-                        ( ( MViewHolder ) holder ).mViewRoot.setOnClickListener ( new View.OnClickListener ( ) {
-                                @Override
-                                public void onClick ( View v ) {
-                                        //跳转显示详情
-                                        Intent intent = new Intent ( mContext, WebActivity.class );
-                                        intent.putExtra ( Keys.URL, contentEntity.getUrl ( ) );
-                                        mContext.startActivity ( intent );
-                                }
-                        } );
-                        ImageUtil.displayImage ( mContext, contentEntity.getContentImg ( ), ( ( MViewHolder ) holder ).mImage );
-
+                        Contentlist contentEntity = mData.get ( position );
+                        ( ( MViewHolder ) holder ).mTitle.setText ( contentEntity.getTitle ( ) );
+                        ( ( MViewHolder ) holder ).mDescription.setText ( contentEntity.getDesc ( ) );
+                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ( ( MViewHolder ) holder ).mImage );
                 }
         }
 
@@ -90,18 +81,30 @@ public class WxArticleRecyclerAdapter extends RecyclerView.Adapter< RecyclerView
                 return mData.size ( ) + 1;
         }
 
-        public class MViewHolder extends RecyclerView.ViewHolder {
+        public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
                 public TextView mTitle;//标题
                 public TextView mDescription;//描述内容
                 public ImageView mImage;//预览图
-                public View mViewRoot;
 
                 public MViewHolder ( View view ) {
                         super ( view );
-                        mViewRoot = view.findViewById ( R.id.layout_content );
                         mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
                         mDescription = ( TextView ) view.findViewById ( R.id.tv_description );
                         mImage = ( ImageView ) view.findViewById ( R.id.imageView );
+                        view.setOnClickListener ( this );
+                }
+
+                @Override
+                public void onClick ( View v ) {
+                        //点击跳转新闻页
+                        Intent intent = new Intent ( mContext, NewsDetailActivity.class );
+                        intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
+//                     View transitionView = view.findViewById(R.id.ivNews);
+                        ActivityOptionsCompat options =
+                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
+                                        mImage, mContext.getString ( R.string.transition__img ) );
+                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
+
                 }
         }
 }

@@ -20,7 +20,7 @@ import com.github.cchao.touchnews.ui.fragment.MusicFragment;
 import com.github.cchao.touchnews.ui.fragment.NewsContainerFragment;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.cchao.touchnews.util.NetRequestUtil;
-import com.github.cchao.touchnews.util.UriUtil;
+import com.github.cchao.touchnews.util.UrlUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,9 +58,9 @@ public class HomeModel implements IHomeModel {
         public void loadNavigation ( final NetRequestUtil.RequestListener requestListener ) {
                 param.put ( "city", "广州");
                 //获取天气
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_WEATHER, param, headers, requestListener );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_WEATHER, param, headers, requestListener );
                 //根据IP地址获取城市名>获取天气数据
-                /*NetRequestUtil.getInstance ( ).getJson ( UriUtil.URL_CITY, null, new NetRequestUtil.RequestListener ( ) {
+                /*NetRequestUtil.getInstance ( ).getJson ( UrlUtil.URL_CITY, null, new NetRequestUtil.RequestListener ( ) {
                         @Override
                         public void onResponse ( JSONObject response ) {
                                 String responseStr=response.toString ();
@@ -70,7 +70,7 @@ public class HomeModel implements IHomeModel {
                                 param.put ( "city", "广州");
 //                                responseStr.s
                                 //获取天气
-                                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UriUtil.URL_WEATHER, param, headers, requestListener );
+                                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_WEATHER, param, headers, requestListener );
                         }
 
                         @Override

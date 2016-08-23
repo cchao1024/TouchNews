@@ -3,7 +3,7 @@ package com.github.cchao.touchnews.model;
 import com.github.cchao.touchnews.model.i.IChatModel;
 import com.github.cchao.touchnews.presenter.i.IChatPresenter;
 import com.github.cchao.touchnews.util.NetRequestUtil;
-import com.github.cchao.touchnews.util.UriUtil;
+import com.github.cchao.touchnews.util.UrlUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -23,7 +23,7 @@ public class ChatModel implements IChatModel {
         public ChatModel ( IChatPresenter chatPresenter, NetRequestUtil.RequestListener requestListener ) {
                 mChatPresenter = chatPresenter;
                 mRequestListener= requestListener;
-                param.put ( "key",UriUtil.TURING_KEY );
+                param.put ( "key", UrlUtil.TURING_KEY );
         }
 
         @Override
@@ -34,7 +34,7 @@ public class ChatModel implements IChatModel {
                 “userid”：“12345678”*/
                 param.put ( "info", EncodeString(message ));
                 param.put ( "userid","12345678" );
-                NetRequestUtil.getInstance ( ).getJson ( UriUtil.URL_CHAT, param, mRequestListener );
+                NetRequestUtil.getInstance ( ).getJson ( UrlUtil.URL_CHAT, param, mRequestListener );
         }
         public  String EncodeString(String str) {
                 try {

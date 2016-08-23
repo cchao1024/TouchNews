@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.JokeTextListRecyclerAdapter;
+import com.github.cchao.touchnews.ui.adapter.JokeTextListRecyclerAdapter;
 import com.github.cchao.touchnews.javaBean.joke.JokeTextRoot;
 import com.github.cchao.touchnews.presenter.JokeTextListPresenter;
 import com.github.cchao.touchnews.presenter.i.IContentListPresenter;

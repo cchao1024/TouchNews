@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.javaBean;
+package com.github.cchao.touchnews.javaBean.music;
 
 import com.github.cchao.touchnews.javaBean.music.Data;
 import com.github.cchao.touchnews.javaBean.music.MusicPathRoot;

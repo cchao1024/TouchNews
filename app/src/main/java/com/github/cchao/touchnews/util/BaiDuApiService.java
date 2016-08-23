@@ -13,8 +13,8 @@ import rx.Observable;
  * E-mail:   cchao1024@163.com
  * Description: retrofit api 接口
  */
-public interface ApiService {
+public interface BaiDuApiService {
         //wx
         @GET ( "showapi_open_bus/weixin/weixin_article_list" )
-        Observable< WxArticle > getID ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
+        Observable< WxArticle > getWxArticle ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
 }

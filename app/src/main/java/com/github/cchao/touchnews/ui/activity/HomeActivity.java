@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.HomeFragmentPagerAdapter;
+import com.github.cchao.touchnews.ui.adapter.HomeFragmentPagerAdapter;
 import com.github.cchao.touchnews.javaBean.Weather;
 import com.github.cchao.touchnews.presenter.HomePresenter;
 import com.github.cchao.touchnews.presenter.i.IHomePresenter;

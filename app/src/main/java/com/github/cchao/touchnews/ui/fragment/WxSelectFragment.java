@@ -6,10 +6,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.WxArticleRecyclerAdapter;
 import com.github.cchao.touchnews.javaBean.WxArticle.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
-import com.github.cchao.touchnews.presenter.BasePresenter;
 import com.github.cchao.touchnews.presenter.WxSelectPresenter;
+import com.github.cchao.touchnews.ui.adapter.WxArticleRecyclerAdapter;
 import com.github.cchao.touchnews.ui.fragment.base.PresentFragment;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.view.WxView;
@@ -38,7 +37,7 @@ public class WxSelectFragment extends PresentFragment implements WxView {
         }
 
         @Override
-        protected BasePresenter getPresenter ( ) {
+        protected WxSelectPresenter getPresenter ( ) {
                 return new WxSelectPresenter ( );
         }
 

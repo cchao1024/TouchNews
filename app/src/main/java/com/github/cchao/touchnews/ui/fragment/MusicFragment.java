@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.javaBean.MusicEntity;
+import com.github.cchao.touchnews.javaBean.music.MusicEntity;
 import com.github.cchao.touchnews.presenter.MusicPresenter;
 import com.github.cchao.touchnews.presenter.i.IMusicPresenter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;

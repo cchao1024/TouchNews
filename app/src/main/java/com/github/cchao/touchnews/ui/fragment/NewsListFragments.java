@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.NewsListRecyclerAdapter;
+import com.github.cchao.touchnews.ui.adapter.NewsListRecyclerAdapter;
 import com.github.cchao.touchnews.javaBean.news.Contentlist;
 import com.github.cchao.touchnews.presenter.NewsListPresenter;
 import com.github.cchao.touchnews.presenter.i.IContentListPresenter;

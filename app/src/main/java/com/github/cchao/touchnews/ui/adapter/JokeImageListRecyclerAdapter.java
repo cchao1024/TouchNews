@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.adapter;
+package com.github.cchao.touchnews.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.javaBean.news.Contentlist;
+import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
 import com.github.cchao.touchnews.ui.activity.HomeActivity;
-import com.github.cchao.touchnews.ui.activity.NewsDetailActivity;
+import com.github.cchao.touchnews.ui.activity.ImageBrowseActivity;
 import com.github.cchao.touchnews.util.ImageUtil;
 
 import java.util.List;
@@ -24,26 +24,21 @@ import java.util.List;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
+public class JokeImageListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_FOOTER = 1;
         public Context mContext;
-        public List< Contentlist > mData;
+        public List< JokeImageRoot.Contentlist > mData;
         public LayoutInflater mLayoutInflater;
 
 //        private View.OnClickListener mOnClickListener;
 
-        public NewsListRecyclerAdapter ( Context context, List< Contentlist > data ) {
+        public JokeImageListRecyclerAdapter ( Context context, List< JokeImageRoot.Contentlist > data ) {
                 mContext = context;
                 mData = data;
                 mLayoutInflater = LayoutInflater.from ( context );
         }
 
-        /**
-         * 获取当前滑动到的view 类型
-         * @param position 当前滑动位置
-         * @return 内容或者footView
-         */
         @Override
         public int getItemViewType ( int position ) {
                 if ( position + 1 == getItemCount ( ) ) {
@@ -56,54 +51,69 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
                 if ( viewType == TYPE_ITEM ) {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_news, parent, false );
+                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_joke_image, parent, false );
                         return new MViewHolder ( view );
                 } else {
-                        //最后放置一个加载更多的 footView
                         View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
-                        return new RecyclerView.ViewHolder ( view ) { };
+                        return new RecyclerView.ViewHolder ( view ) {
+                                @Override
+                                public String toString ( ) {
+                                        return super.toString ( );
+                                }
+                        };
                 }
         }
 
         @Override
-        public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
+        public void onBindViewHolder ( final RecyclerView.ViewHolder holder, final int position ) {
                 if ( holder instanceof MViewHolder ) {
-                        Contentlist contentEntity = mData.get ( position );
+                        JokeImageRoot.Contentlist contentEntity = mData.get ( position );
                         ( ( MViewHolder ) holder ).mTitle.setText ( contentEntity.getTitle ( ) );
-                        ( ( MViewHolder ) holder ).mDescription.setText ( contentEntity.getDesc ( ) );
-                        ImageUtil.displayImage ( mContext, contentEntity.getImageurls ( ).get ( 0 ).getUrl ( ), ( ( MViewHolder ) holder ).mImage );
+                        final ImageView imageView = ( ( MViewHolder ) holder ).mImage;
+                        ImageUtil.displayImage ( mContext, contentEntity.getImg ( ), imageView );
+
+                        imageView.setOnClickListener ( new View.OnClickListener ( ) {
+                                @Override
+                                public void onClick ( View v ) {
+                                        Intent intent = new Intent ( mContext, ImageBrowseActivity.class );
+                                        intent.putExtra ( "url", mData.get ( position ).getImg ( ) );
+//                     View transitionView = view.findViewById(R.id.ivNews);
+                                        ActivityOptionsCompat options =
+                                                ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
+                                                        imageView, mContext.getString ( R.string.transition__img ) );
+
+                                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
+
+                                }
+                        } );
                 }
         }
 
         @Override
         public int getItemCount ( ) {
-                //多一个放加载更多
                 return mData.size ( ) + 1;
         }
 
         public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-                public TextView mTitle;//标题
-                public TextView mDescription;//描述内容
-                public ImageView mImage;//预览图
+                public TextView mTitle;
+                public ImageView mImage;
 
                 public MViewHolder ( View view ) {
                         super ( view );
                         mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
-                        mDescription = ( TextView ) view.findViewById ( R.id.tv_description );
                         mImage = ( ImageView ) view.findViewById ( R.id.imageView );
-                        view.setOnClickListener ( this );
                 }
 
                 @Override
                 public void onClick ( View v ) {
-                        //点击跳转新闻页
-                        Intent intent = new Intent ( mContext, NewsDetailActivity.class );
+                       /* Intent intent = new Intent ( mContext, NewsDetailActivity.class );
                         intent.putExtra ( "contentList", mData.get ( this.getLayoutPosition ( ) ) );
 //                     View transitionView = view.findViewById(R.id.ivNews);
                         ActivityOptionsCompat options =
                                 ActivityOptionsCompat.makeSceneTransitionAnimation ( ( HomeActivity ) mContext,
                                         mImage, mContext.getString ( R.string.transition__img ) );
-                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );
+
+                        ActivityCompat.startActivity ( ( HomeActivity ) mContext, intent, options.toBundle ( ) );*/
 
                 }
         }

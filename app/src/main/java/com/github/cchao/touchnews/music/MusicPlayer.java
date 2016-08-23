@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
-import com.github.cchao.touchnews.javaBean.MusicEntity;
+import com.github.cchao.touchnews.javaBean.music.MusicEntity;
 import com.github.cchao.touchnews.javaBean.event.MusicEvent;
 import com.github.cchao.touchnews.util.ToastUtil;
 

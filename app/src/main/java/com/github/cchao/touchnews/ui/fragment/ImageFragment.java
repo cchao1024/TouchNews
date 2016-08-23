@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.adapter.ImageFragmentsPagerAdapter;
+import com.github.cchao.touchnews.ui.adapter.ImageFragmentsPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
