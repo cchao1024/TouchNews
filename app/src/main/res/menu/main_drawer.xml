@@ -28,5 +28,25 @@
             android:orderInCategory="5"
             android:title="@string/wx"/>
     </group>
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="none"
+        android:orderInCategory="6">
+        <item
+            android:id="@+id/nav_theme"
+            android:title="主题风格"/>
+        <item
+            android:id="@+id/nav_night"
+            android:title="夜间模式"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:title="设置"/>
+        <item
+            android:id="@+id/nav_suggestion"
+            android:title="意见反馈"/>
+        <item
+            android:id="@+id/nav_about"
+            android:title="关于"/>
 
+    </group>
 </menu>

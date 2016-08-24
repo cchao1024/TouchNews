@@ -42,6 +42,6 @@ public class BaseFragment extends BaseLazyFragment{
          */
         private void setSupportActionBar ( ) {
                 ( ( AppCompatActivity ) getActivity ( ) ).setSupportActionBar ( mToolbar );
-                ( ( HomeActivity ) getActivity ( ) ).addDrawerListener ( mToolbar );
+                ( ( HomeActivity ) getActivity ( ) ).setDrawerLayout ( mToolbar );
         }
 }

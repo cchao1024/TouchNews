@@ -6,18 +6,17 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.adapter.HomeFragmentPagerAdapter;
 import com.github.cchao.touchnews.javaBean.Weather;
 import com.github.cchao.touchnews.presenter.HomePresenter;
 import com.github.cchao.touchnews.presenter.i.IHomePresenter;
 import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
+import com.github.cchao.touchnews.ui.adapter.HomeFragmentPagerAdapter;
 import com.github.cchao.touchnews.util.SnackBarUtil;
 import com.github.cchao.touchnews.view.HomeView;
 import com.github.cchao.touchnews.widget.MyViewpager;
@@ -27,7 +26,11 @@ import java.util.List;
 
 import butterknife.Bind;
 
+/**
+ * 主界面
+ */
 public class HomeActivity extends BaseActivity implements HomeView {
+
 
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
@@ -38,24 +41,16 @@ public class HomeActivity extends BaseActivity implements HomeView {
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
 
-
         @Override
         protected int getLayoutID ( ) {
-                return R.layout.activity_home ;
+                return R.layout.activity_home;
         }
+
         @Override
         protected void initialize ( ) {
                 super.initialize ( );
                 initNavigation ( );
-                addDrawerListener ( mToolbar );
                 initViews ( );
-        }
-
-        public void addDrawerListener ( Toolbar toolbar ) {
-                mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, toolbar, R.string.open,
-                        R.string.close );
-                mActionBarDrawerToggle.syncState ( );
-                mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );
         }
 
         private void initNavigation ( ) {
@@ -128,8 +123,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         //城市位置 - 广州
                         TextView tvPosition = ( ( TextView ) headerView.findViewById ( R.id.tv_weather_position ) );
                         //天气类型代码
-
-
                         int weatherCode = Integer.valueOf ( weather.getNow ( ).getCond ( ).getCode ( ) );
                         int[] weatherCodeArr = getResources ( ).getIntArray ( R.array.weather_code );
                         tvTypeText.setCompoundDrawablesWithIntrinsicBounds ( 0, R.drawable.weather_999, 0, 0 );
@@ -160,6 +153,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 }
         }
 
+        /**
+         * 再按一次退出程序
+         */
         long preTime = 0;
 
         @Override

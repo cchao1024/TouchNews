@@ -1,6 +1,6 @@
 package com.github.cchao.touchnews.di.module;
 
-import android.content.Context;
+import android.app.Application;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,14 +13,14 @@ import dagger.Provides;
 @Module
 public final class AppModule {
 
-        private final Context mContext;
+        private Application application;
 
-        AppModule ( Context context ) {
-                mContext = context;
+        public AppModule ( Application application ) {
+                this.application = application;
         }
 
         @Provides
-        Context provideContext ( ) {
-                return mContext;
+        public Application provideApplication ( ) {
+                return application;
         }
 }

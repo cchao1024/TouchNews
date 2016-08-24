@@ -1,7 +1,10 @@
 package com.github.cchao.touchnews.di.component;
 
-import com.github.cchao.touchnews.di.module.*;
-import com.github.cchao.touchnews.presenter.BasePresenter;
+import com.github.cchao.touchnews.di.module.ApiModule;
+import com.github.cchao.touchnews.di.module.AppModule;
+import com.github.cchao.touchnews.presenter.WxSelectPresenter;
+
+import javax.inject.Singleton;
 
 import dagger.Component;
 
@@ -10,7 +13,8 @@ import dagger.Component;
  * E-mail:   cchao1024@163.com
  * Description: application
  */
+@Singleton
 @Component ( modules = { AppModule.class , ApiModule.class } )
 public interface AppComponent {
-        void inject ( BasePresenter presenter );
+        void inject ( WxSelectPresenter presenter );
 }

@@ -20,6 +20,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         protected Toolbar mToolbar;
         public Context mContext = this;
 
+        /**
+         * @return 界面布局
+         */
         protected abstract
         @LayoutRes
         int getLayoutID ( );
@@ -32,6 +35,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 setToolbar ( );
                 initialize ( );
         }
+
+        /**
+         * 设置获取Toolbar
+         */
         private void setToolbar ( ) {
                 mToolbar = ButterKnife.findById ( this, R.id.toolbar );
                 if ( null != mToolbar ) {
@@ -40,6 +47,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                         getSupportActionBar ( ).setDisplayHomeAsUpEnabled ( true );
                 }
         }
+
+        /**
+         * 初始化界面
+         */
         protected void initialize ( ) {}
 
         @Override
