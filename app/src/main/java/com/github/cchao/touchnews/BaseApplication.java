@@ -19,6 +19,14 @@ public class BaseApplication extends Application {
         private static Context context;
         private static AppComponent mAppComponent;
 
+        public static AppComponent getAppComponent ( ) {
+                return mAppComponent;
+        }
+
+        public static Context getContext ( ) {
+                return context;
+        }
+
         @Override
         public void onCreate ( ) {
                 super.onCreate ( );
@@ -28,14 +36,20 @@ public class BaseApplication extends Application {
                 MobclickAgent.startWithConfigure ( new MobclickAgent.UMAnalyticsConfig ( this, "5739942de0f55a0b3c001aab", "APP0" ) );
         }
 
+        /**
+         * 设置LogUtil
+         */
         private void setupLogUtils ( ) {
                 LogUtils.getLogConfig ( )
                         .configAllowLog ( true )
-                        .configTagPrefix ( "LogUtils" )
+                        .configTagPrefix ( "TouchNews" )
                         .configShowBorders ( true )
                         .configLevel ( LogLevel.TYPE_VERBOSE );
         }
 
+        /**
+         * 设置AppComponent
+         */
         private void setupComponent ( ) {
                 mAppComponent = DaggerAppComponent.builder ( )
                         .appModule ( new AppModule ( this ) )
@@ -51,13 +65,5 @@ public class BaseApplication extends Application {
         @Override
         public void onConfigurationChanged ( Configuration newConfig ) {
                 super.onConfigurationChanged ( newConfig );
-        }
-
-        public static AppComponent getAppComponent ( ) {
-                return mAppComponent;
-        }
-
-        public static Context getContext ( ) {
-                return context;
         }
 }

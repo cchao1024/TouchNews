@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/header_height"
                 android:background="@color/colorPrimary"
-                android:paddingTop="@dimen/margin_huge"
-                android:fitsSystemWindows="false">
+                android:fitsSystemWindows="false"
+                android:paddingTop="@dimen/margin_huge">
 
     <TextView
         android:id="@+id/iv_user_photo"
@@ -16,9 +17,9 @@
         android:layout_marginLeft="@dimen/margin_large"
         android:drawableTop="@drawable/icon_user"
         android:gravity="center_horizontal"
-        android:text="cchao"
         android:textColor="@color/textWhite"
-        android:textSize="@dimen/text_large"/>
+        android:textSize="@dimen/text_large"
+        tools:text="cchao"/>
 
     <ImageView
         android:id="@+id/btn_user_exit"
@@ -27,31 +28,29 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_large"
         android:src="@drawable/icon_user_exit"/>
 
     <RelativeLayout
         android:id="@+id/layout_drawer_header_weather"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_user_exit"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/margin_medium">
-
-
+        android:layout_below="@+id/btn_user_exit"
+        android:layout_margin="@dimen/margin_large">
         <TextView
             android:id="@+id/tv_weather_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_toLeftOf="@+id/linearLayout"
             android:drawableTop="@drawable/weather_999"
             android:gravity="center"
-            android:layout_toLeftOf="@+id/linearLayout"
-            android:layout_marginRight="@dimen/margin_medium"
             android:textColor="@color/textWhite"
-            android:text="晴"/>
+            tools:text="晴"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -67,19 +66,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_temperature"
-                android:text="32"
                 android:paddingBottom="@dimen/margin_medium"
-                android:textColor="@color/textWhite"
                 android:textAppearance="?textAppearanceLargePopupMenu"
-                android:textSize="@dimen/text_large"/>
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_large"
+                tools:text="32"/>
             <TextView
                 android:id="@+id/tv_weather_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="广州"
                 android:textColor="@color/textWhite"
-                android:textSize="@dimen/text_small"/>
+                android:textSize="@dimen/text_small"
+                tools:text="广州"/>
         </LinearLayout>
     </RelativeLayout>
 

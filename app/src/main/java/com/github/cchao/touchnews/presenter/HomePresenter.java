@@ -13,12 +13,11 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.BaseApplication;
+import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.javaBean.Weather;
-import com.github.cchao.touchnews.model.i.IHomeModel;
 import com.github.cchao.touchnews.presenter.i.IHomePresenter;
 import com.github.cchao.touchnews.ui.fragment.ChatFragment;
 import com.github.cchao.touchnews.ui.fragment.JokeContainerFragment;
-import com.github.cchao.touchnews.ui.fragment.MusicFragment;
 import com.github.cchao.touchnews.ui.fragment.NewsContainerFragment;
 import com.github.cchao.touchnews.ui.fragment.WxSelectFragment;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
@@ -42,7 +41,6 @@ import java.util.Map;
  */
 public class HomePresenter implements IHomePresenter {
         HomeView mHomeView;
-        IHomeModel mHomeModel;
         Gson gson = new Gson ( );
         List< BaseLazyFragment > mFragments;
         Map< String, String > param = new HashMap<> ( );
@@ -57,7 +55,6 @@ public class HomePresenter implements IHomePresenter {
                 mFragments = new ArrayList<> ( );
                 mFragments.add ( new NewsContainerFragment ( ) );
                 mFragments.add ( new JokeContainerFragment ( ) );
-                mFragments.add ( new MusicFragment ( ) );
                 mFragments.add ( new ChatFragment ( ) );
                 mFragments.add ( new WxSelectFragment ( ) );
                 mHomeView.setFragmentPager ( mFragments );
@@ -65,8 +62,8 @@ public class HomePresenter implements IHomePresenter {
 
         @Override
         public void getNavigation ( ) {
-                headers.put ( "apikey", "1bb91df70ccde8148a2c3da582ca9ff2" );
-                param.put ( "city", "广州" );
+                headers.put ( Keys.API_KEY, Keys.WEATHER_KEY );
+                param.put ( Keys.CITY, "广州" );
                 //获取天气
                 NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_WEATHER, param, headers, new NetRequestUtil.RequestListener ( ) {
                         @Override

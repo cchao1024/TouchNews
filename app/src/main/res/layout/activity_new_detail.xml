@@ -9,8 +9,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/news_detail_image_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_new_detail"
@@ -56,10 +56,10 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grey12"
+                android:background="@color/greyC"
                 android:max="100"
-                android:visibility="invisible"
-                android:progressDrawable="@drawable/selector_progressbar_web_view"/>
+                android:progressDrawable="@drawable/selector_progressbar_web_view"
+                android:visibility="invisible"/>
 
             <WebView
                 android:id="@+id/webview_new_detail"

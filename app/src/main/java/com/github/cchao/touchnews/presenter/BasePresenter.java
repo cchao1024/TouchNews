@@ -1,18 +1,19 @@
 package com.github.cchao.touchnews.presenter;
 
 import com.github.cchao.touchnews.BaseApplication;
-import com.github.cchao.touchnews.di.component.AppComponent;
+import com.github.cchao.touchnews.util.BaiDuApiService;
 
 /**
  * Created by cchao on 2016/8/18.
  * E-mail:   cchao1024@163.com
- * Description:
+ * Description: 根 Presenter 绑定View
  */
 public abstract class BasePresenter < V > {
+        BaiDuApiService mBaiDApiService;
         V mView;
 
         public BasePresenter ( ) {
-                setupActivityComponent ( BaseApplication.getAppComponent ( ) );
+                mBaiDApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
         }
 
         public void bindView ( V mvpView ) {
@@ -23,18 +24,4 @@ public abstract class BasePresenter < V > {
                 this.mView = null;
         }
 
-        /**
-         * 刷新或初次加载数据
-         */
-        public void refreshData ( ) {}
-
-        /**
-         * 加载更多数据
-         */
-        public void loadMoreData ( ) {}
-
-        /**
-         * inject
-         */
-        protected abstract void setupActivityComponent ( AppComponent appComponent );
 }

@@ -11,8 +11,7 @@
         android:id="@+id/viewpager_home_fragments_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_home"

@@ -13,19 +13,14 @@
             android:orderInCategory="2"
             android:title="@string/joke"/>
         <item
-            android:id="@+id/menu_item_drawer_music"
-            android:icon="@drawable/icon_music"
-            android:orderInCategory="3"
-            android:title="@string/music"/>
-        <item
             android:id="@+id/menu_item_drawer_chat"
             android:icon="@drawable/icon_chat"
-            android:orderInCategory="4"
+            android:orderInCategory="3"
             android:title="@string/chat"/>
         <item
             android:id="@+id/menu_item_drawer_wx"
             android:icon="@drawable/icon_wx"
-            android:orderInCategory="5"
+            android:orderInCategory="4"
             android:title="@string/wx"/>
     </group>
     <group

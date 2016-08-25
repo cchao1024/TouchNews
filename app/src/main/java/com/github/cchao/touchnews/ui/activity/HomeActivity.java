@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +31,6 @@ import butterknife.Bind;
  * 主界面
  */
 public class HomeActivity extends BaseActivity implements HomeView {
-
-
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
         @Bind ( R.id.viewpager_home_fragments_container )
@@ -40,6 +39,10 @@ public class HomeActivity extends BaseActivity implements HomeView {
         NavigationView mNavigationView;
         IHomePresenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
+        /**
+         * 再按一次退出程序
+         */
+        long preTime = 0;
 
         @Override
         protected int getLayoutID ( ) {
@@ -49,15 +52,23 @@ public class HomeActivity extends BaseActivity implements HomeView {
         @Override
         protected void initialize ( ) {
                 super.initialize ( );
+                addDrawerListener ( mToolbar );
                 initNavigation ( );
                 initViews ( );
         }
 
-        private void initNavigation ( ) {
-                mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, mToolbar, R.string.open,
+        public void addDrawerListener ( Toolbar toolbar ) {
+                mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, toolbar, R.string.open,
                         R.string.close );
                 mActionBarDrawerToggle.syncState ( );
                 mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );
+        }
+
+        private void initNavigation ( ) {
+                /*mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, mToolbar, R.string.open,
+                        R.string.close );
+                mActionBarDrawerToggle.syncState ( );
+                mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );*/
                 mNavigationView.setNavigationItemSelectedListener ( new NavigationView.OnNavigationItemSelectedListener ( ) {
                         @Override
                         public boolean onNavigationItemSelected ( MenuItem item ) {
@@ -76,12 +87,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 } );
         }
 
-        private void initViews ( ) {
-                mHomePresenter = new HomePresenter ( this );
-                mHomePresenter.getFragments ( );
-                mHomePresenter.getNavigation ( );
-        }
-
        /* @Override
         public boolean onCreateOptionsMenu ( Menu menu ) {
                 // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,18 +94,22 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 return true;
         }*/
 
+        private void initViews ( ) {
+                mHomePresenter = new HomePresenter ( this );
+                mHomePresenter.getFragments ( );
+                mHomePresenter.getNavigation ( );
+        }
+
         @Override
         public boolean onOptionsItemSelected ( MenuItem item ) {
                 // Handle action bar item clicks here. The action bar will
                 // automatically handle clicks on the Home/Up button, so long
                 // as you specify a parent activity in AndroidManifest.xml.
                 int id = item.getItemId ( );
-
                 //noinspection SimplifiableIfStatement
                 if ( id == R.id.action_settings ) {
                         return true;
                 }
-
                 return super.onOptionsItemSelected ( item );
         }
 
@@ -152,11 +161,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
                         } );
                 }
         }
-
-        /**
-         * 再按一次退出程序
-         */
-        long preTime = 0;
 
         @Override
         public void onBackPressed ( ) {

@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="@color/grey12"/>
+            <solid android:color="@color/greyC"/>
             <size android:height="3dp"/>
         </shape>
     </item>
