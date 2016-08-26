@@ -6,33 +6,30 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.adapter.JokeImageListRecyclerAdapter;
+import com.github.cchao.touchnews.contract.JokeImageListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
 import com.github.cchao.touchnews.presenter.JokeImageListPresenter;
-import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
-import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.cchao.touchnews.ui.adapter.JokeImageListRecyclerAdapter;
+import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.NetUtil;
 import com.github.cchao.touchnews.util.SnackBarUtil;
-import com.github.cchao.touchnews.view.JokeImageListView;
 import com.github.cchao.touchnews.widget.VaryViewWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/3/30.
  * E-mail:   cchao1024@163.com
  * Description: 开心一刻- 图片类Fragment
  */
-public class JokeImageListFragments extends BaseLazyFragment implements JokeImageListView, SwipeRefreshLayout.OnRefreshListener {
+public class JokeImageListFragments extends BaseFragment implements JokeImageListContract.View, SwipeRefreshLayout.OnRefreshListener {
         @Bind ( R.id.swipe_refresh_joke_image_list )
         SwipeRefreshLayout mSwipeRefreshLayout;
         @Bind ( R.id.recycle_view_joke_image )
@@ -40,16 +37,8 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
         View mRootView;
         List< JokeImageRoot.Contentlist > mContentList;
         JokeImageListRecyclerAdapter mRecyclerAdapter;
-        IContentListPresenter mJokeImageListPresenter;
+        JokeImageListContract.Presenter mPresenter;
         VaryViewWidget mVaryViewWidget;
-
-        @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                mRootView = inflater.inflate ( R.layout.fragment_joke_image, null );
-                ButterKnife.bind ( this, mRootView );
-                return mRootView;
-        }
 
         @Override
         public void onViewCreated ( View view, Bundle savedInstanceState ) {
@@ -62,24 +51,26 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                 mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
 
                 mRecyclerAdapter = new JokeImageListRecyclerAdapter ( mContext, mContentList );
-                mRecyclerView.addOnScrollListener (new RecyclerView.OnScrollListener() {
+                mRecyclerView.addOnScrollListener ( new RecyclerView.OnScrollListener ( ) {
                         private int lastVisibleItem;
+
                         @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                                super.onScrolled(recyclerView, dx, dy);
-                                lastVisibleItem =((LinearLayoutManager)recyclerView.getLayoutManager ()).findLastVisibleItemPosition();
+                        public void onScrolled ( RecyclerView recyclerView, int dx, int dy ) {
+                                super.onScrolled ( recyclerView, dx, dy );
+                                lastVisibleItem = ( ( LinearLayoutManager ) recyclerView.getLayoutManager ( ) ).findLastVisibleItemPosition ( );
                         }
+
                         @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                                super.onScrollStateChanged(recyclerView, newState);
-                                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                                        && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount()) {
+                        public void onScrollStateChanged ( RecyclerView recyclerView, int newState ) {
+                                super.onScrollStateChanged ( recyclerView, newState );
+                                if ( newState == RecyclerView.SCROLL_STATE_IDLE
+                                        && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount ( ) ) {
                                         //加载更多
-                                        LogUtils.d(getClass ().getSimpleName (),"info_loading more data");
-                                        mJokeImageListPresenter.getMoreData ();
+                                        LogUtils.d ( getClass ( ).getSimpleName ( ), "info_loading more data" );
+                                        mPresenter.getMoreData ( );
                                 }
                         }
-                });
+                } );
                 mRecyclerView.setAdapter ( mRecyclerAdapter );
 
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
@@ -91,17 +82,27 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
-                mJokeImageListPresenter = new JokeImageListPresenter ( this, "1" );
-                mJokeImageListPresenter.getFirstData ( );
+                mPresenter.getRefreshData ( );
+        }
+
+        @Override
+        protected int getLayoutId ( ) {
+                return R.layout.fragment_joke_image;
+        }
+
+        @Override
+        public void bindPresenter ( ) {
+                mPresenter = new JokeImageListPresenter ( this );
         }
 
         @Override
         public void onRefresh ( ) {
-                mJokeImageListPresenter.getRefreshData ( );
+                mPresenter.getRefreshData ( );
         }
 
         /**
          * 刷新数据
+         *
          * @param newsList newsList
          */
         @Override
@@ -110,26 +111,27 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
-                if(mContentList.size ()<7){
-                        mJokeImageListPresenter.getMoreData ( );
+                if ( mContentList.size ( ) < 7 ) {
+                        mPresenter.getMoreData ( );
                 }
         }
 
         /**
-         *  上拉添加数据
+         * 上拉添加数据
+         *
          * @param newsList add newsList
          */
         @Override
         public void onReceiveMoreListData ( List< JokeImageRoot.Contentlist > newsList ) {
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
-                if(mContentList.size ()<7){
-                        mJokeImageListPresenter.getMoreData ( );
+                if ( mContentList.size ( ) < 7 ) {
+                        mPresenter.getMoreData ( );
                 }
         }
 
         /**
-         * @param INFOType     枚举值 e.g. 没有网络、正在加载、异常
+         * @param INFOType 枚举值 e.g. 没有网络、正在加载、异常
          * @param infoText infoText 提示的文本内容
          */
         @Override
@@ -158,7 +160,7 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                                         infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
                                                 @Override
                                                 public void onClick ( View v ) {
-                                                        mJokeImageListPresenter.getFirstData ( );
+                                                        mPresenter.getRefreshData ( );
                                                 }
                                         } );
                                         mVaryViewWidget.setNoNetView ( infoView );
@@ -175,5 +177,6 @@ public class JokeImageListFragments extends BaseLazyFragment implements JokeImag
                         mVaryViewWidget.hideInfo ( );
                 }
         }
+
 
 }

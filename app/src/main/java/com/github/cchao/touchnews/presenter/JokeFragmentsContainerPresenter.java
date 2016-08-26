@@ -20,7 +20,7 @@ public class JokeFragmentsContainerPresenter implements IFragmentsContainerPrese
         }
 
         @Override
-        public void setFragments ( ) {
+        public void getFragments ( ) {
                 mView.onSetFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
         }
 }

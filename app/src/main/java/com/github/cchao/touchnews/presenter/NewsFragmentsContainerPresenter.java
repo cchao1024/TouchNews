@@ -1,26 +1,57 @@
 package com.github.cchao.touchnews.presenter;
 
-import com.github.cchao.touchnews.model.i.IFragmentsContainerModel;
-import com.github.cchao.touchnews.model.NewsContainerFragmentModel;
-import com.github.cchao.touchnews.presenter.i.IFragmentsContainerPresenter;
-import com.github.cchao.touchnews.view.FragmentsContainerView;
+import com.github.cchao.touchnews.BaseApplication;
+import com.github.cchao.touchnews.R;
+import com.github.cchao.touchnews.contract.FragmentContainerContract;
+import com.github.cchao.touchnews.ui.fragment.NewsListFragments;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cchao on 2016/3/31.
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class NewsFragmentsContainerPresenter implements IFragmentsContainerPresenter {
-        FragmentsContainerView mView;
-        IFragmentsContainerModel mModel;
+public class NewsFragmentsContainerPresenter implements FragmentContainerContract.Presenter {
+        List< NewsListFragments > mFragments;
+        String[] mTitles;
+        FragmentContainerContract.View mView;
 
-        public NewsFragmentsContainerPresenter ( FragmentsContainerView view ) {
+        public NewsFragmentsContainerPresenter ( FragmentContainerContract.View view ) {
                 mView = view;
-                mModel = new NewsContainerFragmentModel ( this );
         }
 
         @Override
-        public void setFragments ( ) {
-                mView.onSetFragment ( mModel.getFragments ( ), mModel.getTitles ( ) );
+        public void onStart ( ) {
+                mView.setFragment ( getFragments ( ), getTitles ( ) );
         }
+
+        /**
+         * @return 新闻频道List
+         */
+        public List< NewsListFragments > getFragments ( ) {
+                mFragments = new ArrayList<> ( );
+                //Arguments 加入新闻频道ID
+                String[] newsChannelId = BaseApplication.getContext ( ).getResources ( ).getStringArray ( R.array.news_channelId );
+                for ( int i = 0 ; i < newsChannelId.length ; i++ ) {
+                        NewsListFragments newsListFragments = new NewsListFragments ( );
+//                        Bundle bundle= new Bundle (  );
+//                        bundle.putString ( "channelId", newsChannelId[ i ] );
+//                        newsListFragments.setArguments ( bundle );
+                        newsListFragments.setChannelId ( newsChannelId[ i ] );
+                        mFragments.add ( newsListFragments );
+                }
+                return mFragments;
+        }
+
+        /**
+         * @return 新闻页的标题
+         */
+        public String[] getTitles ( ) {
+                mTitles = BaseApplication.getContext ( ).getResources ( ).getStringArray ( R.array.news_titles );
+                return mTitles;
+        }
+
+
 }

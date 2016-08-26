@@ -1,5 +1,7 @@
 package com.github.cchao.touchnews.view;
 
+import com.github.cchao.touchnews.ui.fragment.NewsListFragments;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,8 @@ import java.util.List;
 public interface FragmentsContainerView {
         /**
          * 初始化  FragmentViewpager
+         *
          * @param fragments ViewPager数据源
          */
-        void onSetFragment ( List fragments , String[] titles);
+        void onSetFragment ( List< NewsListFragments > fragments, String[] titles );
 }

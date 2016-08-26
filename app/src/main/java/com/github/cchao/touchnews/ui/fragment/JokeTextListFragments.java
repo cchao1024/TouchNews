@@ -6,33 +6,30 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.adapter.JokeTextListRecyclerAdapter;
+import com.github.cchao.touchnews.contract.JokeTextListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeTextRoot;
 import com.github.cchao.touchnews.presenter.JokeTextListPresenter;
-import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
-import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.cchao.touchnews.ui.adapter.JokeTextListRecyclerAdapter;
+import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.NetUtil;
 import com.github.cchao.touchnews.util.SnackBarUtil;
-import com.github.cchao.touchnews.view.JokeTextListView;
 import com.github.cchao.touchnews.widget.VaryViewWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/3/30.
  * E-mail:   cchao1024@163.com
  * Description:开心一刻- 文本类Fragment
  */
-public class JokeTextListFragments extends BaseLazyFragment implements JokeTextListView, SwipeRefreshLayout.OnRefreshListener {
+public class JokeTextListFragments extends BaseFragment implements JokeTextListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
         @Bind ( R.id.swipe_refresh_joke_text_list )
         SwipeRefreshLayout mSwipeRefreshLayout;
@@ -41,28 +38,31 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
         View mRootView;
         List< JokeTextRoot.Contentlist > mContentList;
         JokeTextListRecyclerAdapter mRecyclerAdapter;
-        IContentListPresenter mJokeTextListPresenter;
+        JokeTextListContract.Presenter mJokeTextListPresenter;
         VaryViewWidget mVaryViewWidget;
-
-        @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                mRootView = inflater.inflate ( R.layout.fragment_joke_text, null );
-                ButterKnife.bind ( this, mRootView );
-                return mRootView;
-        }
 
         @Override
         public void onViewCreated ( View view, Bundle savedInstanceState ) {
                 super.onViewCreated ( view, savedInstanceState );
         }
+
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
-                mJokeTextListPresenter = new JokeTextListPresenter ( this, "1" );
-                mJokeTextListPresenter.getFirstData ( );
+                mJokeTextListPresenter.getRefreshData ( );
         }
+
+        @Override
+        protected int getLayoutId ( ) {
+                return R.layout.fragment_joke_text;
+        }
+
+        @Override
+        public void bindPresenter ( ) {
+                mJokeTextListPresenter = new JokeTextListPresenter ( this );
+        }
+
         private void initViews ( ) {
                 mContentList = new ArrayList<> ( );
                 mRecyclerView.setHasFixedSize ( true );
@@ -103,6 +103,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
 
         /**
          * 刷新数据
+         *
          * @param newsList newsList
          */
         @Override
@@ -111,7 +112,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
-                if(mContentList.size ()<7){
+                if ( mContentList.size ( ) < 7 ) {
                         mJokeTextListPresenter.getMoreData ( );
                 }
         }
@@ -120,7 +121,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
         public void onReceiveMoreListData ( List< JokeTextRoot.Contentlist > newsList ) {
                 mContentList.addAll ( newsList );
                 mRecyclerAdapter.notifyDataSetChanged ( );
-                if(mContentList.size ()<7){
+                if ( mContentList.size ( ) < 7 ) {
                         mJokeTextListPresenter.getMoreData ( );
                 }
         }
@@ -155,7 +156,7 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
                                         infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
                                                 @Override
                                                 public void onClick ( View v ) {
-                                                        mJokeTextListPresenter.getFirstData ( );
+                                                        mJokeTextListPresenter.getRefreshData ( );
                                                 }
                                         } );
                                         mVaryViewWidget.setNoNetView ( infoView );
@@ -174,5 +175,6 @@ public class JokeTextListFragments extends BaseLazyFragment implements JokeTextL
 
 
         }
+
 
 }

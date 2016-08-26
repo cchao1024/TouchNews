@@ -1,38 +1,34 @@
 package com.github.cchao.touchnews.ui.fragment;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.adapter.NewsListRecyclerAdapter;
+import com.github.cchao.touchnews.contract.NewListDataContract;
 import com.github.cchao.touchnews.javaBean.news.Contentlist;
 import com.github.cchao.touchnews.presenter.NewsListPresenter;
-import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
-import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.cchao.touchnews.ui.adapter.NewsListRecyclerAdapter;
+import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.NetUtil;
 import com.github.cchao.touchnews.util.SnackBarUtil;
-import com.github.cchao.touchnews.view.NewsListView;
 import com.github.cchao.touchnews.widget.VaryViewWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by cchao on 2016/3/30.
  * E-mail:   cchao1024@163.com
  * Description: 新闻资讯List Fragment
  */
-public class NewsListFragments extends BaseLazyFragment implements NewsListView, SwipeRefreshLayout.OnRefreshListener {
+public class NewsListFragments extends BaseFragment implements NewListDataContract.View, SwipeRefreshLayout.OnRefreshListener {
         @Bind ( R.id.swipe_refresh_news_list )
         SwipeRefreshLayout mSwipeRefreshLayout;
         @Bind ( R.id.recycle_view_news )
@@ -40,19 +36,21 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         View mRootView;
         List< Contentlist > mNewsItemList;
         NewsListRecyclerAdapter mNewsListRecyclerAdapter;
-        IContentListPresenter mNewsListPresenter;
+        NewListDataContract.Presenter mNewsListPresenter;
+        VaryViewWidget mVaryViewWidget;
         //新闻频道的ID
         private String mChannelId = null;
-        VaryViewWidget mVaryViewWidget;
 
         @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                mRootView = inflater.inflate ( R.layout.fragment_news_list, null );
-                ButterKnife.bind ( this, mRootView );
-                return mRootView;
+        protected int getLayoutId ( ) {
+                return R.layout.fragment_news_list;
         }
 
+        @Override
+        public void bindPresenter ( ) {
+                mNewsListPresenter = new NewsListPresenter ( this, mChannelId );
+                mNewsListPresenter.getFirstData ( );
+        }
         private void initViews ( ) {
                 mNewsItemList = new ArrayList<> ( );
                 mRecyclerView.setHasFixedSize ( true );
@@ -99,9 +97,8 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
-                mNewsListPresenter = new NewsListPresenter ( this, mChannelId );
-                mNewsListPresenter.getFirstData ( );
         }
+
 
         @Override
         public void onRefresh ( ) {
@@ -185,5 +182,6 @@ public class NewsListFragments extends BaseLazyFragment implements NewsListView,
                         mVaryViewWidget.hideInfo ( );
                 }
         }
+
 
 }

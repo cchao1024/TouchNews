@@ -1,9 +1,13 @@
 package com.github.cchao.touchnews.ui.fragment.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.ui.activity.HomeActivity;
@@ -16,21 +20,38 @@ import butterknife.ButterKnife;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class BaseFragment extends BaseLazyFragment{
+public abstract class BaseFragment extends BaseLazyFragment {
         @Bind ( R.id.toolbar )
         protected Toolbar mToolbar;
+        protected View mRootView;
+
+        @Nullable
+        @Override
+        public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
+                mRootView = inflater.inflate ( getLayoutId ( ), null );
+                ButterKnife.bind ( this, mRootView );
+                return mRootView;
+        }
 
         @Override
-        public void onViewCreated ( View view,  Bundle savedInstanceState ) {
+        public void onViewCreated ( View view, Bundle savedInstanceState ) {
                 super.onViewCreated ( view, savedInstanceState );
-                ButterKnife.bind ( this, view );
+                initialize ( );
         }
+
+        protected void initialize ( ) {}
+
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 setSupportActionBar ();
-
         }
+
+        //布局ID
+        protected abstract
+        @LayoutRes
+        int getLayoutId ( );
+
         @Override
         public void onUserVisible ( ) {
                 super.onUserVisible ( );

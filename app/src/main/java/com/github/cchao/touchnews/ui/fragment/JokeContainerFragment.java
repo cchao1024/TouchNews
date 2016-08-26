@@ -5,17 +5,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.adapter.JokeFragmentsPagerAdapter;
 import com.github.cchao.touchnews.presenter.JokeFragmentsContainerPresenter;
 import com.github.cchao.touchnews.presenter.i.IFragmentsContainerPresenter;
+import com.github.cchao.touchnews.ui.adapter.JokeFragmentsPagerAdapter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 import com.github.cchao.touchnews.view.FragmentsContainerView;
 
@@ -42,20 +39,18 @@ public class JokeContainerFragment extends BaseFragment implements FragmentsCont
                 super.onCreate ( savedInstanceState );
                 setHasOptionsMenu ( true );
         }
-        @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                View view = inflater.inflate ( R.layout.fragment_joke_container, null );
-                return view;
-        }
-
 
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 mPresenter = new JokeFragmentsContainerPresenter ( this );
-                mPresenter.setFragments ( );
+                mPresenter.getFragments ( );
                 mToolbar.setTitle ( R.string.joke );
+        }
+
+        @Override
+        protected int getLayoutId ( ) {
+                return R.layout.fragment_joke_container;
         }
 
         @Override

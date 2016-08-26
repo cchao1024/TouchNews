@@ -6,5 +6,5 @@ package com.github.cchao.touchnews.presenter.i;
  * Description:
  */
 public interface IFragmentsContainerPresenter {
-        void setFragments ( );
+        void getFragments ( );
 }

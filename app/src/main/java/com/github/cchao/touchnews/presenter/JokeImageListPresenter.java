@@ -1,84 +1,91 @@
 package com.github.cchao.touchnews.presenter;
 
-import com.android.volley.VolleyError;
-import com.apkfuns.logutils.LogUtils;
+import com.github.cchao.touchnews.BaseApplication;
+import com.github.cchao.touchnews.contants.Keys;
+import com.github.cchao.touchnews.contract.JokeImageListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
-import com.github.cchao.touchnews.model.JokeImageListMode;
-import com.github.cchao.touchnews.model.i.IListMode;
-import com.github.cchao.touchnews.presenter.i.IContentListPresenter;
+import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.github.cchao.touchnews.util.Constant;
-import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.NetUtil;
-import com.github.cchao.touchnews.view.JokeImageListView;
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by cchao on 2016/4/25.
  * E-mail:   cchao1024@163.com
  * Description: 图片笑话列表 Presenter
  */
-public class JokeImageListPresenter implements IContentListPresenter, NetRequestUtil.RequestListener {
-        JokeImageListView mJokeImageListView;
-        IListMode mListMode;
-        Gson mGson;
+public class JokeImageListPresenter implements JokeImageListContract.Presenter {
+        JokeImageListContract.View mView;
+        BaiDuApiService mBaiDApiService;
+        int mCurrentPage = 1;
 
-        public JokeImageListPresenter ( JokeImageListView jokeImageListView, String page ) {
-                mGson = new Gson ( );
-                mJokeImageListView = jokeImageListView;
-                mListMode = new JokeImageListMode ( this, page );
+        public JokeImageListPresenter ( JokeImageListContract.View view ) {
+                mView = view;
+                mBaiDApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
         }
 
         @Override
         public void getRefreshData ( ) {
                 //无网刷新数据>底部显示SnackBar>点击打开设置界面
                 if ( ! NetUtil.isConnected ( ) ) {
-                        mJokeImageListView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
+                        mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
-                        mJokeImageListView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mListMode.loadRefreshData ( );
-                }
-        }
+                        mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
+                        mBaiDApiService.getJokeImage ( Keys.BAI_DU_KEY, "1" )
+                                .subscribeOn ( Schedulers.newThread ( ) )
+                                .observeOn ( AndroidSchedulers.mainThread ( ) )
+                                .subscribe ( new Action1< JokeImageRoot > ( ) {
+                                        @Override
+                                        public void call ( JokeImageRoot jokeimageRoot ) {
+                                                if ( jokeimageRoot.getShowapi_res_code ( ) == 0 && jokeimageRoot.getShowapi_res_body ( ) != null ) {
 
-        @Override
-        public void getFirstData ( ) {
-                if ( ! NetUtil.isConnected ( ) ) {
-                        mJokeImageListView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
-                } else {
-                        mJokeImageListView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mListMode.loadRefreshData ( );
+                                                        List< JokeImageRoot.Contentlist > contentlist = jokeimageRoot.getShowapi_res_body ( ).getContentlist ( );
+                                                        mView.hideInfo ( );
+                                                        if ( jokeimageRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
+                                                                mView.onRefreshData ( contentlist );
+                                                        } else {
+                                                                mView.onReceiveMoreListData ( contentlist );
+                                                        }
+                                                }
+                                        }
+                                } );
                 }
         }
 
         @Override
         public void getMoreData ( ) {
-                mListMode.loadMoreData ( );
-        }
+                //无网刷新数据>底部显示SnackBar>点击打开设置界面
+                if ( ! NetUtil.isConnected ( ) ) {
+                        mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
+                } else {
+                        mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
+                        mBaiDApiService.getJokeImage ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
+                                .subscribeOn ( Schedulers.newThread ( ) )
+                                .observeOn ( AndroidSchedulers.mainThread ( ) )
+                                .subscribe ( new Action1< JokeImageRoot > ( ) {
+                                        @Override
+                                        public void call ( JokeImageRoot jokeimageRoot ) {
+                                                if ( jokeimageRoot.getShowapi_res_code ( ) == 0 && jokeimageRoot.getShowapi_res_body ( ) != null ) {
 
-        @Override
-        public void onResponse ( JSONObject response ) {
-                LogUtils.i ( response );
-                JokeImageRoot jokeImageRoot = mGson.fromJson ( response.toString ( ), JokeImageRoot.class );
-                if ( jokeImageRoot.getShowapi_res_code ( ) == 0 && jokeImageRoot.getShowapi_res_body ( ) != null ) {
-
-                        List< JokeImageRoot.Contentlist > contentlist = jokeImageRoot.getShowapi_res_body ( ).getContentlist ( );
-                        mJokeImageListView.hideInfo ( );
-                        if ( jokeImageRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
-                                mJokeImageListView.onRefreshData ( contentlist );
-                        } else {
-                                mJokeImageListView.onReceiveMoreListData ( contentlist );
-                        }
+                                                        List< JokeImageRoot.Contentlist > contentlist = jokeimageRoot.getShowapi_res_body ( ).getContentlist ( );
+                                                        mView.hideInfo ( );
+                                                        if ( jokeimageRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
+                                                                mView.onRefreshData ( contentlist );
+                                                        } else {
+                                                                mView.onReceiveMoreListData ( contentlist );
+                                                        }
+                                                }
+                                        }
+                                } );
                 }
         }
 
         @Override
-        public void onError ( VolleyError error ) {
-
-                LogUtils.i ( error );
-        }
-
+        public void onStart ( ) { }
 
 }

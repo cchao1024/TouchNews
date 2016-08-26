@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.javaBean.WxArticle.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
+import com.github.cchao.touchnews.presenter.ListDataPresenter;
 import com.github.cchao.touchnews.presenter.WxSelectPresenter;
 import com.github.cchao.touchnews.ui.adapter.WxArticleRecyclerAdapter;
 import com.github.cchao.touchnews.ui.fragment.base.PresentFragment;
@@ -23,7 +24,7 @@ import butterknife.Bind;
  * E-mail:   cchao1024@163.com
  * Description: 微信精选文章
  */
-public class WxSelectFragment extends PresentFragment implements WxView {
+public class WxSelectFragment extends PresentFragment< ListDataPresenter > implements WxView {
         @Bind ( R.id.swipe_refresh_wx_select_list )
         SwipeRefreshLayout mSwipeRefreshLayout;
         @Bind ( R.id.recycle_view_wx_select )

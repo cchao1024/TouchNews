@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,13 +46,6 @@ public class ChatFragment extends BaseFragment implements IChatView {
         public void onCreate ( Bundle savedInstanceState ) {
                 super.onCreate ( savedInstanceState );
                 setHasOptionsMenu ( true );
-        }
-
-        @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                mRootView = inflater.inflate ( R.layout.fragment_chat, null );
-                return mRootView;
         }
 
         private void initiation ( ) {
@@ -106,7 +98,6 @@ public class ChatFragment extends BaseFragment implements IChatView {
                 super.onCreateOptionsMenu ( menu, inflater );
         }
 
-
         @Override
         public boolean onOptionsItemSelected ( MenuItem item ) {
                 switch ( item.getItemId ( ) ) {
@@ -125,6 +116,11 @@ public class ChatFragment extends BaseFragment implements IChatView {
                 mChatPresenter = new ChatPresenter ( this );
                 mChatPresenter.onSendMessage ( "现在时间" );
                 mToolbar.setTitle ( R.string.chat );
+        }
+
+        @Override
+        protected int getLayoutId ( ) {
+                return R.layout.fragment_chat;
         }
 
         @OnClick ( R.id.chat_send )
