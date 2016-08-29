@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.javaBean.Weather;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.google.gson.Gson;
 
 import butterknife.Bind;

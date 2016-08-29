@@ -14,16 +14,14 @@ import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.BaseApplication;
 import com.github.cchao.touchnews.contants.Keys;
+import com.github.cchao.touchnews.contract.HomeContract;
 import com.github.cchao.touchnews.javaBean.Weather;
-import com.github.cchao.touchnews.presenter.i.IHomePresenter;
 import com.github.cchao.touchnews.ui.fragment.ChatFragment;
 import com.github.cchao.touchnews.ui.fragment.JokeContainerFragment;
 import com.github.cchao.touchnews.ui.fragment.NewsContainerFragment;
-import com.github.cchao.touchnews.ui.fragment.WxSelectFragment;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
 import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.UrlUtil;
-import com.github.cchao.touchnews.view.HomeView;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -39,14 +37,14 @@ import java.util.Map;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class HomePresenter implements IHomePresenter {
-        HomeView mHomeView;
+public class HomePresenter implements HomeContract.Presenter {
+        HomeContract.View mHomeView;
         Gson gson = new Gson ( );
         List< BaseLazyFragment > mFragments;
         Map< String, String > param = new HashMap<> ( );
         Map< String, String > headers = new HashMap<> ( );
 
-        public HomePresenter ( HomeView homeView ) {
+        public HomePresenter ( HomeContract.View homeView ) {
                 mHomeView = homeView;
         }
 
@@ -56,7 +54,7 @@ public class HomePresenter implements IHomePresenter {
                 mFragments.add ( new NewsContainerFragment ( ) );
                 mFragments.add ( new JokeContainerFragment ( ) );
                 mFragments.add ( new ChatFragment ( ) );
-                mFragments.add ( new WxSelectFragment ( ) );
+//                mFragments.add ( new WxSelectFragment ( ) );
                 mHomeView.setFragmentPager ( mFragments );
         }
 

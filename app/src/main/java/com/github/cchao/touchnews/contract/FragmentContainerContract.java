@@ -16,7 +16,7 @@
 
 package com.github.cchao.touchnews.contract;
 
-import com.github.cchao.touchnews.ui.fragment.NewsListFragments;
+import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 
 import java.util.List;
 
@@ -25,12 +25,12 @@ import java.util.List;
  */
 public interface FragmentContainerContract {
 
-        interface View extends BaseView {
-                void setFragment ( List< NewsListFragments > fragments, String[] titles );
+        interface View {
+                void setFragment ( List< BaseFragment > fragments, String[] titles );
         }
 
-        interface Presenter extends BasePresenter< View > {
-                List< NewsListFragments > getFragments ( );
+        interface Presenter {
+                List< BaseFragment > getFragments ( );
 
                 String[] getTitles ( );
         }

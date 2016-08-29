@@ -26,7 +26,7 @@ import java.util.List;
  */
 public interface NewListDataContract {
 
-        interface View extends BaseView {
+        interface View {
                 /**
                  * 获取数据
                  *
@@ -54,10 +54,8 @@ public interface NewListDataContract {
 
         }
 
-        interface Presenter extends BasePresenter< View > {
+        interface Presenter {
                 void getRefreshData ( );
-
-                void getFirstData ( );
 
                 void getMoreData ( );
         }

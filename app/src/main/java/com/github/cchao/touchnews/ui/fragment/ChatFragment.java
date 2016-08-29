@@ -16,10 +16,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
+import com.github.cchao.touchnews.contract.ChatContract;
 import com.github.cchao.touchnews.presenter.ChatPresenter;
-import com.github.cchao.touchnews.presenter.i.IChatPresenter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
-import com.github.cchao.touchnews.view.IChatView;
 import com.github.cchao.touchnews.widget.ChatItemView;
 
 import butterknife.Bind;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
  * E-mail:   cchao1024@163.com
  * Description: 聊天机器人
  */
-public class ChatFragment extends BaseFragment implements IChatView {
+public class ChatFragment extends BaseFragment implements ChatContract.View {
         @Bind ( R.id.scroll_chat )
         ScrollView mScrollView;
         @Bind ( R.id.lyt_chat )
@@ -39,8 +38,7 @@ public class ChatFragment extends BaseFragment implements IChatView {
         EditText mEditText;
         @Bind ( R.id.chat_send )
         TextView mSend;
-        View mRootView;
-        IChatPresenter mChatPresenter;
+        ChatContract.Presenter mChatPresenter;
 
         @Override
         public void onCreate ( Bundle savedInstanceState ) {
@@ -48,12 +46,12 @@ public class ChatFragment extends BaseFragment implements IChatView {
                 setHasOptionsMenu ( true );
         }
 
-        private void initiation ( ) {
+        @Override
+        protected void initialize ( ) {
+                super.initialize ( );
                 mEditText.addTextChangedListener ( new TextWatcher ( ) {
                         @Override
-                        public void beforeTextChanged ( CharSequence s, int start, int count, int after ) {
-
-                        }
+                        public void beforeTextChanged ( CharSequence s, int start, int count, int after ) {}
                         @Override
                         public void onTextChanged ( CharSequence s, int start, int before, int count ) {
                                 //用户输入文本就改变发送键颜色
@@ -65,11 +63,8 @@ public class ChatFragment extends BaseFragment implements IChatView {
                                         mSend.setTextColor ( getResources ( ).getColor ( R.color.textPrimaryGrey ) );
                                 }
                         }
-
                         @Override
-                        public void afterTextChanged ( Editable s ) {
-
-                        }
+                        public void afterTextChanged ( Editable s ) {}
                 } );
         }
 
@@ -83,13 +78,6 @@ public class ChatFragment extends BaseFragment implements IChatView {
                                 mScrollView.fullScroll ( ScrollView.FOCUS_DOWN );
                         }
                 } );
-        }
-
-        @Override
-        public void onViewCreated ( View view, Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
-                initiation ( );
-
         }
 
         @Override

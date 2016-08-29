@@ -93,11 +93,9 @@ public class JokeTextListPresenter implements JokeTextListContract.Presenter {
 
         private void filterP ( JokeTextRoot.Contentlist contentlist ) {
                 String string = contentlist.getText ( );
-                String regex = "</?p>";
+                String regex = "</?p>*";
                 string = string.replaceAll ( regex, "\n" );
                 contentlist.setText ( string );
         }
 
-        @Override
-        public void onStart ( ) { }
 }

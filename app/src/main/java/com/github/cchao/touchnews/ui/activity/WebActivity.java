@@ -5,7 +5,6 @@ import android.webkit.WebView;
 
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.contants.Keys;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.github.cchao.touchnews.util.LogUtil;
 
 import butterknife.Bind;

@@ -12,7 +12,6 @@ import com.github.cchao.touchnews.presenter.WxSelectPresenter;
 import com.github.cchao.touchnews.ui.adapter.WxArticleRecyclerAdapter;
 import com.github.cchao.touchnews.ui.fragment.base.PresentFragment;
 import com.github.cchao.touchnews.util.Constant;
-import com.github.cchao.touchnews.view.WxView;
 
 import java.util.ArrayList;
 import java.util.List;

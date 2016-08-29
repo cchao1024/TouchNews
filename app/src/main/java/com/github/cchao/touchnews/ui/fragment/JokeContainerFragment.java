@@ -10,11 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.github.cchao.touchnews.R;
+import com.github.cchao.touchnews.contract.FragmentContainerContract;
 import com.github.cchao.touchnews.presenter.JokeFragmentsContainerPresenter;
-import com.github.cchao.touchnews.presenter.i.IFragmentsContainerPresenter;
 import com.github.cchao.touchnews.ui.adapter.JokeFragmentsPagerAdapter;
 import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
-import com.github.cchao.touchnews.view.FragmentsContainerView;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ import butterknife.Bind;
  * E-mail:   cchao1024@163.com
  * Description: 开心一下容器Fragment
  */
-public class JokeContainerFragment extends BaseFragment implements FragmentsContainerView {
+public class JokeContainerFragment extends BaseFragment implements FragmentContainerContract.View {
         @Bind ( R.id.toolbar )
         Toolbar mToolbar;
         @Bind ( R.id.tab_joke_image )
@@ -33,7 +32,7 @@ public class JokeContainerFragment extends BaseFragment implements FragmentsCont
         @Bind ( R.id.viewpager_joke_image )
         ViewPager mViewPager;
         FragmentPagerAdapter mFragmentsPagerAdapter;
-        IFragmentsContainerPresenter mPresenter;
+        FragmentContainerContract.Presenter mPresenter;
         @Override
         public void onCreate ( Bundle savedInstanceState ) {
                 super.onCreate ( savedInstanceState );
@@ -68,8 +67,9 @@ public class JokeContainerFragment extends BaseFragment implements FragmentsCont
                 return false;
         }
 
+
         @Override
-        public void onSetFragment ( List fragments, String[] titles ) {
+        public void setFragment ( List< BaseFragment > fragments, String[] titles ) {
                 mFragmentsPagerAdapter = new JokeFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), titles, fragments );
                 mViewPager.setOffscreenPageLimit ( fragments.size ( ) );
                 mViewPager.setAdapter ( mFragmentsPagerAdapter );

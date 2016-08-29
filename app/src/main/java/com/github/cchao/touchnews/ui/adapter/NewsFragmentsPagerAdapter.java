@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.github.cchao.touchnews.ui.fragment.NewsListFragments;
+import com.github.cchao.touchnews.ui.fragment.base.BaseFragment;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * Description: 新闻频道 页面Adapter
  */
 public class NewsFragmentsPagerAdapter extends FragmentPagerAdapter {
-        private List< NewsListFragments > mListFragments = null;
+        private List< BaseFragment > mListFragments = null;
         private String[] mTitles = null;
 
-        public NewsFragmentsPagerAdapter ( FragmentManager fm, String[] titles, List< NewsListFragments > fragments ) {
+        public NewsFragmentsPagerAdapter ( FragmentManager fm, String[] titles, List< BaseFragment > fragments ) {
                 super ( fm );
                 mListFragments = fragments;
                 mTitles = titles;

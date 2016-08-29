@@ -50,17 +50,13 @@ public class JokeTextListFragments extends BaseFragment implements JokeTextListC
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 initViews ( );
+                mJokeTextListPresenter = new JokeTextListPresenter ( this );
                 mJokeTextListPresenter.getRefreshData ( );
         }
 
         @Override
         protected int getLayoutId ( ) {
                 return R.layout.fragment_joke_text;
-        }
-
-        @Override
-        public void bindPresenter ( ) {
-                mJokeTextListPresenter = new JokeTextListPresenter ( this );
         }
 
         private void initViews ( ) {

@@ -40,9 +40,6 @@ public class NewsListPresenter implements NewListDataContract.Presenter, NetRequ
                 param.put ( "channelId", channelId );
         }
 
-        @Override
-        public void onStart ( ) {}
-
         public void loadRefreshData ( ) {
                 mCurrentPage = 1;
                 loadMoreData ( );
@@ -57,16 +54,6 @@ public class NewsListPresenter implements NewListDataContract.Presenter, NetRequ
         @Override
         public void getRefreshData ( ) {
                 //无网刷新数据>底部显示SnackBar>点击打开设置界面
-                if ( ! NetUtil.isConnected ( ) ) {
-                        mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
-                } else {
-                        mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        loadRefreshData ( );
-                }
-        }
-
-        @Override
-        public void getFirstData ( ) {
                 if ( ! NetUtil.isConnected ( ) ) {
                         mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
@@ -105,10 +92,7 @@ public class NewsListPresenter implements NewListDataContract.Presenter, NetRequ
         }
 
         @Override
-        public void onError ( VolleyError error ) {
-
-                LogUtils.i ( error );
-        }
+        public void onError ( VolleyError error ) {}
 
 
 }

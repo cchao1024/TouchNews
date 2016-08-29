@@ -11,7 +11,7 @@ import java.util.List;
  * Description: 笑话集
  */
 public interface JokeImageListContract {
-        interface View extends BaseView {
+        interface View {
                 /**
                  * 获取数据
                  *
@@ -39,7 +39,7 @@ public interface JokeImageListContract {
 
         }
 
-        interface Presenter extends BasePresenter< View > {
+        interface Presenter {
                 void getRefreshData ( );
 
                 void getMoreData ( );

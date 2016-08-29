@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.javaBean.news.Contentlist;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.github.cchao.touchnews.util.ImageUtil;
 
 import butterknife.Bind;

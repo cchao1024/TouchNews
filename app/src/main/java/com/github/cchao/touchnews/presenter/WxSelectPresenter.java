@@ -3,7 +3,7 @@ package com.github.cchao.touchnews.presenter;
 
 import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.javaBean.WxArticle;
-import com.github.cchao.touchnews.view.WxView;
+import com.github.cchao.touchnews.ui.fragment.WxView;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

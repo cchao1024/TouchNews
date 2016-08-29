@@ -13,13 +13,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.cchao.touchnews.R;
+import com.github.cchao.touchnews.contract.HomeContract;
 import com.github.cchao.touchnews.javaBean.Weather;
 import com.github.cchao.touchnews.presenter.HomePresenter;
-import com.github.cchao.touchnews.presenter.i.IHomePresenter;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.github.cchao.touchnews.ui.adapter.HomeFragmentPagerAdapter;
 import com.github.cchao.touchnews.util.SnackBarUtil;
-import com.github.cchao.touchnews.view.HomeView;
 import com.github.cchao.touchnews.widget.MyViewpager;
 import com.google.gson.Gson;
 
@@ -30,14 +28,14 @@ import butterknife.Bind;
 /**
  * 主界面
  */
-public class HomeActivity extends BaseActivity implements HomeView {
+public class HomeActivity extends BaseActivity implements HomeContract.View {
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
         @Bind ( R.id.viewpager_home_fragments_container )
         MyViewpager mFragmentViewPager;
         @Bind ( R.id.navigation_home )
         NavigationView mNavigationView;
-        IHomePresenter mHomePresenter;
+        HomeContract.Presenter mHomePresenter;
         ActionBarDrawerToggle mActionBarDrawerToggle;
         /**
          * 再按一次退出程序

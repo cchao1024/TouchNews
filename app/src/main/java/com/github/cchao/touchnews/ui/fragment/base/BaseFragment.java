@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.ui.activity.HomeActivity;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -21,7 +20,7 @@ import butterknife.ButterKnife;
  * Description:
  */
 public abstract class BaseFragment extends BaseLazyFragment {
-        @Bind ( R.id.toolbar )
+        @Nullable
         protected Toolbar mToolbar;
         protected View mRootView;
 
@@ -30,6 +29,7 @@ public abstract class BaseFragment extends BaseLazyFragment {
         public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
                 mRootView = inflater.inflate ( getLayoutId ( ), null );
                 ButterKnife.bind ( this, mRootView );
+                mToolbar = ButterKnife.findById ( mRootView, R.id.toolbar );
                 return mRootView;
         }
 

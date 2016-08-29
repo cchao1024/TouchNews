@@ -42,14 +42,15 @@ public class NewsContainerFragment extends BaseFragment implements FragmentConta
         }
 
         @Override
-        public void bindPresenter ( ) {
+        protected void initialize ( ) {
+                super.initialize ( );
                 mPresenter = new NewsFragmentsContainerPresenter ( this );
         }
+
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
                 mToolbar.setTitle ( R.string.news );
-                mPresenter.onStart ( );
         }
 
         @Override
@@ -74,7 +75,7 @@ public class NewsContainerFragment extends BaseFragment implements FragmentConta
          * @param titles    标题
          */
         @Override
-        public void setFragment ( List< NewsListFragments > fragments, String[] titles ) {
+        public void setFragment ( List< BaseFragment > fragments, String[] titles ) {
                 mFragmentsPagerAdapter = new NewsFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), titles, fragments );
                 mViewPager.setOffscreenPageLimit ( fragments.size ( ) );
                 mViewPager.setAdapter ( mFragmentsPagerAdapter );

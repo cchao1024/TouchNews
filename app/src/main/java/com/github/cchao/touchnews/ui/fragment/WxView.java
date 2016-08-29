@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.view;
+package com.github.cchao.touchnews.ui.fragment;
 
 import com.github.cchao.touchnews.javaBean.WxArticle.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.github.cchao.touchnews.util.Constant;

@@ -45,6 +45,13 @@ public class JokeImageListFragments extends BaseFragment implements JokeImageLis
                 super.onViewCreated ( view, savedInstanceState );
         }
 
+        @Override
+        public void onFirstUserVisible ( ) {
+                super.onFirstUserVisible ( );
+                initViews ( );
+                mPresenter = new JokeImageListPresenter ( this );
+                mPresenter.getRefreshData ( );
+        }
         private void initViews ( ) {
                 mContentList = new ArrayList<> ( );
                 mRecyclerView.setHasFixedSize ( true );
@@ -77,22 +84,9 @@ public class JokeImageListFragments extends BaseFragment implements JokeImageLis
                 mSwipeRefreshLayout.setOnRefreshListener ( this );
 
         }
-
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                initViews ( );
-                mPresenter.getRefreshData ( );
-        }
-
         @Override
         protected int getLayoutId ( ) {
                 return R.layout.fragment_joke_image;
-        }
-
-        @Override
-        public void bindPresenter ( ) {
-                mPresenter = new JokeImageListPresenter ( this );
         }
 
         @Override

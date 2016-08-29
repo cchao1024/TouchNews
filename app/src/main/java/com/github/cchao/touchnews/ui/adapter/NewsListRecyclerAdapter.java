@@ -77,8 +77,9 @@ public class NewsListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.
 
         @Override
         public int getItemCount ( ) {
+
                 //多一个放加载更多
-                return mData.size ( ) + 1;
+                return mData == null ? 1 : mData.size ( ) + 1;
         }
 
         public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

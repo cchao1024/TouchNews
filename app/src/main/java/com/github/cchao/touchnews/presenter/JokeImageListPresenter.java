@@ -85,7 +85,4 @@ public class JokeImageListPresenter implements JokeImageListContract.Presenter {
                 }
         }
 
-        @Override
-        public void onStart ( ) { }
-
 }

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;

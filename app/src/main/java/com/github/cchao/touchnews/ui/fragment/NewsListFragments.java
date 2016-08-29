@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.R;
 import com.github.cchao.touchnews.contract.NewListDataContract;
 import com.github.cchao.touchnews.javaBean.news.Contentlist;
@@ -47,15 +46,15 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
         }
 
         @Override
-        public void bindPresenter ( ) {
+        protected void initialize ( ) {
+                super.initialize ( );
                 mNewsListPresenter = new NewsListPresenter ( this, mChannelId );
-                mNewsListPresenter.getFirstData ( );
         }
+
         private void initViews ( ) {
-                mNewsItemList = new ArrayList<> ( );
+
                 mRecyclerView.setHasFixedSize ( true );
                 mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
-
                 mNewsListRecyclerAdapter = new NewsListRecyclerAdapter ( mContext, mNewsItemList );
                 mRecyclerView.addOnScrollListener ( new RecyclerView.OnScrollListener ( ) {
                         private int lastVisibleItem;
@@ -72,16 +71,13 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
                                 if ( newState == RecyclerView.SCROLL_STATE_IDLE
                                         && lastVisibleItem + 1 == mNewsListRecyclerAdapter.getItemCount ( ) ) {
                                         //加载更多
-                                        LogUtils.d ( getClass ( ).getSimpleName ( ), "info_loading more data" );
                                         mNewsListPresenter.getMoreData ( );
                                 }
                         }
                 } );
                 mRecyclerView.setAdapter ( mNewsListRecyclerAdapter );
-
                 mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
                 mSwipeRefreshLayout.setOnRefreshListener ( this );
-
         }
 
         /**
@@ -96,10 +92,10 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
+                mNewsItemList = new ArrayList<> ( );
                 initViews ( );
+                mNewsListPresenter.getRefreshData ( );
         }
-
-
         @Override
         public void onRefresh ( ) {
                 mNewsListPresenter.getRefreshData ( );
@@ -116,9 +112,6 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
                 mNewsItemList.addAll ( newsList );
                 mNewsListRecyclerAdapter.notifyDataSetChanged ( );
                 mSwipeRefreshLayout.setRefreshing ( false );
-                if(mNewsItemList.size ()<7){
-                        mNewsListPresenter.getMoreData ( );
-                }
         }
 
         /**
@@ -130,7 +123,7 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
         public void onReceiveMoreListData ( List< Contentlist > newsList ) {
                 mNewsItemList.addAll ( newsList );
                 mNewsListRecyclerAdapter.notifyDataSetChanged ( );
-                if(mNewsItemList.size ()<7){
+                if ( mNewsItemList.size ( ) < 7 ) {
                         mNewsListPresenter.getMoreData ( );
                 }
         }
@@ -144,7 +137,7 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
                 if ( mVaryViewWidget == null ) {
                         mVaryViewWidget = new VaryViewWidget ( mSwipeRefreshLayout );
                 }
-                View infoView = null;
+                View infoView;
                 switch ( INFOType ) {
                         case LOADING:
                                 infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_loading, null );
@@ -166,7 +159,7 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
                                         infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
                                                 @Override
                                                 public void onClick ( View v ) {
-                                                        mNewsListPresenter.getFirstData ( );
+                                                        mNewsListPresenter.getRefreshData ( );
                                                 }
                                         } );
                                         mVaryViewWidget.setNoNetView ( infoView );
@@ -182,6 +175,4 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
                         mVaryViewWidget.hideInfo ( );
                 }
         }
-
-
 }

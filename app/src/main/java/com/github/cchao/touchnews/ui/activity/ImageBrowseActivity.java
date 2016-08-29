@@ -4,7 +4,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.github.cchao.touchnews.R;
-import com.github.cchao.touchnews.ui.activity.base.BaseActivity;
 import com.github.cchao.touchnews.util.ImageUtil;
 
 /**

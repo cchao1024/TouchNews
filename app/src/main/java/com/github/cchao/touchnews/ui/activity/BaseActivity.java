@@ -1,4 +1,4 @@
-package com.github.cchao.touchnews.ui.activity.base;
+package com.github.cchao.touchnews.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
  * Description:
  */
 public abstract class BaseActivity extends AppCompatActivity {
-        protected Toolbar mToolbar;
         public Context mContext = this;
+        protected Toolbar mToolbar;
 
         /**
          * @return 界面布局
