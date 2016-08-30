@@ -19,6 +19,7 @@
     <string name="joke">开心一下</string>
     <string name="music">音乐鉴赏</string>
     <string name="chat">聊天机器人</string>
+    <string name="wx">来个段子</string>
     <string name="edit">编辑</string>
     <string name="share">分享</string>
     <string name="loading">正在加载</string>
@@ -27,5 +28,4 @@
     <string name="set">设置</string>
     <string name="action_search">search</string>
     <string name="again_press_exit">再按一次退出程序</string>
-    <string name="wx">微信精选</string>
 </resources>
