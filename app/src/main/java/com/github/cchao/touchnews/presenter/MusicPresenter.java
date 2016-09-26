@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
+import com.github.cchao.touchnews.BaseApplication;
+import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.MusicContract;
 import com.github.cchao.touchnews.javaBean.MusicEntity;
-import com.github.cchao.touchnews.javaBean.event.MusicEvent;
 import com.github.cchao.touchnews.javaBean.music.Data;
 import com.github.cchao.touchnews.javaBean.music.MusicInfoRoot;
 import com.github.cchao.touchnews.javaBean.music.MusicPathRoot;
@@ -16,9 +17,6 @@ import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.UrlUtil;
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -26,51 +24,62 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by cchao on 2016/4/18.
  * E-mail:   cchao1024@163.com
- * Description:
+ * Description: 音乐
  */
 public class MusicPresenter implements MusicContract.Presenter {
         private MusicContract.View mMusicView;
-        //List< MusicPathRoot.Data > mMusicInfoList;
-        private List< MusicEntity > mMusicList;
-        private MusicPlayer mMusicPlayer;
-        private Context mContext;
+        private List< MusicEntity > mMusicList = new ArrayList<> ( );
         private Map< String, String > param = new HashMap<> ( );
         private Map< String, String > headers = new HashMap<> ( );
+        private MusicPlayer mMusicPlayer;
         private Gson mGson = new Gson ( );
 
         public MusicPresenter ( Context context, MusicContract.View iMusicView ) {
-                mContext = context;
                 mMusicView = iMusicView;
-//              mMusicInfoList = new ArrayList<> ( );
-                mMusicList = new ArrayList<> ( );
-                mMusicPlayer = new MusicPlayer ( mContext );
-                EventBus.getDefault ( ).register ( this );
+                mMusicPlayer = new MusicPlayer ( context );
+//                EventBus.getDefault ( ).register ( this );
 
-                headers.put ( "apikey", "1bb91df70ccde8148a2c3da582ca9ff2" );
+                headers.put ( Keys.API_KEY, "1bb91df70ccde8148a2c3da582ca9ff2" );
+                setMusicListener ( );
         }
 
-        @Subscribe ( threadMode = ThreadMode.MAIN )
-        public void onMusicEvent ( MusicEvent musicEvent ) {
-                switch ( musicEvent.getType ( ) ) {
-                        case PLAY:
-                                mMusicView.onMusicPlay ( );
-                                break;
-                        case PREPARE:
+        /**
+         * 设置music 状态监听器
+         */
+        private void setMusicListener ( ) {
+                mMusicPlayer.setPlayerStateListener ( new MusicPlayer.MusicPlayerStateListener ( ) {
+                        @Override
+                        public void onPrepared ( ) {
                                 mMusicView.onMusicPrepare ( mMusicPlayer.getCurMusic ( ) );
                                 mMusicView.setAlbum ( );
-                                break;
-                        case PAUSE:
-                                mMusicView.onMusicPause ( );
-                                break;
-                        case RESUME_PALY:
-                                mMusicView.onResumePlay ( );
-                                break;
-                }
-        }
+                        }
 
+                        @Override
+                        public void onResumePlay ( ) {
+                                mMusicView.onResumePlay ( );
+                        }
+
+                        @Override
+                        public void onPlay ( ) {
+                                mMusicView.onMusicPlay ( );
+                        }
+
+                        @Override
+                        public void onPause ( ) {
+                                mMusicView.onMusicPause ( );
+                        }
+
+                        @Override
+                        public void onStop ( ) {}
+                } );
+        }
         @Override
         public void onPlay ( ) {
                 mMusicPlayer.play ( );
@@ -84,17 +93,43 @@ public class MusicPresenter implements MusicContract.Presenter {
         @Override
         public void onDestroy ( ) {
                 mMusicList.clear ( );
-                EventBus.getDefault ( ).unregister ( this );
+//                EventBus.getDefault ( ).unregister ( this );
                 mMusicPlayer.onDestroy ( );
         }
 
+        /**
+         * 响应根据关键字获取的歌曲列表
+         */
         @Override
         public void getMusic ( String musicName ) {
                 mMusicList.clear ( );
-                loadMusicsHashList ( musicName, new NetRequestUtil.RequestListener ( ) {
-                        /**
-                         * @param response 响应根据关键字获取的歌曲列表
-                         */
+
+                BaseApplication.mBaiDuApiService.getMusicList ( Keys.WEATHER_KEY, musicName )
+                        .subscribeOn ( Schedulers.newThread ( ) )
+                        .observeOn ( AndroidSchedulers.mainThread ( ) )
+                        .subscribe ( new Action1< MusicInfoRoot > ( ) {
+                                @Override
+                                public void call ( MusicInfoRoot musicInfoRoot ) {
+                                        if ( musicInfoRoot.getCode ( ) == 0 && musicInfoRoot.getData ( ) != null ) {
+//                        这是外层包含Page信息的Data
+                                                MusicInfoRoot.Data data = musicInfoRoot.getData ( );
+                                                //这是歌曲信息HashList-Data
+                                                List< Data > dataList = data.getData ( );
+                                                for ( int i = 0 ; i < dataList.size ( ) ; i++ ) {
+                                                        Data musicInfo = dataList.get ( i );
+                                                        final MusicEntity musicEntity = new MusicEntity ( musicInfo );
+                                                        //获取到播放地址就加入到待播放列表 - 图片等获取到地址再显示
+                                                        //获取播放路径
+                                                        getMusicPath ( musicInfo, musicEntity, i );
+                                                        //获取歌手图片信息
+                                                        getSingerAlbum ( musicInfo, musicEntity, i );
+                                                }
+                                        }
+                                }
+                        } );
+                /*param.put ( "s", musicName );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_HASH, param, headers, new NetRequestUtil.RequestListener ( ) {
+
                         @Override
                         public void onResponse ( JSONObject response ) {
                                 LogUtils.i ( response.toString ( ) );
@@ -117,18 +152,19 @@ public class MusicPresenter implements MusicContract.Presenter {
                         }
 
                         @Override
-                        public void onError ( VolleyError error ) {
-
-                        }
-                } );
+                        public void onError ( VolleyError error ) { }
+                } );*/
         }
 
         /**
+         * 发送请求获取歌曲的hash值，再请求播放地址
+         *
          * @param key 搜索关键字
          */
         @Override
         public void searchMusic ( String key ) {
-                loadMusicsHashList ( key, new NetRequestUtil.RequestListener ( ) {
+                param.put ( "s", key );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_HASH, param, headers, new NetRequestUtil.RequestListener ( ) {
                         /**
                          * @param response 响应根据关键字获取的歌曲列表
                          */
@@ -158,32 +194,28 @@ public class MusicPresenter implements MusicContract.Presenter {
                 } );
         }
 
-
-        public void addMusicListToPlayer ( ) {
-//                if ( music != null ) {
-//                        mMusicInfoList.add ( music );
-                mMusicPlayer.setMusicList ( mMusicList );
-                mMusicPlayer.play ( );
-//                }
-                // 如果插入第一首歌，就播放
-//                if ( mMusicInfoList.size ( ) == 1 ) {
-//                        mMusicPlayer.preparePlay ( );
-//                }
-        }
-
+        /**
+         * 获取Music信息数据List
+         * <p>
+         * music- Hash 值
+         */
         private void getMusicPath ( Data musicInfo, final MusicEntity musicEntity, final int finalI ) {
-                loadMusicPath ( musicInfo.getHash ( ), new NetRequestUtil.RequestListener ( ) {
+
+                //根据hash获取Music播放地址
+                param.clear ( );
+                param.put ( "hash", musicInfo.getHash ( ) );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_INFO, param, headers, new NetRequestUtil.RequestListener ( ) {
                         @Override
                         public void onResponse ( JSONObject response ) {
                                 LogUtils.i ( response.toString ( ) );
                                 MusicPathRoot musicPathRoot = mGson.fromJson ( response.toString ( ), MusicPathRoot.class );
                                 if ( musicPathRoot.getCode ( ) == 0 ) {
-//                                                                mMusicPresenter.addMusic ( musicPathRoot.getData ( ) );
                                         musicEntity.setMusicPath ( musicPathRoot.getData ( ) );
                                         //如果获取到第一首歌的播放地址，就播放
                                         mMusicList.add ( musicEntity );
                                         if ( finalI == 0 ) {
-                                                addMusicListToPlayer ( );
+                                                mMusicPlayer.setMusicList ( mMusicList );
+                                                mMusicPlayer.play ( );
                                         }
                                 }
                         }
@@ -194,8 +226,15 @@ public class MusicPresenter implements MusicContract.Presenter {
                 } );
         }
 
+        /**
+         * 获取专辑头像
+         *
+         * @param musicInfo mu
+         */
         private void getSingerAlbum ( Data musicInfo, final MusicEntity musicEntity, final int i ) {
-                loadSingerAlbum ( musicInfo.getSingername ( ), new NetRequestUtil.RequestListener ( ) {
+                param.clear ( );
+                param.put ( "name", musicInfo.getSingername ( ) );
+                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_SINGER, param, headers, new NetRequestUtil.RequestListener ( ) {
                         @Override
                         public void onResponse ( JSONObject response ) {
                                 LogUtils.i ( response.toString ( ) );
@@ -208,47 +247,8 @@ public class MusicPresenter implements MusicContract.Presenter {
                                         }
                                 }
                         }
-
                         @Override
-                        public void onError ( VolleyError error ) {
-                        }
+                        public void onError ( VolleyError error ) {}
                 } );
-        }
-
-        /**
-         * 发送请求获取歌曲的hash值，再请求播放地址
-         *
-         * @param s 关键字
-         */
-        public void loadMusicsHashList ( String s, NetRequestUtil.RequestListener requestListener ) {
-                param.put ( "s", s );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_HASH, param, headers, requestListener );
-        }
-
-
-        public void loadSingerAlbum ( String singerName, NetRequestUtil.RequestListener requestListener ) {
-                param.clear ( );
-                param.put ( "name", singerName );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_SINGER, param, headers, requestListener );
-        }
-
-
-        /**
-         * 获取Music信息数据List
-         *
-         * @param hash music- Hash 值
-         */
-        public void loadMusicPath ( String hash, NetRequestUtil.RequestListener requestListener ) {
-//                这是外层包含Page信息的Data
-//                MusicInfoRoot.Data data = MusicInfoRoot.getData ( );
-                //这是歌曲List-Data
-//                List< Data > dataList = data.getData ( );
-//                for ( int i = 0 ; i < dataList.size ( ) ; i++ ) {
-//                        Data musicInfo = dataList.get ( i );
-//                        if ( i == 0 ) {
-                //根据hash获取Music播放地址
-                param.clear ( );
-                param.put ( "hash", hash );
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_INFO, param, headers, requestListener );
         }
 }

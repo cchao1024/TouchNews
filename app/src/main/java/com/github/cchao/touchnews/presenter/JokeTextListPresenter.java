@@ -21,8 +21,8 @@ import rx.schedulers.Schedulers;
  */
 public class JokeTextListPresenter implements JokeTextListContract.Presenter {
         JokeTextListContract.View mView;
-        BaiDuApiService mBaiDApiService;
         int mCurrentPage = 1;
+        private BaiDuApiService mBaiDApiService;
 
         public JokeTextListPresenter ( JokeTextListContract.View view ) {
                 mView = view;

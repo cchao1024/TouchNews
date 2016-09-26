@@ -63,6 +63,13 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
                 mDrawerLayout.addDrawerListener ( mActionBarDrawerToggle );
         }
 
+       /* @Override
+        public boolean onCreateOptionsMenu ( Menu menu ) {
+                // Inflate the menu; this adds items to the action bar if it is present.
+                getMenuInflater ( ).inflate ( R.menu.menu_main, menu );
+                return true;
+        }*/
+
         private void initNavigation ( ) {
                 /*mActionBarDrawerToggle = new ActionBarDrawerToggle ( this, mDrawerLayout, mToolbar, R.string.open,
                         R.string.close );
@@ -85,13 +92,6 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
                         }
                 } );
         }
-
-       /* @Override
-        public boolean onCreateOptionsMenu ( Menu menu ) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater ( ).inflate ( R.menu.menu_main, menu );
-                return true;
-        }*/
 
         private void initViews ( ) {
                 mHomePresenter = new HomePresenter ( this );

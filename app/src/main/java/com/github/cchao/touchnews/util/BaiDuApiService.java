@@ -4,6 +4,7 @@ package com.github.cchao.touchnews.util;
 import com.github.cchao.touchnews.javaBean.WxArticle;
 import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
 import com.github.cchao.touchnews.javaBean.joke.JokeTextRoot;
+import com.github.cchao.touchnews.javaBean.music.MusicInfoRoot;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -27,4 +28,8 @@ public interface BaiDuApiService {
         //笑话集
         @GET ( "showapi_open_bus/showapi_joke/joke_pic" )
         Observable< JokeImageRoot > getJokeImage ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
+
+        //响应根据关键字获取的歌曲列表
+        @GET ( "geekery/music/query" )
+        Observable< MusicInfoRoot > getMusicList ( @Header ( "apikey" ) String apikey, @Query ( "s" ) String s );
 }

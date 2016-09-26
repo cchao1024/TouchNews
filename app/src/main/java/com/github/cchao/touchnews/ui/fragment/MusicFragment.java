@@ -51,7 +51,6 @@ public class MusicFragment extends BaseFragment implements MusicContract.View {
         TextView mMusicSinger;
         @Bind ( R.id.iv_music_album )
         ImageView mAlbum;
-        View mViewRoot;
         SearchView mMenuItemSearch;
         MusicContract.Presenter mMusicsPresenter;
         MusicEntity mCurMusic;
@@ -193,7 +192,7 @@ public class MusicFragment extends BaseFragment implements MusicContract.View {
         @Override
         public void onMusicPlay ( ) {
                 mPlayBtn.setImageResource ( R.drawable.btn_music_pause );
-                Snackbar.make ( mViewRoot, "onMusicPlay", Snackbar.LENGTH_SHORT ).show ( );
+                Snackbar.make ( mRootView, "onMusicPlay", Snackbar.LENGTH_SHORT ).show ( );
         }
 
         /**
@@ -202,7 +201,7 @@ public class MusicFragment extends BaseFragment implements MusicContract.View {
         @Override
         public void onMusicPause ( ) {
                 mPlayBtn.setImageResource ( R.drawable.btn_music_play );
-                Snackbar.make ( mViewRoot, "onMusicPause", Snackbar.LENGTH_SHORT ).show ( );
+                Snackbar.make ( mRootView, "onPause", Snackbar.LENGTH_SHORT ).show ( );
         }
 
         /**
@@ -220,7 +219,7 @@ public class MusicFragment extends BaseFragment implements MusicContract.View {
                         mMusicName.setText ( mCurMusic.getMusicInfo ( ).getSongname ( ) );
                         mMusicSinger.setText ( mCurMusic.getMusicInfo ( ).getSingername ( ) );
                         mPlayBtn.setImageResource ( R.drawable.btn_music_play );
-                        Snackbar.make ( mViewRoot, "PREPARE", Snackbar.LENGTH_SHORT ).show ( );
+                        Snackbar.make ( mRootView, "PREPARE", Snackbar.LENGTH_SHORT ).show ( );
                 }
         }
 

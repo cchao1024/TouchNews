@@ -10,15 +10,18 @@ import com.github.cchao.touchnews.di.component.AppComponent;
 import com.github.cchao.touchnews.di.component.DaggerAppComponent;
 import com.github.cchao.touchnews.di.module.ApiModule;
 import com.github.cchao.touchnews.di.module.AppModule;
+import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.umeng.analytics.MobclickAgent;
 
 /**
  * * Created by H on 2016/3/12.
  */
 public class BaseApplication extends Application {
+        public static BaiDuApiService mBaiDuApiService;
         private static AppComponent mAppComponent;
         private static Application mApplication;
         public static AppComponent getAppComponent ( ) {
+                mBaiDuApiService = mAppComponent.getBaiDuApiService ( );
                 return mAppComponent;
         }
 

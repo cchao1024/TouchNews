@@ -24,6 +24,7 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
         private final static long SLEEP_TIME = 1000;
         public boolean isPause;
+        public MusicPlayerStateListener mPlayerStateListener;
         private MediaPlayer mMediaPlayer;
         private List< MusicEntity > mMusicList;
         private MusicEntity mCurMusic;
@@ -77,6 +78,9 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                         mMediaPlayer.start ( );
                         isPause = false;
                         EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.RESUME_PALY ) );
+                        if ( mPlayerStateListener != null ) {
+                                mPlayerStateListener.onResumePlay ( );
+                        }
                 } else if ( isPlaying ( ) ) {
                         this.pauseM ( );
                 } else {
@@ -91,6 +95,9 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                                 } catch ( Exception e ) {
                                         e.printStackTrace ( );
                                 }
+                                if ( mPlayerStateListener != null ) {
+                                        mPlayerStateListener.onPrepared ( );
+                                }
                                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PREPARE ) );
                         }
 
@@ -101,11 +108,18 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mMediaPlayer.pause ( );
                 isPause = true;
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PAUSE ) );
+                if ( mPlayerStateListener != null ) {
+                        mPlayerStateListener.onPause ( );
+                }
         }
+
 
         public void stop ( ) {
                 mMediaPlayer.stop ( );
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.STOP ) );
+                if ( mPlayerStateListener != null ) {
+                        mPlayerStateListener.onStop ( );
+                }
         }
 
         /**
@@ -171,17 +185,36 @@ public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mp.start ( );
                 isPause = false;
                 EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PLAY ) );
+                if ( mPlayerStateListener != null ) {
+                        mPlayerStateListener.onPlay ( );
+                }
         }
 
-      /*  @Override
-        public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
-                TLog.d ( TAG, "second percent --> " + percent );
-                if ( percent < 100 ) {
-                        Intent intent = new Intent ( );
-                        intent.setAction ( Constants.ACTION_MUSIC_SECOND_PROGRESS_BROADCAST );
-                        intent.putExtra ( Constants.KEY_MUSIC_SECOND_PROGRESS, percent );
-                        mContext.sendBroadcast ( intent );
-                }
-        }*/
+        /*  @Override
+          public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
+                  TLog.d ( TAG, "second percent --> " + percent );
+                  if ( percent < 100 ) {
+                          Intent intent = new Intent ( );
+                          intent.setAction ( Constants.ACTION_MUSIC_SECOND_PROGRESS_BROADCAST );
+                          intent.putExtra ( Constants.KEY_MUSIC_SECOND_PROGRESS, percent );
+                          mContext.sendBroadcast ( intent );
+                  }
+          }*/
+        //设置状态监听器
+        public void setPlayerStateListener ( MusicPlayerStateListener musicPlayerStateListener ) {
+                mPlayerStateListener = musicPlayerStateListener;
+        }
 
+        //监听器
+        public interface MusicPlayerStateListener {
+                void onPrepared ( );
+
+                void onResumePlay ( );
+
+                void onPlay ( );
+
+                void onPause ( );
+
+                void onStop ( );
+        }
 }
