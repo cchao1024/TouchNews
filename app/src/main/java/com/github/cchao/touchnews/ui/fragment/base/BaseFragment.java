@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
  * Description:
  */
 public abstract class BaseFragment extends BaseLazyFragment {
-        @Nullable
         protected Toolbar mToolbar;
         protected View mRootView;
 

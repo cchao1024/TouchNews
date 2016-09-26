@@ -20,6 +20,12 @@ public class UrlUtil {
         public static final String URL_JOKE_Text = "http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text";
         //天气api
         public static final String URL_WEATHER = "http://apis.baidu.com/heweather/weather/free";
+        //音乐地址 api
+        public static final String URL_MUSIC_SEARCH = "http://apis.baidu.com/geekery/music/query";
+        //音乐Hash api
+        public static final String URL_MUSIC_HASH = "http://apis.baidu.com/geekery/music/query";
+        //音乐地址 api
+        public static final String URL_MUSIC_INFO = "http://apis.baidu.com/geekery/music/playinfo";
         //歌手信息 api
         public static final String URL_MUSIC_SINGER = "http://apis.baidu.com/geekery/music/singer";
         //通过IP获取定位城市

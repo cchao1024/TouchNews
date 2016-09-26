@@ -29,6 +29,7 @@ import butterknife.Bind;
  * 主界面
  */
 public class HomeActivity extends BaseActivity implements HomeContract.View {
+        private static final int OUT_TIME = 2000;
         @Bind ( R.id.drawer_home )
         DrawerLayout mDrawerLayout;
         @Bind ( R.id.viewpager_home_fragments_container )
@@ -162,7 +163,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
         @Override
         public void onBackPressed ( ) {
-                if ( System.currentTimeMillis ( ) - preTime <= 1500 ) {
+                if ( System.currentTimeMillis ( ) - preTime <= OUT_TIME ) {
                         super.onBackPressed ( );
                         finish ( );
                 } else {

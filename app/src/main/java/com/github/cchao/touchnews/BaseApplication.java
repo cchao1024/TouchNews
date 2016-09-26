@@ -16,23 +16,22 @@ import com.umeng.analytics.MobclickAgent;
  * * Created by H on 2016/3/12.
  */
 public class BaseApplication extends Application {
-        private static Context context;
         private static AppComponent mAppComponent;
-
+        private static Application mApplication;
         public static AppComponent getAppComponent ( ) {
                 return mAppComponent;
         }
 
         public static Context getContext ( ) {
-                return context;
+                return mApplication;
         }
 
         @Override
         public void onCreate ( ) {
                 super.onCreate ( );
-                context = getApplicationContext ( );
                 setupLogUtils ( );
                 setupComponent ( );
+                mApplication = this;
                 MobclickAgent.startWithConfigure ( new MobclickAgent.UMAnalyticsConfig ( this, "5739942de0f55a0b3c001aab", "APP0" ) );
         }
 
