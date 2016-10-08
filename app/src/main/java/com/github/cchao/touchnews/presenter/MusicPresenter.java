@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
-import com.github.cchao.touchnews.BaseApplication;
-import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.MusicContract;
 import com.github.cchao.touchnews.javaBean.MusicEntity;
 import com.github.cchao.touchnews.javaBean.music.Data;
@@ -13,6 +11,7 @@ import com.github.cchao.touchnews.javaBean.music.MusicInfoRoot;
 import com.github.cchao.touchnews.javaBean.music.MusicPathRoot;
 import com.github.cchao.touchnews.javaBean.music.MusicSingerRoot;
 import com.github.cchao.touchnews.music.MusicPlayer;
+import com.github.cchao.touchnews.util.Keys;
 import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.UrlUtil;
 import com.google.gson.Gson;
@@ -23,10 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by cchao on 2016/4/18.
@@ -80,6 +75,7 @@ public class MusicPresenter implements MusicContract.Presenter {
                         public void onStop ( ) {}
                 } );
         }
+
         @Override
         public void onPlay ( ) {
                 mMusicPlayer.play ( );
@@ -103,8 +99,7 @@ public class MusicPresenter implements MusicContract.Presenter {
         @Override
         public void getMusic ( String musicName ) {
                 mMusicList.clear ( );
-
-                BaseApplication.mBaiDuApiService.getMusicList ( Keys.WEATHER_KEY, musicName )
+                /*BaseApplication.mBaiDuApiService.getMusicList ( Keys.BAI_DU_API_KEY, musicName )
                         .subscribeOn ( Schedulers.newThread ( ) )
                         .observeOn ( AndroidSchedulers.mainThread ( ) )
                         .subscribe ( new Action1< MusicInfoRoot > ( ) {
@@ -126,8 +121,8 @@ public class MusicPresenter implements MusicContract.Presenter {
                                                 }
                                         }
                                 }
-                        } );
-                /*param.put ( "s", musicName );
+                        } );*/
+                param.put ( "s", musicName );
                 NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_HASH, param, headers, new NetRequestUtil.RequestListener ( ) {
 
                         @Override
@@ -153,7 +148,7 @@ public class MusicPresenter implements MusicContract.Presenter {
 
                         @Override
                         public void onError ( VolleyError error ) { }
-                } );*/
+                } );
         }
 
         /**
@@ -170,14 +165,13 @@ public class MusicPresenter implements MusicContract.Presenter {
                          */
                         @Override
                         public void onResponse ( JSONObject response ) {
-                                LogUtils.i ( response.toString ( ) );
                                 MusicInfoRoot musicInfoRoot = mGson.fromJson ( response.toString ( ), MusicInfoRoot.class );
                                 if ( musicInfoRoot.getCode ( ) == 0 && musicInfoRoot.getData ( ) != null ) {
 //                        这是外层包含Page信息的Data
                                         MusicInfoRoot.Data data = musicInfoRoot.getData ( );
                                         //这是歌曲信息HashList-Data
                                         List< Data > dataList = data.getData ( );
-                                        List< String > searchResult = new ArrayList< String > ( );
+                                        List< String > searchResult = new ArrayList<> ( );
                                         for ( int i = 0 ; i < dataList.size ( ) ; i++ ) {
                                                 Data musicInfo = dataList.get ( i );
                                                 final MusicEntity musicEntity = new MusicEntity ( musicInfo );
@@ -201,6 +195,26 @@ public class MusicPresenter implements MusicContract.Presenter {
          */
         private void getMusicPath ( Data musicInfo, final MusicEntity musicEntity, final int finalI ) {
 
+               /* BaseApplication.mBaiDuApiService.getMusicPath ( Keys.BAI_DU_API_KEY, musicInfo.getHash ( ) )
+                        .subscribeOn ( Schedulers.io ( ) )
+                        .observeOn ( AndroidSchedulers.mainThread ( ) )
+                        .subscribe ( new Action1< MusicPathRoot > ( ) {
+                                @Override
+                                public void call ( MusicPathRoot musicPathRoot ) {
+                                        if ( musicPathRoot.getCode ( ) == 0 && musicPathRoot.getData ( ) != null ) {
+                                                if ( musicPathRoot.getCode ( ) == 0 ) {
+                                                        musicEntity.setMusicPath ( musicPathRoot.getData ( ) );
+                                                        //如果获取到第一首歌的播放地址，就播放
+                                                        mMusicList.add ( musicEntity );
+                                                        if ( finalI == 0 ) {
+                                                                mMusicPlayer.setMusicList ( mMusicList );
+                                                                mMusicPlayer.play ( );
+                                                        }
+                                                }
+                                        }
+                                }
+                        } );
+*/
                 //根据hash获取Music播放地址
                 param.clear ( );
                 param.put ( "hash", musicInfo.getHash ( ) );
@@ -232,6 +246,22 @@ public class MusicPresenter implements MusicContract.Presenter {
          * @param musicInfo mu
          */
         private void getSingerAlbum ( Data musicInfo, final MusicEntity musicEntity, final int i ) {
+                /*BaseApplication.mBaiDuApiService.getSinger ( Keys.BAI_DU_API_KEY, musicInfo.getSingername ( ) )
+                        .subscribeOn ( Schedulers.newThread ( ) )
+                        .observeOn ( AndroidSchedulers.mainThread ( ) )
+                        .subscribe ( new Action1< MusicSingerRoot > ( ) {
+                                @Override
+                                public void call ( MusicSingerRoot musicSingerRoot ) {
+                                        if ( musicSingerRoot.getCode ( ) == 0 ) {
+//                                                                mMusicPresenter.addMusic ( musicInfoRoot.getData ( ) );
+                                                musicEntity.setMusicSinger ( musicSingerRoot.getData ( ) );
+                                                if ( i == 0 ) {
+                                                        mMusicView.setAlbum ( );
+                                                }
+                                        }
+                                }
+                        } );
+                        */
                 param.clear ( );
                 param.put ( "name", musicInfo.getSingername ( ) );
                 NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_MUSIC_SINGER, param, headers, new NetRequestUtil.RequestListener ( ) {

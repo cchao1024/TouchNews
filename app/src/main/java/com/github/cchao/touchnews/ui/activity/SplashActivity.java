@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * Description: 欢迎页
  */
 public class SplashActivity extends Activity {
-        final int DELAY_TIME = 1500;
+        final int DELAY_TIME = 500;
         @Bind ( R.id.tv_version )
         TextView mVersionText;
 

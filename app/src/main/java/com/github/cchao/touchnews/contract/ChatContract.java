@@ -7,15 +7,12 @@ package com.github.cchao.touchnews.contract;
  */
 public interface ChatContract {
         interface View {
-                public void onReceiveRespond ( String message );
-
+                void onReceiveRespond ( String message );
         }
-
         interface Presenter {
 
                 void onSendMessage ( String message );
 
-                void onReceive ( String receive );
         }
 
 }

@@ -18,7 +18,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class BaseApplication extends Application {
         public static BaiDuApiService mBaiDuApiService;
-        private static AppComponent mAppComponent;
+        public static AppComponent mAppComponent;
         private static Application mApplication;
         public static AppComponent getAppComponent ( ) {
                 mBaiDuApiService = mAppComponent.getBaiDuApiService ( );
@@ -57,6 +57,8 @@ public class BaseApplication extends Application {
                         .appModule ( new AppModule ( this ) )
                         .apiModule ( new ApiModule ( ) )
                         .build ( );
+                mBaiDuApiService = mAppComponent.getBaiDuApiService ( );
+
         }
 
         @Override

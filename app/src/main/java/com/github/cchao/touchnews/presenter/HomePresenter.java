@@ -13,15 +13,14 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
 import com.github.cchao.touchnews.BaseApplication;
-import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.HomeContract;
 import com.github.cchao.touchnews.javaBean.Weather;
 import com.github.cchao.touchnews.ui.fragment.ChatFragment;
 import com.github.cchao.touchnews.ui.fragment.JokeContainerFragment;
 import com.github.cchao.touchnews.ui.fragment.MusicFragment;
 import com.github.cchao.touchnews.ui.fragment.NewsContainerFragment;
-import com.github.cchao.touchnews.ui.fragment.WxSelectFragment;
 import com.github.cchao.touchnews.ui.fragment.base.BaseLazyFragment;
+import com.github.cchao.touchnews.util.Keys;
 import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.UrlUtil;
 import com.google.gson.Gson;
@@ -55,15 +54,14 @@ public class HomePresenter implements HomeContract.Presenter {
                 mFragments = new ArrayList<> ( );
                 mFragments.add ( new NewsContainerFragment ( ) );
                 mFragments.add ( new JokeContainerFragment ( ) );
-                mFragments.add ( new ChatFragment ( ) );
                 mFragments.add ( new MusicFragment ( ) );
-                mFragments.add ( new WxSelectFragment ( ) );
+                mFragments.add ( new ChatFragment ( ) );
                 mHomeView.setFragmentPager ( mFragments );
         }
 
         @Override
         public void getNavigation ( ) {
-                headers.put ( Keys.API_KEY, Keys.WEATHER_KEY );
+                headers.put ( Keys.API_KEY, Keys.BAI_DU_API_KEY );
                 param.put ( Keys.CITY, "广州" );
                 //获取天气
                 NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_WEATHER, param, headers, new NetRequestUtil.RequestListener ( ) {

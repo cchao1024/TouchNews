@@ -9,7 +9,7 @@ public class UrlUtil {
         //baiDu_apiKey
         public static final String API_KEY = "96a573502b09d771c6431c106d04613a";
         //BaiDu_url
-        public static final String API_BAIDU = "http://apis.baidu.com/";
+        public static final String API_BAI_DU = "http://apis.baidu.com/";
         //turing_apiKey
         public static final String TURING_KEY = "16d2878f1e41520c14dde5ed52920423";
         //新闻api

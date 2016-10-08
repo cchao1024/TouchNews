@@ -79,13 +79,34 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
                         @Override
                         public boolean onNavigationItemSelected ( MenuItem item ) {
                                 Menu menu = mNavigationView.getMenu ( );
-                                for ( int i = 0 ; i < menu.size ( ) ; i++ ) {
-                                        if ( item.getOrder ( ) == i + 1 ) {
-                                                mFragmentViewPager.setCurrentItem ( i, false );
-                                                item.setChecked ( true );
-                                        } else {
-                                                item.setChecked ( false );
-                                        }
+                                switch ( item.getItemId ( ) ) {
+                                        case R.id.menu_item_drawer_news:
+                                                mFragmentViewPager.setCurrentItem ( 0, false );
+                                                break;
+                                        case R.id.menu_item_drawer_joke:
+                                                mFragmentViewPager.setCurrentItem ( 1, false );
+                                                break;
+                                        case R.id.menu_item_drawer_music:
+                                                mFragmentViewPager.setCurrentItem ( 2, false );
+                                                break;
+                                        case R.id.menu_item_drawer_chat:
+                                                mFragmentViewPager.setCurrentItem ( 3, false );
+                                                break;
+                                        case R.id.nav_theme:
+//                                                        mFragmentViewPager.setCurrentItem ( i, false );
+                                                break;
+                                        case R.id.nav_night:
+//                                                        mFragmentViewPager.setCurrentItem ( i, false );
+                                                break;
+                                        case R.id.nav_setting:
+//                                                        mFragmentViewPager.setCurrentItem ( i, false );
+                                                break;
+                                        case R.id.nav_suggestion:
+//                                                        mFragmentViewPager.setCurrentItem ( i, false );
+                                                break;
+                                        case R.id.nav_about:
+//                                                        mFragmentViewPager.setCurrentItem ( i, false );
+                                                break;
                                 }
                                 mDrawerLayout.closeDrawer ( GravityCompat.START );
                                 return true;

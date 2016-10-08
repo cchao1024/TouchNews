@@ -33,12 +33,13 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
         @Bind ( R.id.recycle_view_news )
         RecyclerView mRecyclerView;
         View mRootView;
-        List< Contentlist > mNewsItemList;
+        List< Contentlist > mNewsItemList = new ArrayList<> ( );
+        ;
         NewsListRecyclerAdapter mNewsListRecyclerAdapter;
         NewListDataContract.Presenter mNewsListPresenter;
         VaryViewWidget mVaryViewWidget;
         //新闻频道的ID
-        private String mChannelId = null;
+        private String mChannelId;
 
         @Override
         protected int getLayoutId ( ) {
@@ -92,7 +93,6 @@ public class NewsListFragments extends BaseFragment implements NewListDataContra
         @Override
         public void onFirstUserVisible ( ) {
                 super.onFirstUserVisible ( );
-                mNewsItemList = new ArrayList<> ( );
                 initViews ( );
                 mNewsListPresenter.getRefreshData ( );
         }

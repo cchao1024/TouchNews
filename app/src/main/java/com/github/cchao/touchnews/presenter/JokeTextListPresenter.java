@@ -1,11 +1,11 @@
 package com.github.cchao.touchnews.presenter;
 
 import com.github.cchao.touchnews.BaseApplication;
-import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.JokeTextListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeTextRoot;
 import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.github.cchao.touchnews.util.Constant;
+import com.github.cchao.touchnews.util.Keys;
 import com.github.cchao.touchnews.util.NetUtil;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import rx.schedulers.Schedulers;
 public class JokeTextListPresenter implements JokeTextListContract.Presenter {
         JokeTextListContract.View mView;
         int mCurrentPage = 1;
-        private BaiDuApiService mBaiDApiService;
+        private BaiDuApiService mBaiDBaiDuApiService;
 
         public JokeTextListPresenter ( JokeTextListContract.View view ) {
                 mView = view;
-                mBaiDApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
+                mBaiDBaiDuApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
         }
 
         @Override
@@ -36,7 +36,7 @@ public class JokeTextListPresenter implements JokeTextListContract.Presenter {
                         mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
                         mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDApiService.getJokeText ( Keys.BAI_DU_KEY, "1" )
+                        mBaiDBaiDuApiService.getJokeText ( Keys.BAI_DU_KEY, "1" )
                                 .subscribeOn ( Schedulers.newThread ( ) )
                                 .observeOn ( AndroidSchedulers.mainThread ( ) )
                                 .subscribe ( new Action1< JokeTextRoot > ( ) {
@@ -67,7 +67,7 @@ public class JokeTextListPresenter implements JokeTextListContract.Presenter {
                         mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
                         mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDApiService.getJokeText ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
+                        mBaiDBaiDuApiService.getJokeText ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
                                 .subscribeOn ( Schedulers.newThread ( ) )
                                 .observeOn ( AndroidSchedulers.mainThread ( ) )
                                 .subscribe ( new Action1< JokeTextRoot > ( ) {

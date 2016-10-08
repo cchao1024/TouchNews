@@ -1,11 +1,11 @@
 package com.github.cchao.touchnews.presenter;
 
 import com.github.cchao.touchnews.BaseApplication;
-import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.JokeImageListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
 import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.github.cchao.touchnews.util.Constant;
+import com.github.cchao.touchnews.util.Keys;
 import com.github.cchao.touchnews.util.NetUtil;
 
 import java.util.List;
@@ -21,12 +21,12 @@ import rx.schedulers.Schedulers;
  */
 public class JokeImageListPresenter implements JokeImageListContract.Presenter {
         JokeImageListContract.View mView;
-        BaiDuApiService mBaiDApiService;
+        BaiDuApiService mBaiDBaiDuApiService;
         int mCurrentPage = 1;
 
         public JokeImageListPresenter ( JokeImageListContract.View view ) {
                 mView = view;
-                mBaiDApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
+                mBaiDBaiDuApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
         }
 
         @Override
@@ -36,7 +36,7 @@ public class JokeImageListPresenter implements JokeImageListContract.Presenter {
                         mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
                         mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDApiService.getJokeImage ( Keys.BAI_DU_KEY, "1" )
+                        mBaiDBaiDuApiService.getJokeImage ( Keys.BAI_DU_KEY, "1" )
                                 .subscribeOn ( Schedulers.newThread ( ) )
                                 .observeOn ( AndroidSchedulers.mainThread ( ) )
                                 .subscribe ( new Action1< JokeImageRoot > ( ) {
@@ -64,7 +64,7 @@ public class JokeImageListPresenter implements JokeImageListContract.Presenter {
                         mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
                 } else {
                         mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDApiService.getJokeImage ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
+                        mBaiDBaiDuApiService.getJokeImage ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
                                 .subscribeOn ( Schedulers.newThread ( ) )
                                 .observeOn ( AndroidSchedulers.mainThread ( ) )
                                 .subscribe ( new Action1< JokeImageRoot > ( ) {

@@ -2,8 +2,8 @@ package com.github.cchao.touchnews.presenter;
 
 import com.android.volley.VolleyError;
 import com.apkfuns.logutils.LogUtils;
-import com.github.cchao.touchnews.contants.Keys;
 import com.github.cchao.touchnews.contract.ChatContract;
+import com.github.cchao.touchnews.util.Keys;
 import com.github.cchao.touchnews.util.NetRequestUtil;
 import com.github.cchao.touchnews.util.UrlUtil;
 
@@ -35,14 +35,12 @@ public class ChatPresenter implements ChatContract.Presenter {
                 onRequestMessage ( message );
         }
 
-        @Override
-        public void onReceive ( String receive ) { }
-
-        public void onRequestMessage ( String message ) {
+        private void onRequestMessage ( String message ) {
                 /*“key”: “APIKEY”,
                 “info”: “今天天气怎么样”，
                 “loc”：“北京市中关村”，
                 “userid”：“12345678”*/
+
                 param.put ( Keys.INFO, EncodeString ( message ) );
                 param.put ( "userid", "12345678" );
                 NetRequestUtil.getInstance ( ).getJson ( UrlUtil.URL_CHAT, param, new NetRequestUtil.RequestListener ( ) {
@@ -63,7 +61,7 @@ public class ChatPresenter implements ChatContract.Presenter {
                 } );
         }
 
-        public String EncodeString ( String str ) {
+        private String EncodeString ( String str ) {
                 try {
                         return URLEncoder.encode ( str, "UTF-8" );
                 } catch ( UnsupportedEncodingException e ) {

@@ -9,11 +9,11 @@ import com.github.cchao.touchnews.util.BaiDuApiService;
  * Description: 根 Presenter 绑定View
  */
 public abstract class BasePresenter < V > {
-        BaiDuApiService mBaiDApiService;
+        BaiDuApiService mBaiDBaiDuApiService;
         V mView;
 
         public BasePresenter ( ) {
-                mBaiDApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
+                mBaiDBaiDuApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
         }
 
         public void bindView ( V mvpView ) {

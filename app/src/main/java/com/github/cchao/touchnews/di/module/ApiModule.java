@@ -38,6 +38,6 @@ public class ApiModule {
         @Singleton
         @Provides
         protected BaiDuApiService provideBaiDuApiService ( ) {
-                return getApiService ( UrlUtil.API_BAIDU ).create ( BaiDuApiService.class );
+                return getApiService ( UrlUtil.API_BAI_DU ).create ( BaiDuApiService.class );
         }
 }
