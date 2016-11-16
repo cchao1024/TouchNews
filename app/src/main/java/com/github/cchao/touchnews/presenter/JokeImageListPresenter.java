@@ -1,11 +1,14 @@
 package com.github.cchao.touchnews.presenter;
 
+import android.util.Log;
+
 import com.github.cchao.touchnews.BaseApplication;
 import com.github.cchao.touchnews.contract.JokeImageListContract;
 import com.github.cchao.touchnews.javaBean.joke.JokeImageRoot;
 import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.Keys;
+import com.github.cchao.touchnews.util.LogUtil;
 import com.github.cchao.touchnews.util.NetUtil;
 
 import java.util.List;
@@ -53,6 +56,11 @@ public class JokeImageListPresenter implements JokeImageListContract.Presenter {
                                                         }
                                                 }
                                         }
+                                } , new Action1< Throwable > ( ) {
+                                        @Override
+                                        public void call ( Throwable throwable ) {
+                                                LogUtil.e ( throwable.toString () );
+                                        }
                                 } );
                 }
         }
@@ -81,7 +89,12 @@ public class JokeImageListPresenter implements JokeImageListContract.Presenter {
                                                         }
                                                 }
                                         }
-                                } );
+                                }, new Action1< Throwable > ( ) {
+                                        @Override
+                                        public void call ( Throwable throwable ) {
+                                                LogUtil.e ( throwable.toString () );
+                                        }
+                                }  );
                 }
         }
 

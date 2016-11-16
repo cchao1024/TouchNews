@@ -6,6 +6,7 @@ import com.github.cchao.touchnews.javaBean.joke.JokeTextRoot;
 import com.github.cchao.touchnews.util.BaiDuApiService;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.Keys;
+import com.github.cchao.touchnews.util.LogUtil;
 import com.github.cchao.touchnews.util.NetUtil;
 
 import java.util.List;
@@ -56,6 +57,11 @@ public class JokeTextListPresenter implements JokeTextListContract.Presenter {
                                                         }
                                                 }
                                         }
+                                }, new Action1< Throwable > ( ) {
+                                        @Override
+                                        public void call ( Throwable throwable ) {
+                                                LogUtil.e ( throwable.toString () );
+                                        }
                                 } );
                 }
         }
@@ -87,7 +93,12 @@ public class JokeTextListPresenter implements JokeTextListContract.Presenter {
                                                         }
                                                 }
                                         }
-                                } );
+                                }, new Action1< Throwable > ( ) {
+                                        @Override
+                                        public void call ( Throwable throwable ) {
+                                                LogUtil.e ( throwable.toString () );
+                                        }
+                                }  );
                 }
         }
 

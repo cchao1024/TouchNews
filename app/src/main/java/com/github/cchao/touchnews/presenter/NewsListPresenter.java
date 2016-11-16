@@ -7,6 +7,7 @@ import com.github.cchao.touchnews.javaBean.news.NewsItemRoot;
 import com.github.cchao.touchnews.javaBean.news.Pagebean;
 import com.github.cchao.touchnews.util.Constant;
 import com.github.cchao.touchnews.util.Keys;
+import com.github.cchao.touchnews.util.LogUtil;
 import com.github.cchao.touchnews.util.NetUtil;
 
 import java.util.List;
@@ -56,6 +57,11 @@ public class NewsListPresenter implements NewListDataContract.Presenter {
                                                         mView.onReceiveMoreListData ( contentlist );
                                                 }
                                         }
+                                }
+                        }, new Action1< Throwable > ( ) {
+                                @Override
+                                public void call ( Throwable throwable ) {
+                                        LogUtil.e ( throwable.toString () );
                                 }
                         } );
         }
