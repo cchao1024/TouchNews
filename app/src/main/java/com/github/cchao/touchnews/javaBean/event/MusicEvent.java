@@ -6,19 +6,21 @@ package com.github.cchao.touchnews.javaBean.event;
  * Description:
  */
 public class MusicEvent {
-        public  enum MUSIC_TYPE{
-                PREPARE,PLAY,PAUSE, RESUME_PALY,STOP
-        }
-        private MUSIC_TYPE type;
-        public MusicEvent (MUSIC_TYPE type ) {
-                this.type=type;
-        }
+    public enum MUSIC_TYPE {
+        PREPARE, PLAY, PAUSE, RESUME_PALY, STOP
+    }
 
-        public MUSIC_TYPE getType ( ) {
-                return type;
-        }
+    private MUSIC_TYPE type;
 
-        public void setType ( MUSIC_TYPE type ) {
-                this.type = type;
-        }
+    public MusicEvent(MUSIC_TYPE type) {
+        this.type = type;
+    }
+
+    public MUSIC_TYPE getType() {
+        return type;
+    }
+
+    public void setType(MUSIC_TYPE type) {
+        this.type = type;
+    }
 }

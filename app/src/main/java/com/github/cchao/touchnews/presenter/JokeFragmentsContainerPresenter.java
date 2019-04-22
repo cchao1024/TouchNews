@@ -16,26 +16,26 @@ import java.util.List;
  * Description:
  */
 public class JokeFragmentsContainerPresenter implements FragmentContainerContract.Presenter {
-        FragmentContainerContract.View mView;
-        List< BaseFragment > mFragments;
-        String[] mTitles;
+    FragmentContainerContract.View mView;
+    List<BaseFragment> mFragments;
+    String[] mTitles;
 
-        public JokeFragmentsContainerPresenter ( FragmentContainerContract.View view ) {
-                mView = view;
-                mView.setFragment ( getFragments ( ), getTitles ( ) );
-        }
+    public JokeFragmentsContainerPresenter(FragmentContainerContract.View view) {
+        mView = view;
+        mView.setFragment(getFragments(), getTitles());
+    }
 
-        @Override
-        public List< BaseFragment > getFragments ( ) {
-                mFragments = new ArrayList<> ( );
-                mFragments.add ( new JokeTextListFragments ( ) );
-                mFragments.add ( new JokeImageListFragments ( ) );
-                return mFragments;
-        }
+    @Override
+    public List<BaseFragment> getFragments() {
+        mFragments = new ArrayList<>();
+        mFragments.add(new JokeTextListFragments());
+        mFragments.add(new JokeImageListFragments());
+        return mFragments;
+    }
 
-        @Override
-        public String[] getTitles ( ) {
-                mTitles = BaseApplication.getContext ( ).getResources ( ).getStringArray ( R.array.joke_titles );
-                return mTitles;
-        }
+    @Override
+    public String[] getTitles() {
+        mTitles = BaseApplication.getContext().getResources().getStringArray(R.array.joke_titles);
+        return mTitles;
+    }
 }

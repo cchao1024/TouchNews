@@ -14,7 +14,7 @@ import dagger.Component;
  * Description: application
  */
 @Singleton
-@Component ( modules = { AppModule.class , ApiModule.class } )
+@Component(modules = {AppModule.class, ApiModule.class})
 public interface AppComponent {
-        BaiDuApiService getBaiDuApiService ( );
+    BaiDuApiService getBaiDuApiService();
 }

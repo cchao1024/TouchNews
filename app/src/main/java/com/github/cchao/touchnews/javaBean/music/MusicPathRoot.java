@@ -22,116 +22,116 @@ package com.github.cchao.touchnews.javaBean.music;
 }
  */
 public class MusicPathRoot {
-        private int code;
+    private int code;
 
-        private String status;
+    private String status;
 
-        private String msg;
+    private String msg;
 
-        private Data data;
+    private Data data;
 
-        public int getCode ( ) {
-                return this.code;
+    public int getCode() {
+        return this.code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Data getData() {
+        return this.data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public static class Data {
+        private int bitRate;
+
+        private int fileSize;
+
+        private String hash;
+
+        private String fileName;
+
+        private String url;
+
+        private String extName;
+
+        private int timeLength;
+
+        public int getBitRate() {
+            return this.bitRate;
         }
 
-        public void setCode ( int code ) {
-                this.code = code;
+        public void setBitRate(int bitRate) {
+            this.bitRate = bitRate;
         }
 
-        public String getStatus ( ) {
-                return this.status;
+        public int getFileSize() {
+            return this.fileSize;
         }
 
-        public void setStatus ( String status ) {
-                this.status = status;
+        public void setFileSize(int fileSize) {
+            this.fileSize = fileSize;
         }
 
-        public String getMsg ( ) {
-                return this.msg;
+        public String getHash() {
+            return this.hash;
         }
 
-        public void setMsg ( String msg ) {
-                this.msg = msg;
+        public void setHash(String hash) {
+            this.hash = hash;
         }
 
-        public Data getData ( ) {
-                return this.data;
+        public String getFileName() {
+            return this.fileName;
         }
 
-        public void setData ( Data data ) {
-                this.data = data;
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
         }
 
-        public static class Data {
-                private int bitRate;
-
-                private int fileSize;
-
-                private String hash;
-
-                private String fileName;
-
-                private String url;
-
-                private String extName;
-
-                private int timeLength;
-
-                public int getBitRate ( ) {
-                        return this.bitRate;
-                }
-
-                public void setBitRate ( int bitRate ) {
-                        this.bitRate = bitRate;
-                }
-
-                public int getFileSize ( ) {
-                        return this.fileSize;
-                }
-
-                public void setFileSize ( int fileSize ) {
-                        this.fileSize = fileSize;
-                }
-
-                public String getHash ( ) {
-                        return this.hash;
-                }
-
-                public void setHash ( String hash ) {
-                        this.hash = hash;
-                }
-
-                public String getFileName ( ) {
-                        return this.fileName;
-                }
-
-                public void setFileName ( String fileName ) {
-                        this.fileName = fileName;
-                }
-
-                public String getUrl ( ) {
-                        return this.url;
-                }
-
-                public void setUrl ( String url ) {
-                        this.url = url;
-                }
-
-                public String getExtName ( ) {
-                        return this.extName;
-                }
-
-                public void setExtName ( String extName ) {
-                        this.extName = extName;
-                }
-
-                public int getTimeLength ( ) {
-                        return this.timeLength;
-                }
-
-                public void setTimeLength ( int timeLength ) {
-                        this.timeLength = timeLength;
-                }
-
+        public String getUrl() {
+            return this.url;
         }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getExtName() {
+            return this.extName;
+        }
+
+        public void setExtName(String extName) {
+            this.extName = extName;
+        }
+
+        public int getTimeLength() {
+            return this.timeLength;
+        }
+
+        public void setTimeLength(int timeLength) {
+            this.timeLength = timeLength;
+        }
+
+    }
 }

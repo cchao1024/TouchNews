@@ -12,26 +12,29 @@ import android.view.View;
  * Description: SnackBar tool
  */
 public class SnackBarUtil {
-        public  static Snackbar showShort( @NonNull View view, @StringRes int resId){
+    public static Snackbar showShort(@NonNull View view, @StringRes int resId) {
 
-                Snackbar snackbar=Snackbar.make ( view,resId,Snackbar.LENGTH_SHORT );
-                snackbar.show ();
-                return snackbar;
-        }
-        public  static Snackbar showLong( @NonNull View view, @StringRes int resId){
+        Snackbar snackbar = Snackbar.make(view, resId, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        return snackbar;
+    }
 
-                Snackbar snackbar=Snackbar.make ( view,resId,Snackbar.LENGTH_LONG );
-                snackbar.show ();
-                return snackbar;
-        }
-        public  static Snackbar shoShort( @NonNull View view, @NonNull String string){
-                Snackbar snackbar=Snackbar.make ( view,string,Snackbar.LENGTH_SHORT );
-                snackbar.show ();
-                return snackbar;
-        }
-        public  static Snackbar showLong( @NonNull View view, @NonNull String string){
-                Snackbar snackbar=Snackbar.make ( view,string,Snackbar.LENGTH_LONG );
-                snackbar.show ();
-                return snackbar;
-        }
+    public static Snackbar showLong(@NonNull View view, @StringRes int resId) {
+
+        Snackbar snackbar = Snackbar.make(view, resId, Snackbar.LENGTH_LONG);
+        snackbar.show();
+        return snackbar;
+    }
+
+    public static Snackbar shoShort(@NonNull View view, @NonNull String string) {
+        Snackbar snackbar = Snackbar.make(view, string, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        return snackbar;
+    }
+
+    public static Snackbar showLong(@NonNull View view, @NonNull String string) {
+        Snackbar snackbar = Snackbar.make(view, string, Snackbar.LENGTH_LONG);
+        snackbar.show();
+        return snackbar;
+    }
 }

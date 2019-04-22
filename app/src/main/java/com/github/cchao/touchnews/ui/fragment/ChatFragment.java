@@ -30,125 +30,130 @@ import butterknife.OnClick;
  * Description: 聊天机器人
  */
 public class ChatFragment extends BaseFragment implements ChatContract.View {
-        @Bind ( R.id.scroll_chat )
-        ScrollView mScrollView;
-        @Bind ( R.id.lyt_chat )
-        LinearLayout mLinearContent;
-        @Bind ( R.id.chat_edit )
-        EditText mEditText;
-        @Bind ( R.id.chat_send )
-        TextView mSend;
-        ChatContract.Presenter mChatPresenter;
+    @Bind(R.id.scroll_chat)
+    ScrollView mScrollView;
+    @Bind(R.id.lyt_chat)
+    LinearLayout mLinearContent;
+    @Bind(R.id.chat_edit)
+    EditText mEditText;
+    @Bind(R.id.chat_send)
+    TextView mSend;
+    ChatContract.Presenter mChatPresenter;
 
-        @Override
-        public void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setHasOptionsMenu ( true );
-        }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
-        @Override
-        protected void initialize ( ) {
-                super.initialize ( );
-                mEditText.addTextChangedListener ( new TextWatcher ( ) {
-                        @Override
-                        public void beforeTextChanged ( CharSequence s, int start, int count, int after ) {}
-                        @Override
-                        public void onTextChanged ( CharSequence s, int start, int before, int count ) {
-                                //用户输入文本就改变发送键颜色
-                                if ( count != 0 ) {
-                                        mSend.setBackgroundResource ( R.drawable.bg_chat_send_normal );
-                                        mSend.setTextColor ( getResources ( ).getColor ( R.color.textWhite ) );
-                                } else {
-                                        mSend.setBackgroundResource ( R.drawable.bg_chat_send_disabled );
-                                        mSend.setTextColor ( getResources ( ).getColor ( R.color.textPrimaryGrey ) );
-                                }
-                        }
-                        @Override
-                        public void afterTextChanged ( Editable s ) {}
-                } );
-        }
+    @Override
+    protected void initialize() {
+        super.initialize();
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-        /**
-         *  滚动到Linear 底部
-         */
-        private void scrollToBottom ( ) {
-                new Handler ( ).post ( new Runnable ( ) {
-                        @Override
-                        public void run ( ) {
-                                mScrollView.fullScroll ( ScrollView.FOCUS_DOWN );
-                        }
-                } );
-        }
-
-        @Override
-        public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
-                inflater.inflate ( R.menu.menu_main, menu );
-                super.onCreateOptionsMenu ( menu, inflater );
-        }
-
-        @Override
-        public boolean onOptionsItemSelected ( MenuItem item ) {
-                switch ( item.getItemId ( ) ) {
-                        case R.id.action_search:
-                                return true;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //用户输入文本就改变发送键颜色
+                if (count != 0) {
+                    mSend.setBackgroundResource(R.drawable.bg_chat_send_normal);
+                    mSend.setTextColor(getResources().getColor(R.color.textWhite));
+                } else {
+                    mSend.setBackgroundResource(R.drawable.bg_chat_send_disabled);
+                    mSend.setTextColor(getResources().getColor(R.color.textPrimaryGrey));
                 }
-                return false;
-        }
+            }
 
-        /**
-         *  进入页面就发送时间请求
-         */
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                mChatPresenter = new ChatPresenter ( this );
-                mChatPresenter.onSendMessage ( "现在时间" );
-                mToolbar.setTitle ( R.string.chat );
-        }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
 
-        @Override
-        protected int getLayoutId ( ) {
-                return R.layout.fragment_chat;
-        }
+    /**
+     * 滚动到Linear 底部
+     */
+    private void scrollToBottom() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
 
-        @OnClick ( R.id.chat_send )
-        public void click ( View v ) {
-                switch ( v.getId ( ) ) {
-                        //发送
-                        case R.id.chat_send:
-                                mSend.setBackgroundResource ( R.color.textPrimaryGrey );
-                                String message = mEditText.getText ( ).toString ( );
-                                mEditText.setText ( "" );
-                                if ( ! TextUtils.isEmpty ( message ) ) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 进入页面就发送时间请求
+     */
+    @Override
+    public void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        mChatPresenter = new ChatPresenter(this);
+        mChatPresenter.onSendMessage("现在时间");
+        mToolbar.setTitle(R.string.chat);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_chat;
+    }
+
+    @OnClick(R.id.chat_send)
+    public void click(View v) {
+        switch (v.getId()) {
+            //发送
+            case R.id.chat_send:
+                mSend.setBackgroundResource(R.color.textPrimaryGrey);
+                String message = mEditText.getText().toString();
+                mEditText.setText("");
+                if (!TextUtils.isEmpty(message)) {
                                         /*TextView textView=new TextView (  mContext);
                                         textView.setText ( message );
                                         textView.setCompoundDrawablesWithIntrinsicBounds ( 0,0,R.drawable.icon_music,0);
                                         textView.setBackgroundResource ( R.drawable.icon_chat_request_0 );*/
-                                        ChatItemView itemView = new ChatItemView ( mContext );
-                                        itemView.setItem ( false, message );
-                                        mLinearContent.addView ( itemView, new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                                                .LayoutParams.WRAP_CONTENT ) );
-                                        mChatPresenter.onSendMessage ( message );
+                    ChatItemView itemView = new ChatItemView(mContext);
+                    itemView.setItem(false, message);
+                    mLinearContent.addView(itemView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                        .LayoutParams.WRAP_CONTENT));
+                    mChatPresenter.onSendMessage(message);
 
-                                }
-                                break;
                 }
+                break;
         }
+    }
 
-        /**
-         * 接收到响应
-         * @param message 响应信息
-         */
-        @Override
-        public void onReceiveRespond ( String message ) {
+    /**
+     * 接收到响应
+     *
+     * @param message 响应信息
+     */
+    @Override
+    public void onReceiveRespond(String message) {
                /* TextView textView=new TextView (  mContext);
                 textView.setText ( message );
                 textView.setCompoundDrawablesWithIntrinsicBounds ( 0,0,R.drawable.icon_music,0);
                 textView.setBackgroundResource ( R.drawable.bg_chat_respond);*/
-                ChatItemView itemView = new ChatItemView ( mContext );
-                itemView.setItem ( true, message );
-                mLinearContent.addView ( itemView, new ViewGroup.LayoutParams ( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT ) );
-                scrollToBottom ( );
-        }
+        ChatItemView itemView = new ChatItemView(mContext);
+        itemView.setItem(true, message);
+        mLinearContent.addView(itemView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        scrollToBottom();
+    }
 
 }

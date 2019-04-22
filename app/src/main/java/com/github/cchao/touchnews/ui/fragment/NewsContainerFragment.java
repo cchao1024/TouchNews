@@ -24,80 +24,80 @@ import butterknife.Bind;
  * Description: 新闻资讯容器Fragment
  */
 public class NewsContainerFragment extends BaseFragment implements FragmentContainerContract.View {
-        @Bind ( R.id.tab_news )
-        TabLayout mTabLayout;
-        @Bind ( R.id.viewpager_news )
-        ViewPager mViewPager;
-        FragmentPagerAdapter mFragmentsPagerAdapter;
-        FragmentContainerContract.Presenter mPresenter;
+    @Bind(R.id.tab_news)
+    TabLayout mTabLayout;
+    @Bind(R.id.viewpager_news)
+    ViewPager mViewPager;
+    FragmentPagerAdapter mFragmentsPagerAdapter;
+    FragmentContainerContract.Presenter mPresenter;
 
-        @Override
-        public void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setHasOptionsMenu ( true );
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    protected int getLayoutId() {
+        return R.layout.fragment_news_container;
+    }
+
+    @Override
+    protected void initialize() {
+        super.initialize();
+        mPresenter = new NewsFragmentsContainerPresenter(this);
+    }
+
+    @Override
+    public void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        mToolbar.setTitle(R.string.news);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
         }
+        return false;
+    }
 
-        protected int getLayoutId ( ) {
-                return R.layout.fragment_news_container;
-        }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        @Override
-        protected void initialize ( ) {
-                super.initialize ( );
-                mPresenter = new NewsFragmentsContainerPresenter ( this );
-        }
+    /**
+     * 设置新闻频道块
+     *
+     * @param fragments 块
+     * @param titles    标题
+     */
+    @Override
+    public void setFragment(List<BaseFragment> fragments, String[] titles) {
+        mFragmentsPagerAdapter = new NewsFragmentsPagerAdapter(getActivity().getSupportFragmentManager(), titles, fragments);
+        mViewPager.setOffscreenPageLimit(fragments.size());
+        mViewPager.setAdapter(mFragmentsPagerAdapter);
 
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                mToolbar.setTitle ( R.string.news );
-        }
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        @Override
-        public boolean onOptionsItemSelected ( MenuItem item ) {
-                switch ( item.getItemId ( ) ) {
-                        case R.id.action_search:
-                                return true;
-                }
-                return false;
-        }
+            }
 
-        @Override
-        public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
-                inflater.inflate ( R.menu.menu_main, menu );
-                super.onCreateOptionsMenu ( menu, inflater );
-        }
+            @Override
+            public void onPageSelected(int position) {
 
-        /**
-         * 设置新闻频道块
-         *
-         * @param fragments 块
-         * @param titles    标题
-         */
-        @Override
-        public void setFragment ( List< BaseFragment > fragments, String[] titles ) {
-                mFragmentsPagerAdapter = new NewsFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), titles, fragments );
-                mViewPager.setOffscreenPageLimit ( fragments.size ( ) );
-                mViewPager.setAdapter ( mFragmentsPagerAdapter );
+            }
 
-                mViewPager.addOnPageChangeListener ( new ViewPager.OnPageChangeListener ( ) {
-                        @Override
-                        public void onPageScrolled ( int position, float positionOffset, int positionOffsetPixels ) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                        }
-
-                        @Override
-                        public void onPageSelected ( int position ) {
-
-                        }
-
-                        @Override
-                        public void onPageScrollStateChanged ( int state ) {
-
-                        }
-                } );
-                mTabLayout.setupWithViewPager ( mViewPager );
-        }
+            }
+        });
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
 
 
 }

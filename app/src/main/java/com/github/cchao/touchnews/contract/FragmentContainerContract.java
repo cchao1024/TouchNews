@@ -25,13 +25,13 @@ import java.util.List;
  */
 public interface FragmentContainerContract {
 
-        interface View {
-                void setFragment ( List< BaseFragment > fragments, String[] titles );
-        }
+    interface View {
+        void setFragment(List<BaseFragment> fragments, String[] titles);
+    }
 
-        interface Presenter {
-                List< BaseFragment > getFragments ( );
+    interface Presenter {
+        List<BaseFragment> getFragments();
 
-                String[] getTitles ( );
-        }
+        String[] getTitles();
+    }
 }

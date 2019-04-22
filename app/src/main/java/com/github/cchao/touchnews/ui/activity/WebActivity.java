@@ -16,37 +16,37 @@ import butterknife.Bind;
  */
 public class WebActivity extends BaseActivity {
 
-        @Bind ( R.id.webview_article_detail )
-        WebView mWebView;
+    @Bind(R.id.webview_article_detail)
+    WebView mWebView;
 
-        @Override
-        protected int getLayoutID ( ) {
-                return R.layout.activity_web;
-        }
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_web;
+    }
 
-        @Override
-        protected void initialize ( ) {
-                super.initialize ( );
-                setWebView ( );
-                mWebView.loadUrl ( getIntent ( ).getStringExtra ( Keys.URL ) );
-                LogUtil.i ( getIntent ( ).getStringExtra ( Keys.URL ) );
-        }
+    @Override
+    protected void initialize() {
+        super.initialize();
+        setWebView();
+        mWebView.loadUrl(getIntent().getStringExtra(Keys.URL));
+        LogUtil.i(getIntent().getStringExtra(Keys.URL));
+    }
 
-        private void setWebView ( ) {
-                WebSettings settings = mWebView.getSettings ( );
-                settings.setSupportZoom ( true );          //支持缩放
-                settings.setBlockNetworkImage ( true );  //设置图片最后加载
+    private void setWebView() {
+        WebSettings settings = mWebView.getSettings();
+        settings.setSupportZoom(true);          //支持缩放
+        settings.setBlockNetworkImage(true);  //设置图片最后加载
 //                settings.setBlockNetworkLoads ( true );
 //                settings.setDomStorageEnabled ( true );
-                settings.setDatabaseEnabled ( true );
+        settings.setDatabaseEnabled(true);
 //                String cacheDirPath = mContext.getFilesDir ( ).getAbsolutePath()+ CacheUtil.WEB_CACAH_DIRNAME;
-                //缓存
+        //缓存
 //                settings.setAppCachePath (  );
-                settings.setCacheMode ( WebSettings.LOAD_CACHE_ELSE_NETWORK );
-                settings.setAppCacheEnabled ( true );
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        settings.setAppCacheEnabled(true);
 //                settings.setAppCachePath ( cacheDirPath );
 //                settings.setBuiltInZoomControls ( true );  //启用内置缩放装置
-                settings.setJavaScriptEnabled ( true );    //启用JS脚本
+        settings.setJavaScriptEnabled(true);    //启用JS脚本
                /* mWebView.setOnKeyListener ( new View.OnKeyListener() {
                         @Override
                         public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -60,5 +60,5 @@ public class WebActivity extends BaseActivity {
                         }
                 });*/
 
-        }
+    }
 }

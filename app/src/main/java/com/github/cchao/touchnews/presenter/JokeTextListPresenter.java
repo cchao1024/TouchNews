@@ -21,92 +21,92 @@ import rx.schedulers.Schedulers;
  * Description: 文本笑话列表 Presenter
  */
 public class JokeTextListPresenter implements JokeTextListContract.Presenter {
-        JokeTextListContract.View mView;
-        int mCurrentPage = 1;
-        private BaiDuApiService mBaiDBaiDuApiService;
+    JokeTextListContract.View mView;
+    int mCurrentPage = 1;
+    private BaiDuApiService mBaiDBaiDuApiService;
 
-        public JokeTextListPresenter ( JokeTextListContract.View view ) {
-                mView = view;
-                mBaiDBaiDuApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
-        }
+    public JokeTextListPresenter(JokeTextListContract.View view) {
+        mView = view;
+        mBaiDBaiDuApiService = BaseApplication.getAppComponent().getBaiDuApiService();
+    }
 
-        @Override
-        public void getRefreshData ( ) {
-                //无网刷新数据>底部显示SnackBar>点击打开设置界面
-                if ( ! NetUtil.isConnected ( ) ) {
-                        mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
-                } else {
-                        mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDBaiDuApiService.getJokeText ( Keys.BAI_DU_KEY, "1" )
-                                .subscribeOn ( Schedulers.newThread ( ) )
-                                .observeOn ( AndroidSchedulers.mainThread ( ) )
-                                .subscribe ( new Action1< JokeTextRoot > ( ) {
-                                        @Override
-                                        public void call ( JokeTextRoot jokeTextRoot ) {
-                                                if ( jokeTextRoot.getShowapi_res_code ( ) == 0 && jokeTextRoot.getShowapi_res_body ( ) != null ) {
-                                                        List< JokeTextRoot.Contentlist > contentlist = jokeTextRoot.getShowapi_res_body ( ).getContentlist ( );
-                                                        //将文本中的</p><p> 替换
-                                                        for ( int i = 0 ; i < contentlist.size ( ) ; i++ ) {
-                                                                filterP ( contentlist.get ( i ) );
-                                                        }
-                                                        mView.hideInfo ( );
-                                                        if ( jokeTextRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
-                                                                mView.onRefreshData ( contentlist );
-                                                        } else {
-                                                                mView.onReceiveMoreListData ( contentlist );
-                                                        }
-                                                }
-                                        }
-                                }, new Action1< Throwable > ( ) {
-                                        @Override
-                                        public void call ( Throwable throwable ) {
-                                                LogUtil.e ( throwable.toString () );
-                                        }
-                                } );
-                }
+    @Override
+    public void getRefreshData() {
+        //无网刷新数据>底部显示SnackBar>点击打开设置界面
+        if (!NetUtil.isConnected()) {
+            mView.showInfo(Constant.INFO_TYPE.NO_NET, null);
+        } else {
+            mView.showInfo(Constant.INFO_TYPE.LOADING, null);
+            mBaiDBaiDuApiService.getJokeText(Keys.BAI_DU_KEY, "1")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<JokeTextRoot>() {
+                    @Override
+                    public void call(JokeTextRoot jokeTextRoot) {
+                        if (jokeTextRoot.getShowapi_res_code() == 0 && jokeTextRoot.getShowapi_res_body() != null) {
+                            List<JokeTextRoot.Contentlist> contentlist = jokeTextRoot.getShowapi_res_body().getContentlist();
+                            //将文本中的</p><p> 替换
+                            for (int i = 0; i < contentlist.size(); i++) {
+                                filterP(contentlist.get(i));
+                            }
+                            mView.hideInfo();
+                            if (jokeTextRoot.getShowapi_res_body().getCurrentPage() == 1) {
+                                mView.onRefreshData(contentlist);
+                            } else {
+                                mView.onReceiveMoreListData(contentlist);
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        LogUtil.e(throwable.toString());
+                    }
+                });
         }
+    }
 
-        @Override
-        public void getMoreData ( ) {
-                //无网刷新数据>底部显示SnackBar>点击打开设置界面
-                if ( ! NetUtil.isConnected ( ) ) {
-                        mView.showInfo ( Constant.INFO_TYPE.NO_NET, null );
-                } else {
-                        mView.showInfo ( Constant.INFO_TYPE.LOADING, null );
-                        mBaiDBaiDuApiService.getJokeText ( Keys.BAI_DU_KEY, ++ mCurrentPage + "" )
-                                .subscribeOn ( Schedulers.newThread ( ) )
-                                .observeOn ( AndroidSchedulers.mainThread ( ) )
-                                .subscribe ( new Action1< JokeTextRoot > ( ) {
-                                        @Override
-                                        public void call ( JokeTextRoot jokeTextRoot ) {
-                                                if ( jokeTextRoot.getShowapi_res_code ( ) == 0 && jokeTextRoot.getShowapi_res_body ( ) != null ) {
-                                                        List< JokeTextRoot.Contentlist > contentlist = jokeTextRoot.getShowapi_res_body ( ).getContentlist ( );
-                                                        //将文本中的</p><p> 替换
-                                                        for ( int i = 0 ; i < contentlist.size ( ) ; i++ ) {
-                                                                filterP ( contentlist.get ( i ) );
-                                                        }
-                                                        mView.hideInfo ( );
-                                                        if ( jokeTextRoot.getShowapi_res_body ( ).getCurrentPage ( ) == 1 ) {
-                                                                mView.onRefreshData ( contentlist );
-                                                        } else {
-                                                                mView.onReceiveMoreListData ( contentlist );
-                                                        }
-                                                }
-                                        }
-                                }, new Action1< Throwable > ( ) {
-                                        @Override
-                                        public void call ( Throwable throwable ) {
-                                                LogUtil.e ( throwable.toString () );
-                                        }
-                                }  );
-                }
+    @Override
+    public void getMoreData() {
+        //无网刷新数据>底部显示SnackBar>点击打开设置界面
+        if (!NetUtil.isConnected()) {
+            mView.showInfo(Constant.INFO_TYPE.NO_NET, null);
+        } else {
+            mView.showInfo(Constant.INFO_TYPE.LOADING, null);
+            mBaiDBaiDuApiService.getJokeText(Keys.BAI_DU_KEY, ++mCurrentPage + "")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<JokeTextRoot>() {
+                    @Override
+                    public void call(JokeTextRoot jokeTextRoot) {
+                        if (jokeTextRoot.getShowapi_res_code() == 0 && jokeTextRoot.getShowapi_res_body() != null) {
+                            List<JokeTextRoot.Contentlist> contentlist = jokeTextRoot.getShowapi_res_body().getContentlist();
+                            //将文本中的</p><p> 替换
+                            for (int i = 0; i < contentlist.size(); i++) {
+                                filterP(contentlist.get(i));
+                            }
+                            mView.hideInfo();
+                            if (jokeTextRoot.getShowapi_res_body().getCurrentPage() == 1) {
+                                mView.onRefreshData(contentlist);
+                            } else {
+                                mView.onReceiveMoreListData(contentlist);
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        LogUtil.e(throwable.toString());
+                    }
+                });
         }
+    }
 
-        private void filterP ( JokeTextRoot.Contentlist contentlist ) {
-                String string = contentlist.getText ( );
-                String regex = "</?p>*";
-                string = string.replaceAll ( regex, "\n" );
-                contentlist.setText ( string );
-        }
+    private void filterP(JokeTextRoot.Contentlist contentlist) {
+        String string = contentlist.getText();
+        String regex = "</?p>*";
+        string = string.replaceAll(regex, "\n");
+        contentlist.setText(string);
+    }
 
 }

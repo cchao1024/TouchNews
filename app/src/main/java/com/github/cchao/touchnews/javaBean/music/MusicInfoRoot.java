@@ -35,107 +35,107 @@ import java.util.List;
             },
 * */
 public class MusicInfoRoot {
-        private int code;
+    private int code;
 
-        private String status;
+    private String status;
 
-        private String msg;
+    private String msg;
 
-        private Data data;
+    private Data data;
 
-        public int getCode ( ) {
-                return this.code;
+    public int getCode() {
+        return this.code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Data getData() {
+        return this.data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public static class Data {
+        private String current_page;
+
+        private String keyword;
+
+        private int total_rows;
+
+        private int total_page;
+
+        private String page_size;
+
+        private List<com.github.cchao.touchnews.javaBean.music.Data> data;
+
+        public String getCurrent_page() {
+            return this.current_page;
         }
 
-        public void setCode ( int code ) {
-                this.code = code;
+        public void setCurrent_page(String current_page) {
+            this.current_page = current_page;
         }
 
-        public String getStatus ( ) {
-                return this.status;
+        public String getKeyword() {
+            return this.keyword;
         }
 
-        public void setStatus ( String status ) {
-                this.status = status;
+        public void setKeyword(String keyword) {
+            this.keyword = keyword;
         }
 
-        public String getMsg ( ) {
-                return this.msg;
+        public int getTotal_rows() {
+            return this.total_rows;
         }
 
-        public void setMsg ( String msg ) {
-                this.msg = msg;
+        public void setTotal_rows(int total_rows) {
+            this.total_rows = total_rows;
         }
 
-        public Data getData ( ) {
-                return this.data;
+        public int getTotal_page() {
+            return this.total_page;
         }
 
-        public void setData ( Data data ) {
-                this.data = data;
+        public void setTotal_page(int total_page) {
+            this.total_page = total_page;
         }
 
-        public static class Data {
-                private String current_page;
-
-                private String keyword;
-
-                private int total_rows;
-
-                private int total_page;
-
-                private String page_size;
-
-                private List< com.github.cchao.touchnews.javaBean.music.Data > data;
-
-                public String getCurrent_page ( ) {
-                        return this.current_page;
-                }
-
-                public void setCurrent_page ( String current_page ) {
-                        this.current_page = current_page;
-                }
-
-                public String getKeyword ( ) {
-                        return this.keyword;
-                }
-
-                public void setKeyword ( String keyword ) {
-                        this.keyword = keyword;
-                }
-
-                public int getTotal_rows ( ) {
-                        return this.total_rows;
-                }
-
-                public void setTotal_rows ( int total_rows ) {
-                        this.total_rows = total_rows;
-                }
-
-                public int getTotal_page ( ) {
-                        return this.total_page;
-                }
-
-                public void setTotal_page ( int total_page ) {
-                        this.total_page = total_page;
-                }
-
-                public String getPage_size ( ) {
-                        return this.page_size;
-                }
-
-                public void setPage_size ( String page_size ) {
-                        this.page_size = page_size;
-                }
-
-                public List< com.github.cchao.touchnews.javaBean.music.Data > getData ( ) {
-                        return this.data;
-                }
-
-                public void setData ( List< com.github.cchao.touchnews.javaBean.music.Data > data ) {
-                        this.data = data;
-                }
-
+        public String getPage_size() {
+            return this.page_size;
         }
+
+        public void setPage_size(String page_size) {
+            this.page_size = page_size;
+        }
+
+        public List<com.github.cchao.touchnews.javaBean.music.Data> getData() {
+            return this.data;
+        }
+
+        public void setData(List<com.github.cchao.touchnews.javaBean.music.Data> data) {
+            this.data = data;
+        }
+
+    }
 }
 

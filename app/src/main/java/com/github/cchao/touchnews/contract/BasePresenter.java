@@ -16,6 +16,6 @@
 
 package com.github.cchao.touchnews.contract;
 
-public interface BasePresenter < V extends BaseView > {
-        void onStart ( );
+public interface BasePresenter<V extends BaseView> {
+    void onStart();
 }

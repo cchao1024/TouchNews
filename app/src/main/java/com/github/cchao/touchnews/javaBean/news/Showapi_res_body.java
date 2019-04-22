@@ -6,24 +6,24 @@ package com.github.cchao.touchnews.javaBean.news;
  * Description:
  */
 public class Showapi_res_body {
-        private Pagebean pagebean;
+    private Pagebean pagebean;
 
-        private int ret_code;
+    private int ret_code;
 
-        public void setPagebean ( Pagebean pagebean ) {
-                this.pagebean = pagebean;
-        }
+    public void setPagebean(Pagebean pagebean) {
+        this.pagebean = pagebean;
+    }
 
-        public Pagebean getPagebean ( ) {
-                return this.pagebean;
-        }
+    public Pagebean getPagebean() {
+        return this.pagebean;
+    }
 
-        public void setRet_code ( int ret_code ) {
-                this.ret_code = ret_code;
-        }
+    public void setRet_code(int ret_code) {
+        this.ret_code = ret_code;
+    }
 
-        public int getRet_code ( ) {
-                return this.ret_code;
-        }
+    public int getRet_code() {
+        return this.ret_code;
+    }
 
 }

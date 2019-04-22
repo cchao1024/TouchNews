@@ -24,74 +24,74 @@ import butterknife.ButterKnife;
  * Description:
  */
 public class ImageFragment extends Fragment {
-        @Bind ( R.id.tab_image )
-        TabLayout mTabLayout;
-        @Bind ( R.id.viewpager_image )
-        ViewPager mViewPager;
-        String[] mTitles;
-        List mFragments;
-        FragmentPagerAdapter mFragmentsPagerAdapter;
+    @Bind(R.id.tab_image)
+    TabLayout mTabLayout;
+    @Bind(R.id.viewpager_image)
+    ViewPager mViewPager;
+    String[] mTitles;
+    List mFragments;
+    FragmentPagerAdapter mFragmentsPagerAdapter;
 
-        @Override
-        public void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                initData ( );
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
 
-        }
+    }
 
-        @Override
-        public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
-                super.onCreateView ( inflater, container, savedInstanceState );
-                View view = inflater.inflate ( R.layout.fragment_image, null );
-                ButterKnife.bind ( this, view );
-                return view;
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_image, null);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
-        @Override
-        public void onViewCreated ( View view, Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
-                setTableLayout ( );
-        }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setTableLayout();
+    }
 
-        private void initData ( ) {
-                mTitles = getResources ( ).getStringArray ( R.array.news_titles );
+    private void initData() {
+        mTitles = getResources().getStringArray(R.array.news_titles);
 
-                mFragments = new ArrayList<> ( );
-                for ( int i = 0 ; i < mTitles.length ; i++ ) {
-                        Bundle mBundle = new Bundle ( );
-                        mBundle.putInt ( "flag", i );
+        mFragments = new ArrayList<>();
+        for (int i = 0; i < mTitles.length; i++) {
+            Bundle mBundle = new Bundle();
+            mBundle.putInt("flag", i);
 //                        Fragment fragment = new NewsListFragments ( );
 //                        fragment.setArguments ( mBundle );
 //                        mFragments.add ( i, fragment );
-                }
         }
+    }
 
-        private void setTableLayout ( ) {
+    private void setTableLayout() {
 
-                mFragmentsPagerAdapter = new ImageFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), mTitles, mFragments );
-                mViewPager.setOffscreenPageLimit ( mFragments.size ( ) );
-                mViewPager.setAdapter ( mFragmentsPagerAdapter );
+        mFragmentsPagerAdapter = new ImageFragmentsPagerAdapter(getActivity().getSupportFragmentManager(), mTitles, mFragments);
+        mViewPager.setOffscreenPageLimit(mFragments.size());
+        mViewPager.setAdapter(mFragmentsPagerAdapter);
 
-                mViewPager.addOnPageChangeListener ( new ViewPager.OnPageChangeListener ( ) {
-                        @Override
-                        public void onPageScrolled ( int position, float positionOffset, int positionOffsetPixels ) {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                        }
+            }
 
-                        @Override
-                        public void onPageSelected ( int position ) {
+            @Override
+            public void onPageSelected(int position) {
 
-                        }
+            }
 
-                        @Override
-                        public void onPageScrollStateChanged ( int state ) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                        }
-                } );
+            }
+        });
 
-                mTabLayout.setTabMode ( TabLayout.MODE_SCROLLABLE );
-                // 将TabLayout和ViewPager进行关联，让两者联动起来
-                mTabLayout.setupWithViewPager ( mViewPager );
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        // 将TabLayout和ViewPager进行关联，让两者联动起来
+        mTabLayout.setupWithViewPager(mViewPager);
 
-        }
+    }
 }

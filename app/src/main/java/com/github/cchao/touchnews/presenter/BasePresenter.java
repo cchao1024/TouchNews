@@ -8,20 +8,20 @@ import com.github.cchao.touchnews.util.BaiDuApiService;
  * E-mail:   cchao1024@163.com
  * Description: 根 Presenter 绑定View
  */
-public abstract class BasePresenter < V > {
-        BaiDuApiService mBaiDBaiDuApiService;
-        V mView;
+public abstract class BasePresenter<V> {
+    BaiDuApiService mBaiDBaiDuApiService;
+    V mView;
 
-        public BasePresenter ( ) {
-                mBaiDBaiDuApiService = BaseApplication.getAppComponent ( ).getBaiDuApiService ( );
-        }
+    public BasePresenter() {
+        mBaiDBaiDuApiService = BaseApplication.getAppComponent().getBaiDuApiService();
+    }
 
-        public void bindView ( V mvpView ) {
-                this.mView = mvpView;
-        }
+    public void bindView(V mvpView) {
+        this.mView = mvpView;
+    }
 
-        public void unbindView ( ) {
-                this.mView = null;
-        }
+    public void unbindView() {
+        this.mView = null;
+    }
 
 }

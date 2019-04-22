@@ -17,5 +17,5 @@
 package com.github.cchao.touchnews.contract;
 
 public interface BaseView {
-        void bindPresenter ( );
+    void bindPresenter();
 }

@@ -20,24 +20,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ApiModule {
-        /**
-         * @param baseUrl baseUrl
-         * @return Retrofit 对象
-         */
-        private Retrofit getApiService ( @NonNull String baseUrl ) {
-                return new Retrofit.Builder ( )
-                        .addConverterFactory ( GsonConverterFactory.create ( ) )
-                        .addCallAdapterFactory ( RxJavaCallAdapterFactory.create ( ) )
-                        .baseUrl ( baseUrl )
-                        .build ( );
-        }
+    /**
+     * @param baseUrl baseUrl
+     * @return Retrofit 对象
+     */
+    private Retrofit getApiService(@NonNull String baseUrl) {
+        return new Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .baseUrl(baseUrl)
+            .build();
+    }
 
-        /**
-         * @return 百度的api接口
-         */
-        @Singleton
-        @Provides
-        protected BaiDuApiService provideBaiDuApiService ( ) {
-                return getApiService ( UrlUtil.API_BAI_DU ).create ( BaiDuApiService.class );
-        }
+    /**
+     * @return 百度的api接口
+     */
+    @Singleton
+    @Provides
+    protected BaiDuApiService provideBaiDuApiService() {
+        return getApiService(UrlUtil.API_BAI_DU).create(BaiDuApiService.class);
+    }
 }

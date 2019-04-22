@@ -23,124 +23,124 @@ package com.github.cchao.touchnews.javaBean.music;
 
  */
 public class Data {
-        private String filename;
+    private String filename;
 
-        private String songname;
+    private String songname;
 
-        private int m4afilesize;
+    private int m4afilesize;
 
-        private int filesize;
+    private int filesize;
 
-        private int bitrate;
+    private int bitrate;
 
-        private String album_name;
+    private String album_name;
 
-        private int isnew;
+    private int isnew;
 
-        private int duration;
+    private int duration;
 
-        private String singername;
+    private String singername;
 
-        private String extname;
+    private String extname;
 
-        private String hash;
+    private String hash;
 
-        private String othername;
+    private String othername;
 
-        public String getFilename ( ) {
-                return this.filename;
-        }
+    public String getFilename() {
+        return this.filename;
+    }
 
-        public void setFilename ( String filename ) {
-                this.filename = filename;
-        }
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-        public String getSongname ( ) {
-                return this.songname;
-        }
+    public String getSongname() {
+        return this.songname;
+    }
 
-        public void setSongname ( String songname ) {
-                this.songname = songname;
-        }
+    public void setSongname(String songname) {
+        this.songname = songname;
+    }
 
-        public int getM4afilesize ( ) {
-                return this.m4afilesize;
-        }
+    public int getM4afilesize() {
+        return this.m4afilesize;
+    }
 
-        public void setM4afilesize ( int m4afilesize ) {
-                this.m4afilesize = m4afilesize;
-        }
+    public void setM4afilesize(int m4afilesize) {
+        this.m4afilesize = m4afilesize;
+    }
 
-        public int getFilesize ( ) {
-                return this.filesize;
-        }
+    public int getFilesize() {
+        return this.filesize;
+    }
 
-        public void setFilesize ( int filesize ) {
-                this.filesize = filesize;
-        }
+    public void setFilesize(int filesize) {
+        this.filesize = filesize;
+    }
 
-        public int getBitrate ( ) {
-                return this.bitrate;
-        }
+    public int getBitrate() {
+        return this.bitrate;
+    }
 
-        public void setBitrate ( int bitrate ) {
-                this.bitrate = bitrate;
-        }
+    public void setBitrate(int bitrate) {
+        this.bitrate = bitrate;
+    }
 
-        public String getAlbum_name ( ) {
-                return this.album_name;
-        }
+    public String getAlbum_name() {
+        return this.album_name;
+    }
 
-        public void setAlbum_name ( String album_name ) {
-                this.album_name = album_name;
-        }
+    public void setAlbum_name(String album_name) {
+        this.album_name = album_name;
+    }
 
-        public int getIsnew ( ) {
-                return this.isnew;
-        }
+    public int getIsnew() {
+        return this.isnew;
+    }
 
-        public void setIsnew ( int isnew ) {
-                this.isnew = isnew;
-        }
+    public void setIsnew(int isnew) {
+        this.isnew = isnew;
+    }
 
-        public int getDuration ( ) {
-                return this.duration;
-        }
+    public int getDuration() {
+        return this.duration;
+    }
 
-        public void setDuration ( int duration ) {
-                this.duration = duration;
-        }
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
-        public String getSingername ( ) {
-                return this.singername;
-        }
+    public String getSingername() {
+        return this.singername;
+    }
 
-        public void setSingername ( String singername ) {
-                this.singername = singername;
-        }
+    public void setSingername(String singername) {
+        this.singername = singername;
+    }
 
-        public String getExtname ( ) {
-                return this.extname;
-        }
+    public String getExtname() {
+        return this.extname;
+    }
 
-        public void setExtname ( String extname ) {
-                this.extname = extname;
-        }
+    public void setExtname(String extname) {
+        this.extname = extname;
+    }
 
-        public String getHash ( ) {
-                return this.hash;
-        }
+    public String getHash() {
+        return this.hash;
+    }
 
-        public void setHash ( String hash ) {
-                this.hash = hash;
-        }
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 
-        public String getOthername ( ) {
-                return this.othername;
-        }
+    public String getOthername() {
+        return this.othername;
+    }
 
-        public void setOthername ( String othername ) {
-                this.othername = othername;
-        }
+    public void setOthername(String othername) {
+        this.othername = othername;
+    }
 
 }

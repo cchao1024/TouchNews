@@ -14,31 +14,31 @@ import java.util.List;
  * Description:
  */
 public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
-        private List< BaseLazyFragment > mListFragments = null;
-        AppCompatActivity mActivity;
+    private List<BaseLazyFragment> mListFragments = null;
+    AppCompatActivity mActivity;
 
-        public HomeFragmentPagerAdapter ( FragmentManager fm, List fragments , AppCompatActivity activity) {
-                super ( fm );
-                mListFragments = fragments;
-                mActivity=activity;
-        }
+    public HomeFragmentPagerAdapter(FragmentManager fm, List fragments, AppCompatActivity activity) {
+        super(fm);
+        mListFragments = fragments;
+        mActivity = activity;
+    }
 
-        @Override
-        public int getCount ( ) {
-                if ( mListFragments != null ) {
-                        return mListFragments.size ( );
-                } else {
-                        return 0;
-                }
+    @Override
+    public int getCount() {
+        if (mListFragments != null) {
+            return mListFragments.size();
+        } else {
+            return 0;
         }
+    }
 
-        @Override
-        public BaseLazyFragment getItem ( int position ) {
-                if ( mListFragments != null && position >= 0 && position < mListFragments.size ( ) ) {
-                        return mListFragments.get ( position );
-                } else {
-                        return null;
-                }
+    @Override
+    public BaseLazyFragment getItem(int position) {
+        if (mListFragments != null && position >= 0 && position < mListFragments.size()) {
+            return mListFragments.get(position);
+        } else {
+            return null;
         }
+    }
 
 }

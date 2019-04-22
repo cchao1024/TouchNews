@@ -20,48 +20,49 @@ import butterknife.ButterKnife;
  * Description:
  */
 public abstract class BaseFragment extends BaseLazyFragment {
-        protected Toolbar mToolbar;
-        protected View mRootView;
+    protected Toolbar mToolbar;
+    protected View mRootView;
 
-        @Nullable
-        @Override
-        public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
-                mRootView = inflater.inflate ( getLayoutId ( ), null );
-                ButterKnife.bind ( this, mRootView );
-                mToolbar = ButterKnife.findById ( mRootView, R.id.toolbar );
-                return mRootView;
-        }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflater.inflate(getLayoutId(), null);
+        ButterKnife.bind(this, mRootView);
+        mToolbar = ButterKnife.findById(mRootView, R.id.toolbar);
+        return mRootView;
+    }
 
-        @Override
-        public void onViewCreated ( View view, Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
-                initialize ( );
-        }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initialize();
+    }
 
-        protected void initialize ( ) {}
+    protected void initialize() {
+    }
 
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                setSupportActionBar ();
-        }
+    @Override
+    public void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        setSupportActionBar();
+    }
 
-        //布局ID
-        protected abstract
-        @LayoutRes
-        int getLayoutId ( );
+    //布局ID
+    protected abstract
+    @LayoutRes
+    int getLayoutId();
 
-        @Override
-        public void onUserVisible ( ) {
-                super.onUserVisible ( );
-                setSupportActionBar ( );
-        }
+    @Override
+    public void onUserVisible() {
+        super.onUserVisible();
+        setSupportActionBar();
+    }
 
-        /**
-         * 设置toolbar
-         */
-        private void setSupportActionBar ( ) {
-                ( ( AppCompatActivity ) getActivity ( ) ).setSupportActionBar ( mToolbar );
-                ( ( HomeActivity ) getActivity ( ) ).addDrawerListener ( mToolbar );
-        }
+    /**
+     * 设置toolbar
+     */
+    private void setSupportActionBar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((HomeActivity) getActivity()).addDrawerListener(mToolbar);
+    }
 }

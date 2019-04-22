@@ -14,36 +14,36 @@ import java.util.List;
  * Description: 新闻频道 页面Adapter
  */
 public class NewsFragmentsPagerAdapter extends FragmentPagerAdapter {
-        private List< BaseFragment > mListFragments = null;
-        private String[] mTitles = null;
+    private List<BaseFragment> mListFragments = null;
+    private String[] mTitles = null;
 
-        public NewsFragmentsPagerAdapter ( FragmentManager fm, String[] titles, List< BaseFragment > fragments ) {
-                super ( fm );
-                mListFragments = fragments;
-                mTitles = titles;
+    public NewsFragmentsPagerAdapter(FragmentManager fm, String[] titles, List<BaseFragment> fragments) {
+        super(fm);
+        mListFragments = fragments;
+        mTitles = titles;
 
+    }
+
+    @Override
+    public int getCount() {
+        if (mListFragments != null) {
+            return mListFragments.size();
+        } else {
+            return 0;
         }
+    }
 
-        @Override
-        public int getCount ( ) {
-                if ( mListFragments != null ) {
-                        return mListFragments.size ( );
-                } else {
-                        return 0;
-                }
+    @Override
+    public Fragment getItem(int position) {
+        if (mListFragments != null && position >= 0 && position < mListFragments.size()) {
+            return mListFragments.get(position);
+        } else {
+            return null;
         }
+    }
 
-        @Override
-        public Fragment getItem ( int position ) {
-                if ( mListFragments != null && position >= 0 && position < mListFragments.size ( ) ) {
-                        return mListFragments.get ( position );
-                } else {
-                        return null;
-                }
-        }
-
-        @Override
-        public CharSequence getPageTitle ( int position ) {
-                return mTitles[ position ];
-        }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles[position];
+    }
 }

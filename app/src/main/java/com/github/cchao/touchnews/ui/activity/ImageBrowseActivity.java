@@ -12,24 +12,24 @@ import com.github.cchao.touchnews.util.ImageUtil;
  * Description: 图片浏览Aty
  */
 public class ImageBrowseActivity extends BaseActivity {
-        @Override
-        protected int getLayoutID ( ) {
-                return R.layout.activity_image_browse;
-        }
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_image_browse;
+    }
 
-        @Override
-        protected void initialize ( ) {
-                super.initialize ( );
-                String url = getIntent ( ).getStringExtra ( "url" );
-                ImageUtil.displayImage ( this, url, ( ImageView ) findViewById ( R.id.iv_browse ) );
-        }
+    @Override
+    protected void initialize() {
+        super.initialize();
+        String url = getIntent().getStringExtra("url");
+        ImageUtil.displayImage(this, url, (ImageView) findViewById(R.id.iv_browse));
+    }
 
-        @Override
-        public boolean onOptionsItemSelected ( MenuItem item ) {
-                if ( item.getItemId ( ) == android.R.id.home ) {
-                        finish ( );
-                        return true;
-                }
-                return super.onOptionsItemSelected ( item );
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
 }

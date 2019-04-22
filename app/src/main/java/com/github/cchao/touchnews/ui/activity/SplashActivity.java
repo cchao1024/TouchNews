@@ -22,55 +22,55 @@ import butterknife.ButterKnife;
  * Description: 欢迎页
  */
 public class SplashActivity extends Activity {
-        final int DELAY_TIME = 500;
-        @Bind ( R.id.tv_version )
-        TextView mVersionText;
+    final int DELAY_TIME = 500;
+    @Bind(R.id.tv_version)
+    TextView mVersionText;
 
-        @Override
-        protected void onCreate ( @Nullable Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( R.layout.activity_splash );
-                ButterKnife.bind ( this );
-                setVersionText ( );
-                setStartAty ( );
-        }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
+        setVersionText();
+        setStartAty();
+    }
 
-        /**
-         * 底部显示版本号
-         */
-        private void setVersionText ( ) {
-                mVersionText.append ( getAppVersionName ( this ) );
-        }
+    /**
+     * 底部显示版本号
+     */
+    private void setVersionText() {
+        mVersionText.append(getAppVersionName(this));
+    }
 
-        //获取当前版本号
-        private String getAppVersionName ( Context context ) {
-                String versionName = "";
-                try {
-                        PackageManager packageManager = context.getPackageManager ( );
-                        PackageInfo packageInfo = packageManager.getPackageInfo ( getPackageName ( ), 0 );
-                        versionName = packageInfo.versionName;
-                        if ( TextUtils.isEmpty ( versionName ) ) {
-                                return "";
-                        }
-                } catch ( Exception e ) {
-                        e.printStackTrace ( );
-                }
-                return versionName;
+    //获取当前版本号
+    private String getAppVersionName(Context context) {
+        String versionName = "";
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            versionName = packageInfo.versionName;
+            if (TextUtils.isEmpty(versionName)) {
+                return "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return versionName;
+    }
 
-        /**
-         * DELAY_TIME 延迟后启动HomeAty
-         */
-        private void setStartAty ( ) {
-                new Handler ( ).postDelayed ( new Runnable ( ) {
-                        @Override
-                        public void run ( ) {
-                                Intent intent = new Intent ( SplashActivity.this, HomeActivity.class );
-                                startActivity ( intent );
-                                finish ( );
-                        }
-                }, DELAY_TIME );
-        }
+    /**
+     * DELAY_TIME 延迟后启动HomeAty
+     */
+    private void setStartAty() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, DELAY_TIME);
+    }
 
 
 }

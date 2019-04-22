@@ -39,83 +39,83 @@ import java.util.Map;
  * Description:
  */
 public class HomePresenter implements HomeContract.Presenter {
-        private HomeContract.View mHomeView;
-        private Gson gson = new Gson ( );
-        private List< BaseLazyFragment > mFragments;
-        private Map< String, String > param = new HashMap<> ( );
-        private Map< String, String > headers = new HashMap<> ( );
+    private HomeContract.View mHomeView;
+    private Gson gson = new Gson();
+    private List<BaseLazyFragment> mFragments;
+    private Map<String, String> param = new HashMap<>();
+    private Map<String, String> headers = new HashMap<>();
 
-        public HomePresenter ( HomeContract.View homeView ) {
-                mHomeView = homeView;
-        }
+    public HomePresenter(HomeContract.View homeView) {
+        mHomeView = homeView;
+    }
 
-        @Override
-        public void getFragments ( ) {
-                mFragments = new ArrayList<> ( );
-                mFragments.add ( new NewsContainerFragment ( ) );
-                mFragments.add ( new JokeContainerFragment ( ) );
-                mFragments.add ( new MusicFragment ( ) );
-                mFragments.add ( new ChatFragment ( ) );
-                mHomeView.setFragmentPager ( mFragments );
-        }
+    @Override
+    public void getFragments() {
+        mFragments = new ArrayList<>();
+        mFragments.add(new NewsContainerFragment());
+        mFragments.add(new JokeContainerFragment());
+        mFragments.add(new MusicFragment());
+        mFragments.add(new ChatFragment());
+        mHomeView.setFragmentPager(mFragments);
+    }
 
-        @Override
-        public void getNavigation ( ) {
-                headers.put ( Keys.API_KEY, Keys.BAI_DU_API_KEY );
-                param.put ( Keys.CITY, "广州" );
-                //获取天气
-                NetRequestUtil.getInstance ( ).getJsonWithHeaders ( UrlUtil.URL_WEATHER, param, headers, new NetRequestUtil.RequestListener ( ) {
-                        @Override
-                        public void onResponse ( JSONObject response ) {
-                                Log.e ( "weather", response.toString ( ) );
-                                try {
-                                        JSONObject jsonObject = new JSONObject ( response.toString ( ) );
-                                        JSONObject jsonWeather = jsonObject.getJSONArray ( "HeWeather data service 3.0" ).getJSONObject ( 0 );
-                                        String s = jsonWeather.toString ( );
-                                        Weather weather = gson.fromJson ( jsonWeather.toString ( ), Weather.class );
-                                        mHomeView.setNavigation ( weather );
-                                } catch ( JSONException e ) {
-                                        e.printStackTrace ( );
-                                }
-                        }
-
-                        @Override
-                        public void onError ( VolleyError error ) {
-
-                        }
-                } );
-        }
-
-        //获取IP地址
-        public String getLocalIpAddress ( ) {
-                LocationManager locationManager = ( LocationManager ) BaseApplication.getContext ( ).getSystemService ( Context.LOCATION_SERVICE );
-                if ( ActivityCompat.checkSelfPermission ( BaseApplication.getContext ( ), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager
-                        .PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission ( BaseApplication.getContext ( ), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-
-                        locationManager.requestLocationUpdates ( LocationManager.GPS_PROVIDER, 0, 0, new LocationListener ( ) {
-                                @Override
-                                public void onLocationChanged ( Location location ) {
-                                        LogUtils.e ( "Latitude:" + location.getLatitude ( ) + ", Longitude:"
-                                                + location.getLongitude ( ) );
-                                }
-
-                                @Override
-                                public void onStatusChanged ( String provider, int status, Bundle extras ) {
-                                        LogUtils.e ( provider + "status" + status );
-                                }
-
-                                @Override
-                                public void onProviderEnabled ( String provider ) {
-                                        LogUtils.e ( provider );
-                                }
-
-                                @Override
-                                public void onProviderDisabled ( String provider ) {
-                                        LogUtils.e ( provider );
-                                }
-                        } );
+    @Override
+    public void getNavigation() {
+        headers.put(Keys.API_KEY, Keys.BAI_DU_API_KEY);
+        param.put(Keys.CITY, "广州");
+        //获取天气
+        NetRequestUtil.getInstance().getJsonWithHeaders(UrlUtil.URL_WEATHER, param, headers, new NetRequestUtil.RequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("weather", response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONObject jsonWeather = jsonObject.getJSONArray("HeWeather data service 3.0").getJSONObject(0);
+                    String s = jsonWeather.toString();
+                    Weather weather = gson.fromJson(jsonWeather.toString(), Weather.class);
+                    mHomeView.setNavigation(weather);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                return null;
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+    }
+
+    //获取IP地址
+    public String getLocalIpAddress() {
+        LocationManager locationManager = (LocationManager) BaseApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(BaseApplication.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager
+            .PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(BaseApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    LogUtils.e("Latitude:" + location.getLatitude() + ", Longitude:"
+                        + location.getLongitude());
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                    LogUtils.e(provider + "status" + status);
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+                    LogUtils.e(provider);
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                    LogUtils.e(provider);
+                }
+            });
         }
+        return null;
+    }
 }

@@ -17,66 +17,66 @@ package com.github.cchao.touchnews.javaBean.music;
 }
 */
 public class MusicSingerRoot {
-        private int code;
+    private int code;
 
-        private String status;
+    private String status;
 
-        private String msg;
+    private String msg;
 
-        private Data data;
+    private Data data;
 
-        public int getCode ( ) {
-                return this.code;
+    public int getCode() {
+        return this.code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Data getData() {
+        return this.data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public static class Data {
+        private String singername;
+
+        private String image;
+
+        public String getSingername() {
+            return this.singername;
         }
 
-        public void setCode ( int code ) {
-                this.code = code;
+        public void setSingername(String singername) {
+            this.singername = singername;
         }
 
-        public String getStatus ( ) {
-                return this.status;
+        public String getImage() {
+            return this.image;
         }
 
-        public void setStatus ( String status ) {
-                this.status = status;
+        public void setImage(String image) {
+            this.image = image;
         }
 
-        public String getMsg ( ) {
-                return this.msg;
-        }
-
-        public void setMsg ( String msg ) {
-                this.msg = msg;
-        }
-
-        public Data getData ( ) {
-                return this.data;
-        }
-
-        public void setData ( Data data ) {
-                this.data = data;
-        }
-
-        public static class Data {
-                private String singername;
-
-                private String image;
-
-                public String getSingername ( ) {
-                        return this.singername;
-                }
-
-                public void setSingername ( String singername ) {
-                        this.singername = singername;
-                }
-
-                public String getImage ( ) {
-                        return this.image;
-                }
-
-                public void setImage ( String image ) {
-                        this.image = image;
-                }
-
-        }
+    }
 }

@@ -20,26 +20,26 @@ import java.io.File;
  */
 public class ImageUtil {
 
-        public static void displayImage ( Context context, String url, ImageView imageView ) {
-                Glide.with ( context ).load ( url ).into ( imageView );
-        }
+    public static void displayImage(Context context, String url, ImageView imageView) {
+        Glide.with(context).load(url).into(imageView);
+    }
 
-        public static void displayImage ( Context context, File file, ImageView imageView ) {
-                Glide.with ( context ).load ( file ).into ( imageView );
-        }
+    public static void displayImage(Context context, File file, ImageView imageView) {
+        Glide.with(context).load(file).into(imageView);
+    }
 
-        public static void displayCircularImage ( final Context context, String url, final ImageView imageView ) {
-                Glide.with ( context ).load ( url ).asBitmap ( ).centerCrop ( ).into ( new BitmapImageViewTarget ( imageView ) {
-                        @Override
-                        protected void setResource ( Bitmap resource ) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create ( context.getResources ( ), resource );
-                                circularBitmapDrawable.setCircular ( true );
-                                imageView.setImageDrawable ( circularBitmapDrawable );
+    public static void displayCircularImage(final Context context, String url, final ImageView imageView) {
+        Glide.with(context).load(url).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView.setImageDrawable(circularBitmapDrawable);
 
-                        }
-                } );
-        }
+            }
+        });
+    }
 
         /*public static void displayBlurImage ( Context context, String url, ImageView imageView ) {
                 Glide.with ( context ).load ( url )

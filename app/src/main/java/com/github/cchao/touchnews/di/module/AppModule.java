@@ -13,14 +13,14 @@ import dagger.Provides;
 @Module
 public final class AppModule {
 
-        private Application application;
+    private Application application;
 
-        public AppModule ( Application application ) {
-                this.application = application;
-        }
+    public AppModule(Application application) {
+        this.application = application;
+    }
 
-        @Provides
-        public Application provideApplication ( ) {
-                return application;
-        }
+    @Provides
+    public Application provideApplication() {
+        return application;
+    }
 }

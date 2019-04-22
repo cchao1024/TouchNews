@@ -30,147 +30,149 @@ import butterknife.Bind;
  * Description: 开心一刻- 图片类Fragment
  */
 public class JokeImageListFragments extends BaseFragment implements JokeImageListContract.View, SwipeRefreshLayout.OnRefreshListener {
-        @Bind ( R.id.swipe_refresh_joke_image_list )
-        SwipeRefreshLayout mSwipeRefreshLayout;
-        @Bind ( R.id.recycle_view_joke_image )
-        RecyclerView mRecyclerView;
-        View mRootView;
-        List< JokeImageRoot.Contentlist > mContentList;
-        JokeImageListRecyclerAdapter mRecyclerAdapter;
-        JokeImageListContract.Presenter mPresenter;
-        VaryViewWidget mVaryViewWidget;
+    @Bind(R.id.swipe_refresh_joke_image_list)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.recycle_view_joke_image)
+    RecyclerView mRecyclerView;
+    View mRootView;
+    List<JokeImageRoot.Contentlist> mContentList;
+    JokeImageListRecyclerAdapter mRecyclerAdapter;
+    JokeImageListContract.Presenter mPresenter;
+    VaryViewWidget mVaryViewWidget;
 
-        @Override
-        public void onViewCreated ( View view, Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        initViews();
+        mPresenter = new JokeImageListPresenter(this);
+        mPresenter.getRefreshData();
+    }
+
+    private void initViews() {
+        mContentList = new ArrayList<>();
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+        mRecyclerAdapter = new JokeImageListRecyclerAdapter(mContext, mContentList);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int lastVisibleItem;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                    && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount()) {
+                    //加载更多
+                    LogUtils.d(getClass().getSimpleName(), "info_loading more data");
+                    mPresenter.getMoreData();
+                }
+            }
+        });
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_joke_image;
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getRefreshData();
+    }
+
+    /**
+     * 刷新数据
+     *
+     * @param newsList newsList
+     */
+    @Override
+    public void onRefreshData(List<JokeImageRoot.Contentlist> newsList) {
+        mContentList.clear();
+        mContentList.addAll(newsList);
+        mRecyclerAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (mContentList.size() < 7) {
+            mPresenter.getMoreData();
         }
+    }
 
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                initViews ( );
-                mPresenter = new JokeImageListPresenter ( this );
-                mPresenter.getRefreshData ( );
+    /**
+     * 上拉添加数据
+     *
+     * @param newsList add newsList
+     */
+    @Override
+    public void onReceiveMoreListData(List<JokeImageRoot.Contentlist> newsList) {
+        mContentList.addAll(newsList);
+        mRecyclerAdapter.notifyDataSetChanged();
+        if (mContentList.size() < 7) {
+            mPresenter.getMoreData();
         }
-        private void initViews ( ) {
-                mContentList = new ArrayList<> ( );
-                mRecyclerView.setHasFixedSize ( true );
-                mRecyclerView.setLayoutManager ( new LinearLayoutManager ( mContext ) );
+    }
 
-                mRecyclerAdapter = new JokeImageListRecyclerAdapter ( mContext, mContentList );
-                mRecyclerView.addOnScrollListener ( new RecyclerView.OnScrollListener ( ) {
-                        private int lastVisibleItem;
-
+    /**
+     * @param INFOType 枚举值 e.g. 没有网络、正在加载、异常
+     * @param infoText infoText 提示的文本内容
+     */
+    @Override
+    public void showInfo(Constant.INFO_TYPE INFOType, String infoText) {
+        if (mVaryViewWidget == null) {
+            mVaryViewWidget = new VaryViewWidget(mSwipeRefreshLayout);
+        }
+        View infoView = null;
+        switch (INFOType) {
+            case LOADING:
+                infoView = LayoutInflater.from(mContext).inflate(R.layout.info_loading, null);
+                break;
+            case NO_NET:
+                //已有数据（那就是刷新或者加载更多）-> 那么在底部snack检测网络设置
+                if (mContentList.size() > 1) {
+                    SnackBarUtil.showLong(mRootView, R.string.none_net_show_action).setAction(R.string.set, new View.OnClickListener() {
                         @Override
-                        public void onScrolled ( RecyclerView recyclerView, int dx, int dy ) {
-                                super.onScrolled ( recyclerView, dx, dy );
-                                lastVisibleItem = ( ( LinearLayoutManager ) recyclerView.getLayoutManager ( ) ).findLastVisibleItemPosition ( );
+                        public void onClick(View v) {
+                            NetUtil.openSetting(getActivity());
+                            mSwipeRefreshLayout.setRefreshing(false);
                         }
-
+                    });
+                } else {
+                    //没有数据（那就是第一次加载数据）->点击重试>从新加载第一次资源
+                    infoView = LayoutInflater.from(mContext).inflate(R.layout.info_no_net, null);
+                    infoView.findViewById(R.id.tv_try_again).setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onScrollStateChanged ( RecyclerView recyclerView, int newState ) {
-                                super.onScrollStateChanged ( recyclerView, newState );
-                                if ( newState == RecyclerView.SCROLL_STATE_IDLE
-                                        && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount ( ) ) {
-                                        //加载更多
-                                        LogUtils.d ( getClass ( ).getSimpleName ( ), "info_loading more data" );
-                                        mPresenter.getMoreData ( );
-                                }
+                        public void onClick(View v) {
+                            mPresenter.getRefreshData();
                         }
-                } );
-                mRecyclerView.setAdapter ( mRecyclerAdapter );
-
-                mSwipeRefreshLayout.setColorSchemeResources ( R.color.colorPrimary, R.color.colorPrimaryDark );
-                mSwipeRefreshLayout.setOnRefreshListener ( this );
-
-        }
-        @Override
-        protected int getLayoutId ( ) {
-                return R.layout.fragment_joke_image;
-        }
-
-        @Override
-        public void onRefresh ( ) {
-                mPresenter.getRefreshData ( );
-        }
-
-        /**
-         * 刷新数据
-         *
-         * @param newsList newsList
-         */
-        @Override
-        public void onRefreshData ( List< JokeImageRoot.Contentlist > newsList ) {
-                mContentList.clear ( );
-                mContentList.addAll ( newsList );
-                mRecyclerAdapter.notifyDataSetChanged ( );
-                mSwipeRefreshLayout.setRefreshing ( false );
-                if ( mContentList.size ( ) < 7 ) {
-                        mPresenter.getMoreData ( );
+                    });
+                    mVaryViewWidget.setNoNetView(infoView);
                 }
+                break;
         }
+        mVaryViewWidget.setLoadingView(infoView);
+        mVaryViewWidget.showView(INFOType);
+    }
 
-        /**
-         * 上拉添加数据
-         *
-         * @param newsList add newsList
-         */
-        @Override
-        public void onReceiveMoreListData ( List< JokeImageRoot.Contentlist > newsList ) {
-                mContentList.addAll ( newsList );
-                mRecyclerAdapter.notifyDataSetChanged ( );
-                if ( mContentList.size ( ) < 7 ) {
-                        mPresenter.getMoreData ( );
-                }
+    @Override
+    public void hideInfo() {
+        if (mVaryViewWidget != null) {
+            mVaryViewWidget.hideInfo();
         }
-
-        /**
-         * @param INFOType 枚举值 e.g. 没有网络、正在加载、异常
-         * @param infoText infoText 提示的文本内容
-         */
-        @Override
-        public void showInfo ( Constant.INFO_TYPE INFOType, String infoText ) {
-                if ( mVaryViewWidget == null ) {
-                        mVaryViewWidget = new VaryViewWidget ( mSwipeRefreshLayout );
-                }
-                View infoView = null;
-                switch ( INFOType ) {
-                        case LOADING:
-                                infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_loading, null );
-                                break;
-                        case NO_NET:
-                                //已有数据（那就是刷新或者加载更多）-> 那么在底部snack检测网络设置
-                                if ( mContentList.size ( ) > 1 ) {
-                                        SnackBarUtil.showLong ( mRootView, R.string.none_net_show_action ).setAction ( R.string.set, new View.OnClickListener ( ) {
-                                                @Override
-                                                public void onClick ( View v ) {
-                                                        NetUtil.openSetting ( getActivity ( ) );
-                                                        mSwipeRefreshLayout.setRefreshing ( false );
-                                                }
-                                        } );
-                                } else {
-                                        //没有数据（那就是第一次加载数据）->点击重试>从新加载第一次资源
-                                        infoView = LayoutInflater.from ( mContext ).inflate ( R.layout.info_no_net, null );
-                                        infoView.findViewById ( R.id.tv_try_again ).setOnClickListener ( new View.OnClickListener ( ) {
-                                                @Override
-                                                public void onClick ( View v ) {
-                                                        mPresenter.getRefreshData ( );
-                                                }
-                                        } );
-                                        mVaryViewWidget.setNoNetView ( infoView );
-                                }
-                                break;
-                }
-                mVaryViewWidget.setLoadingView ( infoView );
-                mVaryViewWidget.showView ( INFOType );
-        }
-
-        @Override
-        public void hideInfo ( ) {
-                if ( mVaryViewWidget != null ) {
-                        mVaryViewWidget.hideInfo ( );
-                }
-        }
+    }
 
 
 }

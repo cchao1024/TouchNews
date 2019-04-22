@@ -21,52 +21,53 @@ import java.util.Map;
  * Description: 聊天机器人Presenter
  */
 public class ChatPresenter implements ChatContract.Presenter {
-        Map< String, String > param;
-        ChatContract.View mView;
+    Map<String, String> param;
+    ChatContract.View mView;
 
-        public ChatPresenter ( ChatContract.View view ) {
-                mView = view;
-                param = new HashMap<> ( );
-                param.put ( Keys.KEY, UrlUtil.TURING_KEY );
-        }
+    public ChatPresenter(ChatContract.View view) {
+        mView = view;
+        param = new HashMap<>();
+        param.put(Keys.KEY, UrlUtil.TURING_KEY);
+    }
 
-        @Override
-        public void onSendMessage ( String message ) {
-                onRequestMessage ( message );
-        }
+    @Override
+    public void onSendMessage(String message) {
+        onRequestMessage(message);
+    }
 
-        private void onRequestMessage ( String message ) {
+    private void onRequestMessage(String message) {
                 /*“key”: “APIKEY”,
                 “info”: “今天天气怎么样”，
                 “loc”：“北京市中关村”，
                 “userid”：“12345678”*/
 
-                param.put ( Keys.INFO, EncodeString ( message ) );
-                param.put ( "userid", "12345678" );
-                NetRequestUtil.getInstance ( ).getJson ( UrlUtil.URL_CHAT, param, new NetRequestUtil.RequestListener ( ) {
-                        @Override
-                        public void onResponse ( JSONObject response ) {
-                                LogUtils.i ( response );
-                                try {
-                                        if ( response.getString ( "code" ).equals ( "100000" ) ) {
-                                                mView.onReceiveRespond ( response.getString ( "text" ) );
-                                        }
-                                } catch ( JSONException e ) {
-                                        e.printStackTrace ( );
-                                }
-                        }
-
-                        @Override
-                        public void onError ( VolleyError error ) {}
-                } );
-        }
-
-        private String EncodeString ( String str ) {
+        param.put(Keys.INFO, EncodeString(message));
+        param.put("userid", "12345678");
+        NetRequestUtil.getInstance().getJson(UrlUtil.URL_CHAT, param, new NetRequestUtil.RequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                LogUtils.i(response);
                 try {
-                        return URLEncoder.encode ( str, "UTF-8" );
-                } catch ( UnsupportedEncodingException e ) {
-                        return "";
+                    if (response.getString("code").equals("100000")) {
+                        mView.onReceiveRespond(response.getString("text"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
+            @Override
+            public void onError(VolleyError error) {
+            }
+        });
+    }
+
+    private String EncodeString(String str) {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
         }
+
+    }
 }

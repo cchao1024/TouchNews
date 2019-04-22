@@ -11,31 +11,31 @@ import java.util.List;
  */
 
 public interface MusicContract {
-        interface View {
-                void onMusicPlay ( );
+    interface View {
+        void onMusicPlay();
 
-                void onMusicPause ( );
+        void onMusicPause();
 
-                void onResumePlay ( );
+        void onResumePlay();
 
-                void onMusicPrepare ( MusicEntity curMusic );
+        void onMusicPrepare(MusicEntity curMusic);
 
-                void setAlbum ( );
+        void setAlbum();
 
-                void updateSearchList ( List< String > result );
-        }
+        void updateSearchList(List<String> result);
+    }
 
-        interface Presenter {
+    interface Presenter {
 
-                void onPlay ( );
+        void onPlay();
 
-                void onNext ( );
+        void onNext();
 
-                void onDestroy ( );
+        void onDestroy();
 
-                void getMusic ( String musicName );
+        void getMusic(String musicName);
 
-                void searchMusic ( String key );
-        }
+        void searchMusic(String key);
+    }
 
 }

@@ -10,36 +10,36 @@ import com.github.cchao.touchnews.javaBean.music.MusicSingerRoot;
  * Description:
  */
 public class MusicEntity {
-        private Data mMusicInfo;
-        private MusicPathRoot.Data mMusicPath;
-        private MusicSingerRoot.Data mMusicSinger;
+    private Data mMusicInfo;
+    private MusicPathRoot.Data mMusicPath;
+    private MusicSingerRoot.Data mMusicSinger;
 
-        public MusicEntity ( Data data ) {
-                mMusicInfo = data;
-        }
+    public MusicEntity(Data data) {
+        mMusicInfo = data;
+    }
 
-        public MusicPathRoot.Data getMusicPath ( ) {
-                return mMusicPath;
-        }
+    public MusicPathRoot.Data getMusicPath() {
+        return mMusicPath;
+    }
 
-        public void setMusicPath ( MusicPathRoot.Data musicPath ) {
-                mMusicPath = musicPath;
-        }
+    public void setMusicPath(MusicPathRoot.Data musicPath) {
+        mMusicPath = musicPath;
+    }
 
-        public MusicSingerRoot.Data getMusicSinger ( ) {
-                return mMusicSinger;
-        }
+    public MusicSingerRoot.Data getMusicSinger() {
+        return mMusicSinger;
+    }
 
-        public void setMusicSinger ( MusicSingerRoot.Data musicSinger ) {
-                mMusicSinger = musicSinger;
-        }
+    public void setMusicSinger(MusicSingerRoot.Data musicSinger) {
+        mMusicSinger = musicSinger;
+    }
 
-        public Data getMusicInfo ( ) {
+    public Data getMusicInfo() {
 
-                return mMusicInfo;
-        }
+        return mMusicInfo;
+    }
 
-        public void setMusicInfo ( Data musicInfo ) {
-                mMusicInfo = musicInfo;
-        }
+    public void setMusicInfo(Data musicInfo) {
+        mMusicInfo = musicInfo;
+    }
 }

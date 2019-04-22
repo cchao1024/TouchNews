@@ -25,70 +25,71 @@ import butterknife.Bind;
  * Description: 开心一下容器Fragment
  */
 public class JokeContainerFragment extends BaseFragment implements FragmentContainerContract.View {
-        @Bind ( R.id.toolbar )
-        Toolbar mToolbar;
-        @Bind ( R.id.tab_joke_image )
-        TabLayout mTabLayout;
-        @Bind ( R.id.viewpager_joke_image )
-        ViewPager mViewPager;
-        FragmentPagerAdapter mFragmentsPagerAdapter;
-        FragmentContainerContract.Presenter mPresenter;
-        @Override
-        public void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setHasOptionsMenu ( true );
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.tab_joke_image)
+    TabLayout mTabLayout;
+    @Bind(R.id.viewpager_joke_image)
+    ViewPager mViewPager;
+    FragmentPagerAdapter mFragmentsPagerAdapter;
+    FragmentContainerContract.Presenter mPresenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        mPresenter = new JokeFragmentsContainerPresenter(this);
+        mPresenter.getFragments();
+        mToolbar.setTitle(R.string.joke);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_joke_container;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
         }
-
-        @Override
-        public void onFirstUserVisible ( ) {
-                super.onFirstUserVisible ( );
-                mPresenter = new JokeFragmentsContainerPresenter ( this );
-                mPresenter.getFragments ( );
-                mToolbar.setTitle ( R.string.joke );
-        }
-
-        @Override
-        protected int getLayoutId ( ) {
-                return R.layout.fragment_joke_container;
-        }
-
-        @Override
-        public void onCreateOptionsMenu ( Menu menu, MenuInflater inflater ) {
-                inflater.inflate ( R.menu.menu_main, menu );
-                super.onCreateOptionsMenu ( menu, inflater );
-        }
-
-        @Override
-        public boolean onOptionsItemSelected ( MenuItem item ) {
-                switch ( item.getItemId ( ) ) {
-                        case R.id.action_search:
-                                return true;
-                }
-                return false;
-        }
+        return false;
+    }
 
 
-        @Override
-        public void setFragment ( List< BaseFragment > fragments, String[] titles ) {
-                mFragmentsPagerAdapter = new JokeFragmentsPagerAdapter ( getActivity ( ).getSupportFragmentManager ( ), titles, fragments );
-                mViewPager.setOffscreenPageLimit ( fragments.size ( ) );
-                mViewPager.setAdapter ( mFragmentsPagerAdapter );
-                mViewPager.addOnPageChangeListener ( new ViewPager.OnPageChangeListener ( ) {
-                        @Override
-                        public void onPageScrolled ( int position, float positionOffset, int positionOffsetPixels ) {
+    @Override
+    public void setFragment(List<BaseFragment> fragments, String[] titles) {
+        mFragmentsPagerAdapter = new JokeFragmentsPagerAdapter(getActivity().getSupportFragmentManager(), titles, fragments);
+        mViewPager.setOffscreenPageLimit(fragments.size());
+        mViewPager.setAdapter(mFragmentsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                        }
+            }
 
-                        @Override
-                        public void onPageSelected ( int position ) {
+            @Override
+            public void onPageSelected(int position) {
 
-                        }
+            }
 
-                        @Override
-                        public void onPageScrollStateChanged ( int state ) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                        }
-                } );
-                mTabLayout.setupWithViewPager ( mViewPager );
-        }
+            }
+        });
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
 }

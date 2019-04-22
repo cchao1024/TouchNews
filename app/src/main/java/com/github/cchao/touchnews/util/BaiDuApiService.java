@@ -19,30 +19,30 @@ import rx.Observable;
  * Description: retrofit api 接口
  */
 public interface BaiDuApiService {
-        //新闻api
-        @GET ( "showapi_open_bus/channel_news/search_news" )
-        Observable< NewsItemRoot > getNews ( @Header ( "apikey" ) String apikey, @Query ( "channelId" ) String channelID, @Query ( "page" ) String
-                page );
+    //新闻api
+    @GET("showapi_open_bus/channel_news/search_news")
+    Observable<NewsItemRoot> getNews(@Header("apikey") String apikey, @Query("channelId") String channelID, @Query("page") String
+        page);
 
-        //笑话集
-        @GET ( "showapi_open_bus/showapi_joke/joke_text" )
-        Observable< JokeTextRoot > getJokeText ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
+    //笑话集
+    @GET("showapi_open_bus/showapi_joke/joke_text")
+    Observable<JokeTextRoot> getJokeText(@Header("apikey") String apikey, @Query("page") String page);
 
-        //笑话集
-        @GET ( "showapi_open_bus/showapi_joke/joke_pic" )
-        Observable< JokeImageRoot > getJokeImage ( @Header ( "apikey" ) String apikey, @Query ( "page" ) String page );
+    //笑话集
+    @GET("showapi_open_bus/showapi_joke/joke_pic")
+    Observable<JokeImageRoot> getJokeImage(@Header("apikey") String apikey, @Query("page") String page);
 
-        //响应根据关键字获取的歌曲列表
-        @GET ( "geekery/music/query" )
-        Observable< MusicInfoRoot > getMusicList ( @Header ( "apikey" ) String apikey, @Query ( "s" ) String s );
+    //响应根据关键字获取的歌曲列表
+    @GET("geekery/music/query")
+    Observable<MusicInfoRoot> getMusicList(@Header("apikey") String apikey, @Query("s") String s);
 
-        //获取Music播放地址
-        @GET ( "geekery/music/playinfo" )
-        Observable< MusicPathRoot > getMusicPath ( @Header ( "apikey" ) String apikey, @Query ( "hash" ) String hash );
+    //获取Music播放地址
+    @GET("geekery/music/playinfo")
+    Observable<MusicPathRoot> getMusicPath(@Header("apikey") String apikey, @Query("hash") String hash);
 
-        //歌手信息
-        @GET ( "geekery/music/singer" )
-        Observable< MusicSingerRoot > getSinger ( @Header ( "apikey" ) String apikey, @Query ( "name" ) String name );
+    //歌手信息
+    @GET("geekery/music/singer")
+    Observable<MusicSingerRoot> getSinger(@Header("apikey") String apikey, @Query("name") String name);
 
 
 }

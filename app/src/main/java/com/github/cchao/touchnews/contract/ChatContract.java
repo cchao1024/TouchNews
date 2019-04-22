@@ -6,13 +6,14 @@ package com.github.cchao.touchnews.contract;
  * Description:
  */
 public interface ChatContract {
-        interface View {
-                void onReceiveRespond ( String message );
-        }
-        interface Presenter {
+    interface View {
+        void onReceiveRespond(String message);
+    }
 
-                void onSendMessage ( String message );
+    interface Presenter {
 
-        }
+        void onSendMessage(String message);
+
+    }
 
 }

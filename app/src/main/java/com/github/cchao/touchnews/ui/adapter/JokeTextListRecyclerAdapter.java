@@ -17,74 +17,74 @@ import java.util.List;
  * E-mail:   cchao1024@163.com
  * Description:
  */
-public class JokeTextListRecyclerAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder > {
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_FOOTER = 1;
-        public Context mContext;
-        public List< JokeTextRoot.Contentlist > mData;
-        public LayoutInflater mLayoutInflater;
+public class JokeTextListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_FOOTER = 1;
+    public Context mContext;
+    public List<JokeTextRoot.Contentlist> mData;
+    public LayoutInflater mLayoutInflater;
 
 //        private View.OnClickListener mOnClickListener;
 
-        public JokeTextListRecyclerAdapter ( Context context, List< JokeTextRoot.Contentlist > data ) {
-                mContext = context;
-                mData = data;
-                mLayoutInflater = LayoutInflater.from ( context );
+    public JokeTextListRecyclerAdapter(Context context, List<JokeTextRoot.Contentlist> data) {
+        mContext = context;
+        mData = data;
+        mLayoutInflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position + 1 == getItemCount()) {
+            return TYPE_FOOTER;
+        } else {
+            return TYPE_ITEM;
         }
+    }
 
-        @Override
-        public int getItemViewType ( int position ) {
-                if ( position + 1 == getItemCount ( ) ) {
-                        return TYPE_FOOTER;
-                } else {
-                        return TYPE_ITEM;
-                }
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder ( ViewGroup parent, int viewType ) {
-                if ( viewType == TYPE_ITEM ) {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.item_joke_text, parent, false );
-                        return new MViewHolder ( view );
-                } else {
-                        View view = LayoutInflater.from ( parent.getContext ( ) ).inflate ( R.layout.list_view_footer, parent, false );
-                        return new RecyclerView.ViewHolder ( view){
-                                @Override
-                                public String toString ( ) {
-                                        return super.toString ( );
-                                }
-                        };
-                }
-        }
-
-        @Override
-        public void onBindViewHolder ( RecyclerView.ViewHolder holder, int position ) {
-                if(holder instanceof MViewHolder) {
-                        JokeTextRoot.Contentlist contentEntity = mData.get ( position );
-                        ((MViewHolder)holder).mTitle.setText ( contentEntity.getTitle ( ) );
-                        ((MViewHolder)holder).mContent.setText ( contentEntity.getText ( ) );
-                }
-        }
-
-        @Override
-        public int getItemCount ( ) {
-                return mData.size ( )+1;
-        }
-
-        public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-                public TextView mTitle;
-                public TextView mContent;
-
-                public MViewHolder ( View view ) {
-                        super ( view );
-                        mTitle = ( TextView ) view.findViewById ( R.id.tv_title );
-                        mContent = ( TextView ) view.findViewById ( R.id.tv_content );
-                        view.setOnClickListener ( this );
-                }
-
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_joke_text, parent, false);
+            return new MViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_footer, parent, false);
+            return new RecyclerView.ViewHolder(view) {
                 @Override
-                public void onClick ( View v ) {
-
+                public String toString() {
+                    return super.toString();
                 }
+            };
         }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MViewHolder) {
+            JokeTextRoot.Contentlist contentEntity = mData.get(position);
+            ((MViewHolder) holder).mTitle.setText(contentEntity.getTitle());
+            ((MViewHolder) holder).mContent.setText(contentEntity.getText());
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size() + 1;
+    }
+
+    public class MViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView mTitle;
+        public TextView mContent;
+
+        public MViewHolder(View view) {
+            super(view);
+            mTitle = (TextView) view.findViewById(R.id.tv_title);
+            mContent = (TextView) view.findViewById(R.id.tv_content);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
 }

@@ -17,57 +17,58 @@ import butterknife.ButterKnife;
  * Description:
  */
 public abstract class BaseActivity extends AppCompatActivity {
-        public Context mContext = this;
-        protected Toolbar mToolbar;
+    public Context mContext = this;
+    protected Toolbar mToolbar;
 
-        /**
-         * @return 界面布局
-         */
-        protected abstract
-        @LayoutRes
-        int getLayoutID ( );
+    /**
+     * @return 界面布局
+     */
+    protected abstract
+    @LayoutRes
+    int getLayoutID();
 
-        @Override
-        protected void onCreate ( Bundle savedInstanceState ) {
-                super.onCreate ( savedInstanceState );
-                setContentView ( getLayoutID ( ) );
-                ButterKnife.bind ( this );
-                setToolbar ( );
-                initialize ( );
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutID());
+        ButterKnife.bind(this);
+        setToolbar();
+        initialize();
+    }
+
+    /**
+     * 设置获取Toolbar
+     */
+    private void setToolbar() {
+        mToolbar = ButterKnife.findById(this, R.id.toolbar);
+        if (null != mToolbar) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
 
-        /**
-         * 设置获取Toolbar
-         */
-        private void setToolbar ( ) {
-                mToolbar = ButterKnife.findById ( this, R.id.toolbar );
-                if ( null != mToolbar ) {
-                        setSupportActionBar ( mToolbar );
-                        getSupportActionBar ( ).setHomeButtonEnabled ( true );
-                        getSupportActionBar ( ).setDisplayHomeAsUpEnabled ( true );
-                }
-        }
+    /**
+     * 初始化界面
+     */
+    protected void initialize() {
+    }
 
-        /**
-         * 初始化界面
-         */
-        protected void initialize ( ) {}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
-        @Override
-        protected void onPause ( ) {
-                super.onPause ( );
-                MobclickAgent.onPause ( this );
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
-        @Override
-        protected void onResume ( ) {
-                super.onResume ( );
-                MobclickAgent.onResume ( this );
-        }
-
-        @Override
-        protected void onDestroy ( ) {
-                super.onDestroy ( );
-                ButterKnife.unbind ( this );
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

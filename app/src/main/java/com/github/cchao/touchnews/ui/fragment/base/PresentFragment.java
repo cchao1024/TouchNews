@@ -16,43 +16,43 @@ import butterknife.ButterKnife;
  * E-mail:   cchao1024@163.com
  * Description:  持有Presenter的Fragment
  */
-public abstract class PresentFragment < P extends BasePresenter > extends BaseFragment {
-        protected View mRootView;
-        protected P mPresenter;
+public abstract class PresentFragment<P extends BasePresenter> extends BaseFragment {
+    protected View mRootView;
+    protected P mPresenter;
 
-        @Nullable
-        @Override
-        public View onCreateView ( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
-                mRootView = inflater.inflate ( getLayoutId ( ), null );
-                ButterKnife.bind ( this, mRootView );
-                return mRootView;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflater.inflate(getLayoutId(), null);
+        ButterKnife.bind(this, mRootView);
+        return mRootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initialize();
+    }
+
+    protected void initialize() {
+        mPresenter = getPresenter();
+        mPresenter.bindView(this);
+    }
+
+    //布局ID
+    protected abstract
+    @LayoutRes
+    int getLayoutId();
+
+    //获取Presenter
+    protected abstract P getPresenter();
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+        if (mPresenter != null) {
+            mPresenter.unbindView();
         }
-
-        @Override
-        public void onViewCreated ( View view, Bundle savedInstanceState ) {
-                super.onViewCreated ( view, savedInstanceState );
-                initialize ( );
-        }
-
-        protected void initialize ( ) {
-                mPresenter = getPresenter ( );
-                mPresenter.bindView ( this );
-        }
-
-        //布局ID
-        protected abstract
-        @LayoutRes
-        int getLayoutId ( );
-
-        //获取Presenter
-         protected abstract P getPresenter ( );
-
-        @Override
-        public void onDestroyView ( ) {
-                super.onDestroyView ( );
-                ButterKnife.unbind ( this );
-                if ( mPresenter != null ) {
-                        mPresenter.unbindView ( );
-                }
-        }
+    }
 }

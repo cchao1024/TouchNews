@@ -6,12 +6,13 @@ package com.github.cchao.touchnews.util;
  * Description: 全局常量
  */
 public class Constant {
-        /**
-         *  显示提示信息给用户 e.g. 没有网络、正在加载、异常
-         *  @see
-         */
-        public enum INFO_TYPE {
-                NO_NET,ALERT, LOADING, EMPTY, ORIGIN
-        }
+    /**
+     * 显示提示信息给用户 e.g. 没有网络、正在加载、异常
+     *
+     * @see
+     */
+    public enum INFO_TYPE {
+        NO_NET, ALERT, LOADING, EMPTY, ORIGIN
+    }
 
 }

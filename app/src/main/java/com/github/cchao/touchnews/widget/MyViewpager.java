@@ -12,35 +12,35 @@ import android.view.MotionEvent;
  */
 public class MyViewpager extends ViewPager {
 
-        private static final String TAG = "MyViewPager";
-        private boolean isEnableScroll = false;
+    private static final String TAG = "MyViewPager";
+    private boolean isEnableScroll = false;
 
-        public MyViewpager ( Context context, boolean isEnableScroll ) {
-                super ( context );
-                this.isEnableScroll = isEnableScroll;
-        }
+    public MyViewpager(Context context, boolean isEnableScroll) {
+        super(context);
+        this.isEnableScroll = isEnableScroll;
+    }
 
-        public MyViewpager ( Context context, AttributeSet attrs ) {
-                super ( context, attrs );
-        }
+    public MyViewpager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-        public void setScrollEnabled ( boolean isEnableScroll ) {
-                this.isEnableScroll=isEnableScroll;
-        }
+    public void setScrollEnabled(boolean isEnableScroll) {
+        this.isEnableScroll = isEnableScroll;
+    }
 
-        @Override
-        public boolean onInterceptTouchEvent ( MotionEvent arg0 ) {
-                if ( isEnableScroll ) {
-                        return super.onInterceptTouchEvent ( arg0 );
-                } else
-                        return false;
-        }
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent arg0) {
+        if (isEnableScroll) {
+            return super.onInterceptTouchEvent(arg0);
+        } else
+            return false;
+    }
 
-        @Override
-        public boolean onTouchEvent ( MotionEvent arg0 ) {
-                if ( isEnableScroll ) {
-                        return super.onTouchEvent ( arg0 );
-                } else
-                        return false;
-        }
+    @Override
+    public boolean onTouchEvent(MotionEvent arg0) {
+        if (isEnableScroll) {
+            return super.onTouchEvent(arg0);
+        } else
+            return false;
+    }
 }

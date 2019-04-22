@@ -20,201 +20,201 @@ import java.util.List;
  */
 public class MusicPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnPreparedListener {
 
-        private final static String TAG = MusicPlayer.class.getSimpleName ( );
+    private final static String TAG = MusicPlayer.class.getSimpleName();
 
-        private final static long SLEEP_TIME = 1000;
-        public boolean isPause;
-        public MusicPlayerStateListener mPlayerStateListener;
-        private MediaPlayer mMediaPlayer;
-        private List< MusicEntity > mMusicList;
-        private MusicEntity mCurMusic;
-        private Context mContext;
+    private final static long SLEEP_TIME = 1000;
+    public boolean isPause;
+    public MusicPlayerStateListener mPlayerStateListener;
+    private MediaPlayer mMediaPlayer;
+    private List<MusicEntity> mMusicList;
+    private MusicEntity mCurMusic;
+    private Context mContext;
 
-        public MusicPlayer ( Context context ) {
-                mContext = context;
-                initiation ( );
+    public MusicPlayer(Context context) {
+        mContext = context;
+        initiation();
+    }
+
+    private void initiation() {
+        mMediaPlayer = new MediaPlayer();
+        mMusicList = new ArrayList<>();
+
+        mMediaPlayer.reset();
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        mMediaPlayer.setOnErrorListener(this);
+        mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setOnCompletionListener(this);
+        mMediaPlayer.setOnBufferingUpdateListener(this);
+
+    }
+
+
+    public void setMusicList(List<MusicEntity> musicList) {
+        mMusicList = musicList;
+        mMediaPlayer.reset();
+    }
+
+    public void addMusic(MusicEntity music) {
+        if (music != null) {
+            mMusicList.add(music);
         }
+    }
 
-        private void initiation ( ) {
-                mMediaPlayer = new MediaPlayer ( );
-                mMusicList = new ArrayList<> ( );
+    public int getMusicListCount() {
+        return null == mMusicList || mMusicList.isEmpty() ? 0 : mMusicList.size();
+    }
 
-                mMediaPlayer.reset ( );
-                mMediaPlayer.setAudioStreamType ( AudioManager.STREAM_MUSIC );
+    public MusicEntity getCurMusic() {
+        return mCurMusic;
+    }
 
-                mMediaPlayer.setOnErrorListener ( this );
-                mMediaPlayer.setOnPreparedListener ( this );
-                mMediaPlayer.setOnCompletionListener ( this );
-                mMediaPlayer.setOnBufferingUpdateListener ( this );
-
-        }
-
-
-        public void setMusicList ( List< MusicEntity > musicList ) {
-                mMusicList = musicList;
-                mMediaPlayer.reset ( );
-        }
-
-        public void addMusic ( MusicEntity music ) {
-                if ( music != null ) {
-                        mMusicList.add ( music );
+    /**
+     * 用户点击播放键
+     */
+    public void play() {
+        if (isPause) {
+            //暂停后再播放
+            mMediaPlayer.start();
+            isPause = false;
+            EventBus.getDefault().post(new MusicEvent(MusicEvent.MUSIC_TYPE.RESUME_PALY));
+            if (mPlayerStateListener != null) {
+                mPlayerStateListener.onResumePlay();
+            }
+        } else if (isPlaying()) {
+            this.pauseM();
+        } else {
+            if (mMusicList.size() > 0) {
+                //播一首移除一首
+                mCurMusic = mMusicList.remove(0);
+                String dataSource = mCurMusic.getMusicPath().getUrl();
+                mMediaPlayer.reset();
+                try {
+                    mMediaPlayer.setDataSource(dataSource);
+                    mMediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-        }
-
-        public int getMusicListCount ( ) {
-                return null == mMusicList || mMusicList.isEmpty ( ) ? 0 : mMusicList.size ( );
-        }
-
-        public MusicEntity getCurMusic ( ) {
-                return mCurMusic;
-        }
-
-        /**
-         * 用户点击播放键
-         */
-        public void play ( ) {
-                if ( isPause ) {
-                        //暂停后再播放
-                        mMediaPlayer.start ( );
-                        isPause = false;
-                        EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.RESUME_PALY ) );
-                        if ( mPlayerStateListener != null ) {
-                                mPlayerStateListener.onResumePlay ( );
-                        }
-                } else if ( isPlaying ( ) ) {
-                        this.pauseM ( );
-                } else {
-                        if ( mMusicList.size ( ) > 0 ) {
-                                //播一首移除一首
-                                mCurMusic = mMusicList.remove ( 0 );
-                                String dataSource = mCurMusic.getMusicPath ( ).getUrl ( );
-                                mMediaPlayer.reset ( );
-                                try {
-                                        mMediaPlayer.setDataSource ( dataSource );
-                                        mMediaPlayer.prepareAsync ( );
-                                } catch ( Exception e ) {
-                                        e.printStackTrace ( );
-                                }
-                                if ( mPlayerStateListener != null ) {
-                                        mPlayerStateListener.onPrepared ( );
-                                }
-                                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PREPARE ) );
-                        }
-
+                if (mPlayerStateListener != null) {
+                    mPlayerStateListener.onPrepared();
                 }
+                EventBus.getDefault().post(new MusicEvent(MusicEvent.MUSIC_TYPE.PREPARE));
+            }
+
         }
+    }
 
-        public void pauseM ( ) {
-                mMediaPlayer.pause ( );
-                isPause = true;
-                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PAUSE ) );
-                if ( mPlayerStateListener != null ) {
-                        mPlayerStateListener.onPause ( );
-                }
+    public void pauseM() {
+        mMediaPlayer.pause();
+        isPause = true;
+        EventBus.getDefault().post(new MusicEvent(MusicEvent.MUSIC_TYPE.PAUSE));
+        if (mPlayerStateListener != null) {
+            mPlayerStateListener.onPause();
         }
+    }
 
 
-        public void stop ( ) {
-                mMediaPlayer.stop ( );
-                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.STOP ) );
-                if ( mPlayerStateListener != null ) {
-                        mPlayerStateListener.onStop ( );
-                }
+    public void stop() {
+        mMediaPlayer.stop();
+        EventBus.getDefault().post(new MusicEvent(MusicEvent.MUSIC_TYPE.STOP));
+        if (mPlayerStateListener != null) {
+            mPlayerStateListener.onStop();
         }
+    }
 
-        /**
-         * 播放下一首
-         */
-        public void playNext ( ) {
-                //列表如果还有歌曲、播放下一首
-                if ( mMusicList.size ( ) > 0 ) {
+    /**
+     * 播放下一首
+     */
+    public void playNext() {
+        //列表如果还有歌曲、播放下一首
+        if (mMusicList.size() > 0) {
 //                        mCurMusic = mMusicList.remove ( 0 );
-                        mMediaPlayer.stop ( );
-                        play ( );
-                } else {
-                        ToastUtil.showShortToast ( null, "没有下一首了" );
-                }
+            mMediaPlayer.stop();
+            play();
+        } else {
+            ToastUtil.showShortToast(null, "没有下一首了");
         }
+    }
 
-        public void seekTo ( int rate ) {
+    public void seekTo(int rate) {
              /*   if ( mPlayState == MusicPlayState.MPS_LIST_EMPTY ) {
                         return;
                 }*/
 //                int r = reviceSeekValue ( rate );
-                int time = mMediaPlayer.getDuration ( );
+        int time = mMediaPlayer.getDuration();
 //                int curTime = ( int ) ( ( float ) r / 100 * time );
 //                mMediaPlayer.seekTo ( curTime );
+    }
+
+    /**
+     * 播放完播下一首
+     *
+     * @param mp
+     */
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        playNext();
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        return false;
+    }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
+    }
+
+    public void onDestroy() {
+        mMediaPlayer.reset();
+        mMediaPlayer.release();
+        mCurMusic = null;
+        mMusicList.clear();
+    }
+
+    /**
+     * @return 是否播放
+     */
+    public boolean isPlaying() {
+        return mMediaPlayer.isPlaying();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
+        isPause = false;
+        EventBus.getDefault().post(new MusicEvent(MusicEvent.MUSIC_TYPE.PLAY));
+        if (mPlayerStateListener != null) {
+            mPlayerStateListener.onPlay();
         }
+    }
 
-        /**
-         * 播放完播下一首
-         *
-         * @param mp
-         */
-        @Override
-        public void onCompletion ( MediaPlayer mp ) {
-                playNext ( );
-        }
+    /*  @Override
+      public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
+              TLog.d ( TAG, "second percent --> " + percent );
+              if ( percent < 100 ) {
+                      Intent intent = new Intent ( );
+                      intent.setAction ( Constants.ACTION_MUSIC_SECOND_PROGRESS_BROADCAST );
+                      intent.putExtra ( Constants.KEY_MUSIC_SECOND_PROGRESS, percent );
+                      mContext.sendBroadcast ( intent );
+              }
+      }*/
+    //设置状态监听器
+    public void setPlayerStateListener(MusicPlayerStateListener musicPlayerStateListener) {
+        mPlayerStateListener = musicPlayerStateListener;
+    }
 
-        @Override
-        public boolean onError ( MediaPlayer mp, int what, int extra ) {
-                return false;
-        }
+    //监听器
+    public interface MusicPlayerStateListener {
+        void onPrepared();
 
-        @Override
-        public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
+        void onResumePlay();
 
-        }
+        void onPlay();
 
-        public void onDestroy ( ) {
-                mMediaPlayer.reset ( );
-                mMediaPlayer.release ( );
-                mCurMusic = null;
-                mMusicList.clear ( );
-        }
+        void onPause();
 
-        /**
-         * @return 是否播放
-         */
-        public boolean isPlaying ( ) {
-                return mMediaPlayer.isPlaying ( );
-        }
-
-        @Override
-        public void onPrepared ( MediaPlayer mp ) {
-                mp.start ( );
-                isPause = false;
-                EventBus.getDefault ( ).post ( new MusicEvent ( MusicEvent.MUSIC_TYPE.PLAY ) );
-                if ( mPlayerStateListener != null ) {
-                        mPlayerStateListener.onPlay ( );
-                }
-        }
-
-        /*  @Override
-          public void onBufferingUpdate ( MediaPlayer mp, int percent ) {
-                  TLog.d ( TAG, "second percent --> " + percent );
-                  if ( percent < 100 ) {
-                          Intent intent = new Intent ( );
-                          intent.setAction ( Constants.ACTION_MUSIC_SECOND_PROGRESS_BROADCAST );
-                          intent.putExtra ( Constants.KEY_MUSIC_SECOND_PROGRESS, percent );
-                          mContext.sendBroadcast ( intent );
-                  }
-          }*/
-        //设置状态监听器
-        public void setPlayerStateListener ( MusicPlayerStateListener musicPlayerStateListener ) {
-                mPlayerStateListener = musicPlayerStateListener;
-        }
-
-        //监听器
-        public interface MusicPlayerStateListener {
-                void onPrepared ( );
-
-                void onResumePlay ( );
-
-                void onPlay ( );
-
-                void onPause ( );
-
-                void onStop ( );
-        }
+        void onStop();
+    }
 }
